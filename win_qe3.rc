@@ -1,0 +1,666 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New",                        ID_FILE_NEW
+        MENUITEM "&Open",                       ID_FILE_OPEN
+        MENUITEM "&Save",                       ID_FILE_SAVE
+        MENUITEM "Save &as...",                 ID_FILE_SAVEAS
+        MENUITEM "&Pointfile",                  ID_FILE_POINTFILE
+        MENUITEM "&Load project",               ID_FILE_LOADPROJECT
+        MENUITEM "E&xit",                       ID_FILE_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Copy brush",                 ID_EDIT_COPYBRUSH, GRAYED
+        MENUITEM "&Paste brush",                ID_EDIT_PASTEBRUSH, GRAYED
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "Texture View\tT",             ID_VIEW_TEXTURE
+        MENUITEM "Console View\tO",             ID_VIEW_CONSOLE
+        MENUITEM "Entity View\tN",              ID_VIEW_ENTITY
+        MENUITEM SEPARATOR
+        MENUITEM "&Center\tEnd",                ID_VIEW_CENTER
+        MENUITEM "&Up Floor\tPage Up",          ID_VIEW_UPFLOOR
+        MENUITEM "&Down Floor\tPage Down",      ID_VIEW_DOWNFLOOR
+        MENUITEM SEPARATOR
+        MENUITEM "Nex&t (XY, YZ, XY)\tTab",     ID_VIEW_NEXTVIEW
+        MENUITEM "XY (Top)",                    ID_VIEW_XY
+        MENUITEM "YZ (Side)",                   ID_VIEW_SIDE
+        MENUITEM "XZ (Front)",                  ID_VIEW_FRONT
+        MENUITEM SEPARATOR
+        MENUITEM "&XY 100%",                    ID_VIEW_100
+        MENUITEM "XY Zoom In\tDelete",          ID_VIEW_ZOOMIN
+        MENUITEM "XY Zoom Out\tInsert",         ID_VIEW_ZOOMOUT
+        MENUITEM SEPARATOR
+        MENUITEM "Paint Sizing Info",           IDC_CHECK_SIZEPAINT, CHECKED
+        MENUITEM "R&adiant Lights",             ID_VIEW_RADIANTLIGHTS
+        , CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Show &Names",                 ID_VIEW_SHOWNAMES, CHECKED
+        MENUITEM "Show Blocks",                 ID_VIEW_SHOWBLOCKS
+        MENUITEM "Show Angles",                 ID_VIEW_SHOWANGLES, CHECKED
+        MENUITEM "Show Workzone",               ID_VIEW_SHOWWORKZONE
+        MENUITEM "Show C&oordinates",           ID_VIEW_SHOWCOORDINATES
+        , CHECKED
+        MENUITEM "Show &Entities",              ID_VIEW_SHOWENT, CHECKED
+        MENUITEM "Show &Path",                  ID_VIEW_SHOWPATH, CHECKED
+        MENUITEM "Show &Lights",                ID_VIEW_SHOWLIGHTS, CHECKED
+        MENUITEM "Show &Water",                 ID_VIEW_SHOWWATER, CHECKED
+        MENUITEM "Show &Sky",                   ID_VIEW_SHOWSKY, CHECKED
+        MENUITEM "Show Clip &Brush",            ID_VIEW_SHOWCLIP, CHECKED
+        MENUITEM "Show &Func Wall\tCtrl-F",     ID_VIEW_SHOWFUNCWALL
+        , CHECKED
+        MENUITEM "Show Wo&rld",                 ID_VIEW_SHOWWORLD, CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Show Hidden\tShift-H",        ID_VIEW_HIDESHOW_SHOWHIDDEN
+        MENUITEM SEPARATOR
+        MENUITEM "&Z 100%",                     ID_VIEW_Z100
+        MENUITEM "Z Zoo&m In\tCtrl-Delete",     ID_VIEW_ZZOOMIN
+        MENUITEM "Z Zoom Out\tCtrl-Insert",     ID_VIEW_ZZOOMOUT
+    END
+    POPUP "&Selection"
+    BEGIN
+        MENUITEM "Drag &Edges\tE",              ID_SELECTION_DRAGEDGES
+        MENUITEM "Drag &Vertecies\tV",          ID_SELECTION_DRAGVERTECIES
+        MENUITEM SEPARATOR
+        MENUITEM "&Clone\tSpace",               ID_SELECTION_CLONE
+        MENUITEM "Deselect\tEsc",               ID_SELECTION_DESELECT
+        MENUITEM "I&nvert\tI",                  ID_SELECTION_INVERT
+        MENUITEM "&Delete\tBackspace",          ID_SELECTION_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Flip &X",                     ID_BRUSH_FLIPX
+        MENUITEM "Flip &Y",                     ID_BRUSH_FLIPY
+        MENUITEM "Flip &Z",                     ID_BRUSH_FLIPZ
+        MENUITEM SEPARATOR
+        MENUITEM "Rotate X",                    ID_BRUSH_ROTATEX
+        MENUITEM "Rotate Y",                    ID_BRUSH_ROTATEY
+        MENUITEM "Rotate Z",                    ID_BRUSH_ROTATEZ
+        MENUITEM "Arbitrary rotation",          ID_SELECTION_ARBITRARYROTATION
+
+        MENUITEM SEPARATOR
+        MENUITEM "Make &Hollow",                ID_SELECTION_MAKEHOLLOW
+        MENUITEM "CSG &Subtract",               ID_SELECTION_CSGSUBTRACT
+        MENUITEM "CSG &Merge",                  ID_SELECTION_CSGMERGE
+        MENUITEM SEPARATOR
+        MENUITEM "Toggle Clipper\tX",           ID_VIEW_CLIPPER
+        MENUITEM "Clip selection\tReturn",      ID_CLIP_SELECTED
+        MENUITEM "Split selection\tShift-Return", ID_SPLIT_SELECTED
+        MENUITEM "Flip Clip orientation\tCtrl-Return", ID_FLIP_CLIP
+        MENUITEM SEPARATOR
+        MENUITEM "Select Complete &Tall",       ID_SELECTION_SELECTCOMPLETETALL
+
+        MENUITEM "Select T&ouching",            ID_SELECTION_SELECTTOUCHING
+        MENUITEM "Select &Partial Tall",        ID_SELECTION_SELECTPARTIALTALL
+
+        MENUITEM "Select &Inside",              ID_SELECTION_SELECTINSIDE
+        MENUITEM SEPARATOR
+        MENUITEM "Hide Selected\tH",            ID_VIEW_HIDESHOW_HIDESELECTED
+
+        MENUITEM SEPARATOR
+        MENUITEM "Connect entities\tCtrl-K",    ID_SELECTION_CONNECT
+        MENUITEM "Ungroup entity",              ID_SELECTION_UNGROUPENTITY
+        MENUITEM "Next Brush in Group\tQ",      ID_SELECT_GROUPNEXTBRUSH
+    END
+    POPUP "&Bsp"
+    BEGIN
+        MENUITEM SEPARATOR
+    END
+    POPUP "&Grid"
+    BEGIN
+        MENUITEM "Grid1\t&1",                   ID_GRID_1
+        MENUITEM "Grid2\t&2",                   ID_GRID_2
+        MENUITEM "Grid4\t&3",                   ID_GRID_4
+        MENUITEM "Grid8\t&4",                   ID_GRID_8, CHECKED
+        MENUITEM "Grid16\t&5",                  ID_GRID_16
+        MENUITEM "Grid32\t&6",                  ID_GRID_32
+        MENUITEM "Grid64\t&7",                  ID_GRID_64
+        MENUITEM "Grid128\t&8",                 ID_GRID_128
+        MENUITEM SEPARATOR
+        MENUITEM "Snap to grid",                ID_SNAPTOGRID, CHECKED
+    END
+    POPUP "&Textures"
+    BEGIN
+        MENUITEM "Update Texture M&enu",        ID_TEXTURES_UPDATEMENU
+        MENUITEM SEPARATOR
+        MENUITEM "Flush &All",                  ID_TEXTURES_FLUSH_ALL
+        MENUITEM "Flush Unuse&d",               ID_TEXTURES_FLUSH_UNUSED
+        MENUITEM "Show In &Use\tU",             ID_TEXTURES_SHOWINUSE
+        MENUITEM SEPARATOR
+        MENUITEM "Find / Replace...",           ID_TEXTURE_REPLACEALL
+        MENUITEM "L&ock textures\tShift-L",     ID_TEXTURES_LOCK
+        MENUITEM SEPARATOR
+        MENUITEM "&Surface inspector\tS",       ID_TEXTURES_INSPECTOR
+        MENUITEM SEPARATOR
+        MENUITEM "&Wireframe",                  ID_TEXTURES_WIREFRAME
+        MENUITEM "&Flat shade",                 ID_TEXTURES_FLATSHADE
+        MENUITEM "&Nearest",                    ID_VIEW_NEAREST
+        MENUITEM "Nearest &Mipmap",             ID_VIEW_NEARESTMIPMAP
+        MENUITEM "&Linear",                     ID_VIEW_LINEAR
+        MENUITEM "&Bilinear",                   ID_VIEW_BILINEAR
+        MENUITEM "B&ilinear Mipmap",            ID_VIEW_BILINEARMIPMAP
+        MENUITEM "T&rilinear",                  ID_VIEW_TRILINEAR
+        MENUITEM SEPARATOR
+    END
+    POPUP "&Misc"
+    BEGIN
+        MENUITEM "&Benchmark",                  ID_MISC_BENCHMARK
+        MENUITEM SEPARATOR
+        POPUP "&Colors"
+        BEGIN
+            MENUITEM "Camera Background",           ID_CAMERABK
+            MENUITEM "&Texture Background",         ID_TEXTUREBK
+            MENUITEM "Texture Text",                ID_TEXTURE_TEXT
+            MENUITEM "&Grid Background",            ID_COLORS_XYBK
+            MENUITEM "Grid Major",                  ID_COLORS_MAJOR
+            MENUITEM "Grid Minor",                  ID_COLORS_MINOR
+            MENUITEM "Grid Text",                   ID_COLORS_GRIDTEXT
+            MENUITEM "Grid Block",                  ID_COLORS_GRIDBLOCK
+            MENUITEM "Default Brush",               ID_COLORS_BRUSH
+            MENUITEM "Selected Brush",              ID_COLORS_SELECTEDBRUSH
+            MENUITEM "Clipper",                     ID_COLORS_CLIPPER
+            MENUITEM "Active View name",            ID_COLORS_VIEWNAME
+        END
+        MENUITEM "&Gamma",                      ID_MISC_GAMMA
+        MENUITEM SEPARATOR
+        MENUITEM "Log console to qe3.log",      IDC_CHECK_LOG
+        MENUITEM SEPARATOR
+        MENUITEM "Find brush",                  ID_MISC_FINDBRUSH
+        MENUITEM "Next leak spot\tCtrl-L",      ID_MISC_NEXTLEAKSPOT
+        MENUITEM "Previous leak spot\tCtrl-P",  ID_MISC_PREVIOUSLEAKSPOT
+        MENUITEM "&Print XY View",              ID_MISC_PRINTXY
+        MENUITEM "&Select Entity Color\tK",     ID_MISC_SELECTENTITYCOLOR
+    END
+    POPUP "&Region"
+    BEGIN
+        MENUITEM "&Off",                        ID_REGION_OFF
+        MENUITEM "&Set XY",                     ID_REGION_SETXY
+        MENUITEM "Set &Tall Brush",             ID_REGION_SETTALLBRUSH
+        MENUITEM "Set &Brush",                  ID_REGION_SETBRUSH
+        MENUITEM "Set Se&lected Brushes",       ID_REGION_SETSELECTION
+    END
+    POPUP "Br&ush"
+    BEGIN
+        MENUITEM "3 sided\tctrl-3",             ID_BRUSH_3SIDED
+        MENUITEM "4 sided\tctrl-4",             ID_BRUSH_4SIDED
+        MENUITEM "5 sided\tctrl-5",             ID_BRUSH_5SIDED
+        MENUITEM "6 sided\tctrl-6",             ID_BRUSH_6SIDED
+        MENUITEM "7 sided\tctrl-7",             ID_BRUSH_7SIDED
+        MENUITEM "8 sided\tctrl-8",             ID_BRUSH_8SIDED
+        MENUITEM "9 sided\tctrl-9",             ID_BRUSH_9SIDED
+        MENUITEM "Arbitrary sided",             ID_BRUSH_ARBITRARYSIDED
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About",                      ID_HELP_ABOUT
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FINDREPLACE DIALOG DISCARDABLE  0, 0, 187, 106
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Find Replace Texture(s)"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,10,85,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,70,85,50,14
+    EDITTEXT        IDC_EDIT_FIND,45,10,130,12,ES_AUTOHSCROLL
+    LTEXT           "Find",IDC_STATIC,10,10,30,10
+    EDITTEXT        IDC_EDIT_REPLACE,45,30,130,12,ES_AUTOHSCROLL
+    LTEXT           "Replace",IDC_STATIC,10,30,30,10
+    CONTROL         "Replace within selected brushes only",
+                    IDC_CHECK_SELECTED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    10,50,135,10
+    CONTROL         "Replace everywhere (force, w/o Find)",IDC_CHECK_FORCE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,65,135,10
+END
+
+IDD_ENTITY DIALOGEX 0, 0, 193, 359
+STYLE DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CLIPSIBLINGS | 
+    WS_CAPTION | WS_THICKFRAME
+EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CLIENTEDGE
+CAPTION "Entity"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LISTBOX         IDC_E_LIST,5,5,180,99,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_TABSTOP,
+                    WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_E_COMMENT,5,106,180,50,ES_MULTILINE | ES_READONLY | 
+                    WS_VSCROLL,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "135",IDC_E_135,5,295,15,15
+    PUSHBUTTON      "180",IDC_E_180,5,310,15,15
+    PUSHBUTTON      "225",IDC_E_225,5,326,15,15
+    PUSHBUTTON      "270",IDC_E_270,21,326,15,15
+    PUSHBUTTON      "90",IDC_E_90,21,295,15,15
+    PUSHBUTTON      "45",IDC_E_45,37,295,15,15
+    PUSHBUTTON      "0",IDC_E_0,37,311,15,15
+    PUSHBUTTON      "315",IDC_E_315,37,326,15,15
+    PUSHBUTTON      "Up",IDC_E_UP,61,295,15,15
+    PUSHBUTTON      "Dn",IDC_E_DOWN,61,310,15,15
+    CONTROL         "",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,5,160,50,8
+    CONTROL         "",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,5,170,50,8
+    CONTROL         "",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,5,180,50,8
+    CONTROL         "",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,5,190,50,8
+    CONTROL         "",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,65,160,50,8
+    CONTROL         "",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,65,170,50,8
+    CONTROL         "",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,65,180,50,8
+    CONTROL         "",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,65,190,50,8
+    CONTROL         "!Easy",IDC_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    125,160,50,8
+    CONTROL         "!Medium",IDC_CHECK10,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,125,170,50,8
+    CONTROL         "!Hard",IDC_CHECK11,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,125,180,50,10
+    CONTROL         "!DeathMatch",IDC_CHECK12,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,125,190,55,10
+    LISTBOX         IDC_E_PROPS,5,205,180,50,LBS_SORT | LBS_USETABSTOPS | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Del Key/Pair",IDC_E_DELPROP,125,300,45,15
+    EDITTEXT        IDC_E_STATUS,90,320,95,30,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+    LTEXT           "Key",IDC_STATIC_KEY,5,260,25,10
+    LTEXT           "Value",IDC_STATIC_VALUE,5,275,25,10
+    EDITTEXT        IDC_E_KEY_FIELD,50,260,135,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_E_VALUE_FIELD,50,275,135,14,ES_AUTOHSCROLL
+END
+
+IDD_GAMMA DIALOGEX 0, 0, 127, 61
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "Gamma"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,10,40,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,65,40,50,14
+    EDITTEXT        IDC_G_EDIT,30,15,66,13,ES_AUTOHSCROLL,WS_EX_CLIENTEDGE
+END
+
+IDD_FINDBRUSH DIALOGEX 0, 0, 137, 77
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "Find brush"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,10,55,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,70,55,50,14
+    EDITTEXT        IDC_FIND_ENTITY,80,15,46,13,ES_AUTOHSCROLL,
+                    WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_FIND_BRUSH,80,30,46,13,ES_AUTOHSCROLL,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "Entity number",IDC_STATIC,10,15,60,8
+    LTEXT           "Brush number",IDC_STATIC,10,30,65,8
+END
+
+IDD_ROTATE DIALOG DISCARDABLE  0, 0, 186, 71
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Arbitrary rotation"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    EDITTEXT        IDC_ROTX,30,5,40,14,ES_AUTOHSCROLL
+    LTEXT           "x",IDC_STATIC,5,10,8,8
+    EDITTEXT        IDC_ROTZ,30,45,40,14,ES_AUTOHSCROLL
+    LTEXT           "y",IDC_STATIC,5,25,8,8
+    EDITTEXT        IDC_ROTY,30,25,40,14,ES_AUTOHSCROLL
+    LTEXT           "z",IDC_STATIC,5,45,8,8
+END
+
+IDD_SIDES DIALOG DISCARDABLE  0, 0, 186, 46
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Arbitrrary sides"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    EDITTEXT        IDC_SIDES,50,15,40,14,ES_AUTOHSCROLL
+    LTEXT           "Sides",IDC_STATIC,15,15,18,8
+END
+
+IDD_ABOUT DIALOG DISCARDABLE  0, 0, 302, 221
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About QuakeEd"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,245,5,50,14
+    CONTROL         127,IDC_STATIC,"Static",SS_BITMAP,7,7,83,58
+    CONTROL         "QuakeEd 3.2\nCopyright (C) 1996-2012 id Software, Inc.",
+                    IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,100,10,
+                    135,55
+    GROUPBOX        "OpenGL Properties",IDC_STATIC,5,75,290,50
+    LTEXT           "Vendor:\t\tWHOEVER",IDC_ABOUT_GLVENDOR,10,90,280,10
+    LTEXT           "Version:\t\t1.1",IDC_ABOUT_GLVERSION,10,100,280,10
+    LTEXT           "Renderer:\tWHATEVER",IDC_ABOUT_GLRENDERER,10,110,280,10
+    GROUPBOX        "OpenGL Extensions",IDC_STATIC,5,130,290,85
+    EDITTEXT        IDC_ABOUT_GLEXTENSIONS,10,140,280,70,ES_MULTILINE | 
+                    ES_READONLY | WS_VSCROLL
+END
+
+IDD_SURFACE DIALOG DISCARDABLE  400, 100, 152, 191
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Surface inspector"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,5,170,40,14
+    PUSHBUTTON      "Cancel",IDCANCEL,105,170,40,14
+    EDITTEXT        IDC_HSHIFT,85,45,35,15,ES_AUTOHSCROLL
+    SCROLLBAR       IDC_HSHIFTA,120,45,10,15,SBS_VERT
+    LTEXT           "Horizontal shift",IDC_STATIC,10,45,65,8
+    LTEXT           "Vertical shift",IDC_STATIC,10,60,65,8
+    LTEXT           "Horizontal stretch",IDC_STATIC,10,75,65,8
+    LTEXT           "Vertical stretch",IDC_STATIC,10,90,65,8
+    LTEXT           "Rotate",IDC_STATIC,10,105,65,8
+    EDITTEXT        IDC_VSHIFT,85,60,35,15,ES_AUTOHSCROLL
+    SCROLLBAR       IDC_VSHIFTA,120,60,10,15,SBS_VERT
+    EDITTEXT        IDC_HSCALE,85,75,35,15,ES_AUTOHSCROLL
+    SCROLLBAR       IDC_HSCALEA,120,75,10,15,SBS_VERT
+    EDITTEXT        IDC_VSCALE,85,90,35,15,ES_AUTOHSCROLL
+    SCROLLBAR       IDC_VSCALEA,120,90,10,15,SBS_VERT
+    EDITTEXT        IDC_ROTATE,85,105,35,15,ES_AUTOHSCROLL
+    SCROLLBAR       IDC_ROTATEA,120,105,10,15,SBS_VERT
+    EDITTEXT        IDC_TEXTURE,50,15,80,14,ES_AUTOHSCROLL
+    LTEXT           "Texture",IDC_STATIC,10,18,30,8
+    PUSHBUTTON      "Apply",IDAPPLY,55,170,40,14
+    EDITTEXT        IDC_HFIT,85,140,35,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_WFIT,35,140,35,15,ES_AUTOHSCROLL
+    SCROLLBAR       IDC_WFITA,70,140,10,15,SBS_VERT
+    SCROLLBAR       IDC_HFITA,120,140,10,15,SBS_VERT
+    LTEXT           "Height",IDC_STATIC,85,130,40,10
+    LTEXT           "Width",IDC_STATIC,35,130,40,10
+    PUSHBUTTON      "Fit",IDC_FIT,10,135,20,25
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 3,2,0,0
+ PRODUCTVERSION 3,2,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Level Editing Software for id Software's Quake™\0"
+            VALUE "CompanyName", "id Software\0"
+            VALUE "FileDescription", "QuakeEd 3.2\0"
+            VALUE "FileVersion", "3, 2, 0, 0\0"
+            VALUE "InternalName", "qe3\0"
+            VALUE "LegalCopyright", "Copyright © 1996-2012\0"
+            VALUE "LegalTrademarks", "Quake™ 1996-2012\0"
+            VALUE "OriginalFilename", "qe3.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "id Software QuakeEd\0"
+            VALUE "ProductVersion", "3, 2, 0, 0\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR1 ACCELERATORS DISCARDABLE 
+BEGIN
+    "3",            ID_BRUSH_3SIDED,        VIRTKEY, CONTROL, NOINVERT
+    "4",            ID_BRUSH_4SIDED,        VIRTKEY, CONTROL, NOINVERT
+    "5",            ID_BRUSH_5SIDED,        VIRTKEY, CONTROL, NOINVERT
+    "6",            ID_BRUSH_6SIDED,        VIRTKEY, CONTROL, NOINVERT
+    "7",            ID_BRUSH_7SIDED,        VIRTKEY, CONTROL, NOINVERT
+    "8",            ID_BRUSH_8SIDED,        VIRTKEY, CONTROL, NOINVERT
+    "9",            ID_BRUSH_9SIDED,        VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_VIEW_SHOWFUNCWALL,   VIRTKEY, CONTROL, NOINVERT
+    "H",            ID_VIEW_HIDESHOW_SHOWHIDDEN, VIRTKEY, SHIFT, NOINVERT
+    "K",            ID_SELECTION_CONNECT,   VIRTKEY, CONTROL, NOINVERT
+    "L",            ID_MISC_NEXTLEAKSPOT,   VIRTKEY, CONTROL, NOINVERT
+    "L",            ID_TEXTURES_LOCK,       VIRTKEY, SHIFT, NOINVERT
+    "M",            ID_SELECTION_MAKE_DETAIL, VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_MISC_PREVIOUSLEAKSPOT, VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_VIEW_ZZOOMIN,        VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_VIEW_ZZOOMOUT,       VIRTKEY, CONTROL, NOINVERT
+    VK_RETURN,      ID_FLIP_CLIP,           VIRTKEY, CONTROL, NOINVERT
+    VK_RETURN,      ID_SPLIT_SELECTED,      VIRTKEY, SHIFT, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TOOLBAR1 TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BRUSH_FLIPX
+    BUTTON      ID_BRUSH_ROTATEX
+    BUTTON      ID_BRUSH_FLIPY
+    BUTTON      ID_BRUSH_ROTATEY
+    BUTTON      ID_BRUSH_FLIPZ
+    BUTTON      ID_BRUSH_ROTATEZ
+    SEPARATOR
+    BUTTON      ID_SELECTION_SELECTCOMPLETETALL
+    BUTTON      ID_SELECTION_SELECTTOUCHING
+    BUTTON      ID_SELECTION_SELECTPARTIALTALL
+    BUTTON      ID_SELECTION_SELECTINSIDE
+    SEPARATOR
+    BUTTON      ID_SELECTION_MAKEHOLLOW
+    BUTTON      ID_SELECTION_CSGSUBTRACT
+    BUTTON      ID_SELECTION_CSGMERGE
+    SEPARATOR
+    BUTTON      ID_TEXTURES_WIREFRAME
+    BUTTON      ID_TEXTURES_FLATSHADE
+    BUTTON      ID_VIEW_TEXTURES
+    BUTTON      ID_TEXTURES_POPUP
+    SEPARATOR
+    BUTTON      ID_VIEW_NEXTVIEW
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TOOLBAR1            BITMAP  DISCARDABLE     "toolbar1.bmp"
+IDB_BITMAP1             BITMAP  DISCARDABLE     "q.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_FINDREPLACE, DIALOG
+    BEGIN
+        RIGHTMARGIN, 74
+        BOTTOMMARGIN, 64
+    END
+
+    IDD_ENTITY, DIALOG
+    BEGIN
+        RIGHTMARGIN, 186
+        BOTTOMMARGIN, 357
+    END
+
+    IDD_GAMMA, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 120
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 53
+    END
+
+    IDD_FINDBRUSH, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 130
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 69
+    END
+
+    IDD_ROTATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
+    END
+
+    IDD_SIDES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
+
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 295
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 214
+    END
+
+    IDD_SURFACE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 145
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 184
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON    DISCARDABLE     "icon1.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_TEXTURES_POPUP       "Set Camera Render Mode"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_NEXTVIEW        "Cycle 2D View (Tab)"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

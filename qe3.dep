@@ -1,0 +1,1977 @@
+# Microsoft Developer Studio Generated Dependency File, included by qe3.mak
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\brush.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\winding.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\brush.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\winding.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\brush.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\brush.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\camera.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\camera.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\camera.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\camera.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\cmdlib.c : \
+	".\cmdlib.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\cmdlib.c : \
+	".\cmdlib.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\cmdlib.c : \
+	".\cmdlib.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\cmdlib.c : \
+	".\cmdlib.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\csg.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\winding.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\csg.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\winding.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\csg.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\csg.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\drag.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\drag.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\drag.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\drag.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\eclass.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\eclass.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\eclass.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\eclass.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\entity.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\entity.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\entity.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\entity.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\lbmlib.c : \
+	".\cmdlib.h"\
+	".\lbmlib.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\lbmlib.c : \
+	".\cmdlib.h"\
+	".\lbmlib.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\map.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\map.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\map.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\map.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\mathlib.c : \
+	".\cmdlib.h"\
+	".\mathlib.h"\
+	".\qedefs.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\mathlib.c : \
+	".\cmdlib.h"\
+	".\mathlib.h"\
+	".\qedefs.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\mathlib.c : \
+	".\cmdlib.h"\
+	".\mathlib.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\mathlib.c : \
+	".\cmdlib.h"\
+	".\mathlib.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\mru.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\mru.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\mru.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\mru.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\mru.c : \
+	".\mru.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\mru.c : \
+	".\mru.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\parse.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\parse.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\parse.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\parse.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\points.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\points.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\points.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\points.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\qe3.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\qe3.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\qe3.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\qe3.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\select.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\select.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\select.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\select.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\textures.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\textures.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\textures.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\textures.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\vertsel.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\vertsel.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\vertsel.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\vertsel.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\win_cam.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\win_cam.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\win_cam.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\win_cam.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\win_dlg.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\win_dlg.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\win_dlg.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\win_dlg.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\win_ent.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\win_ent.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\win_ent.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\win_ent.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\win_main.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\win_main.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\win_main.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\win_main.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\win_qe3.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\win_qe3.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\win_qe3.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\win_qe3.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\win_xy.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\win_xy.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\win_xy.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\win_xy.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\win_z.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\win_z.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\win_z.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\win_z.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\winding.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\winding.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\xy.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\xy.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\xy.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\xy.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+!IF  "$(CFG)" == "qe3 - Win32 Release"
+
+.\z.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 Debug"
+
+.\z.c : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\glingr.h"\
+	".\lbmlib.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\mru.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\qedefs.h"\
+	".\qfiles.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Debug"
+
+.\z.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ELSEIF  "$(CFG)" == "qe3 - Win32 (ALPHA) Release"
+
+.\z.c : \
+	".\brush.h"\
+	".\camera.h"\
+	".\cmdlib.h"\
+	".\entity.h"\
+	".\map.h"\
+	".\mathlib.h"\
+	".\parse.h"\
+	".\qe3.h"\
+	".\select.h"\
+	".\textures.h"\
+	".\xy.h"\
+	".\z.h"\
+	
+
+!ENDIF 
+
+.\win_qe3.rc : \
+	".\icon1.ico"\
+	".\q.bmp"\
+	".\toolbar1.bmp"\
+	
