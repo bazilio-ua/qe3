@@ -124,7 +124,7 @@ typedef struct
 #define	PLANE_ANYY		4
 #define	PLANE_ANYZ		5
 
-// planes (x&~1) and (x&~1)+1 are allways opposites
+// planes (x&~1) and (x&~1)+1 are always opposites
 
 typedef struct
 {

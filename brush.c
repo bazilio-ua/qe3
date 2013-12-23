@@ -1327,7 +1327,7 @@ face_t *Brush_Ray (vec3_t origin, vec3_t dir, brush_t *b, float *dist)
 void	Brush_AddToList (brush_t *b, brush_t *list)
 {
 	if (b->next || b->prev)
-		Error ("Brush_RemoveFromList: allready linked");
+		Error ("Brush_RemoveFromList: already linked");
 	b->next = list->next;
 	list->next->prev = b;
 	list->next = b;
@@ -1416,7 +1416,7 @@ void Brush_SelectFaceForDragging (brush_t *b, face_t *f, qboolean shear)
 	for (i=0 ; i<3 ; i++)
 		c += AddPlanept (f->planepts[i]);
 	if (c == 0)
-		return;		// allready completely added
+		return;		// already completely added
 
 	// select all points on this plane in all brushes the selection
 	for (b2=selected_brushes.next ; b2 != &selected_brushes ; b2 = b2->next)

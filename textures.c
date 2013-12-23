@@ -716,7 +716,7 @@ qtexture_t *Texture_NextPos (int *x, int *y)
 		if (q->name[0] == '(')	// fake color texture
 			continue;
 		if (q->inuse)
-			break;			// allways show in use
+			break;			// always show in use
 		break;
 	}
 

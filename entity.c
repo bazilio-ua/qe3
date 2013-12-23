@@ -398,7 +398,7 @@ Entity_LinkBrush
 void Entity_LinkBrush (entity_t *e, brush_t *b)
 {
 	if (b->oprev || b->onext)
-		Error ("Entity_LinkBrush: Allready linked");
+		Error ("Entity_LinkBrush: already linked");
 	b->owner = e;
 
 	b->onext = e->brushes.onext;
@@ -415,7 +415,7 @@ Entity_UnlinkBrush
 void Entity_UnlinkBrush (brush_t *b)
 {
 	if (!b->owner || !b->onext || !b->oprev)
-		Error ("Entity_UnlinkBrush: Not currently linked");
+		Error ("Entity_UnlinkBrush: not currently linked");
 	b->onext->oprev = b->oprev;
 	b->oprev->onext = b->onext;
 	b->onext = b->oprev = NULL;
