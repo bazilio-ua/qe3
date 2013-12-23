@@ -17,14 +17,14 @@ typedef struct
 
 typedef struct
 {
-	qboolean	bSet;
-	vec3_t		ptClip;      // the 3d point
-} clipPoint_t;
+	qboolean	ptset;
+	vec3_t		ptclip;     // the 3d point
+} clippoint_t;
 
-extern clipPoint_t	Clip1;
-extern clipPoint_t	Clip2;
-extern clipPoint_t	Clip3;
-extern clipPoint_t	*pMovingClip;
+extern clippoint_t	clip1;
+extern clippoint_t	clip2;
+extern clippoint_t	clip3;
+extern clippoint_t	*movingclip;
 
 BOOL XYExcludeBrush(brush_t	*pb);
 
@@ -35,7 +35,7 @@ void XY_MouseMoved (int x, int y, int buttons);
 void XY_Draw (void);
 void XY_Overlay (void);
 
-void PaintSizeInfo (int nDim1, int nDim2, vec3_t vMinBounds, vec3_t vMaxBounds);
+void PaintSizeInfo (int dim1, int dim2, vec3_t minbounds, vec3_t maxbounds);
 
 BOOL FilterBrush (brush_t *pb);
 
@@ -59,9 +59,9 @@ void Clip (void);
 void SplitClip (void);
 void FlipClip (void);
 
-void CleanList (brush_t *pList);
+void CleanList (brush_t *list);
 void ProduceSplitLists (void);
-void Brush_CopyList (brush_t *pFrom, brush_t *pTo);
+void Brush_CopyList (brush_t *from, brush_t *to);
 
 void DropClipPoint (int x, int y);
 void MoveClipPoint (int x, int y);

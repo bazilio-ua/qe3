@@ -42,8 +42,8 @@ vec_t VectorNormalize (vec3_t v);
 void VectorInverse (vec3_t v);
 void VectorScale (vec3_t v, vec_t scale, vec3_t out);
 
-void	VectorRotate	(vec3_t vIn, vec3_t vRotation, vec3_t out);
-void	VectorRotate2	(vec3_t vIn, vec3_t vRotation, vec3_t vOrigin, vec3_t out);
+void	VectorRotate	(vec3_t in, vec3_t rotation, vec3_t out);
+void	VectorRotate2	(vec3_t in, vec3_t rotation, vec3_t origin, vec3_t out);
 
 void	ClearBounds		(vec3_t mins, vec3_t maxs);
 void	AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs);

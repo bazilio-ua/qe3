@@ -67,13 +67,13 @@ Select_Brush
 ============
 */
 //void Select_Brush (brush_t *brush)
-void Select_Brush (brush_t *brush, qboolean bComplete)
+void Select_Brush (brush_t *brush, qboolean complete)
 {
 	brush_t		*b;
 	entity_t	*e;
 	char	selectionstring[256];
 	char	*name;
-	vec3_t vMin, vMax, vSize;
+	vec3_t mins, maxs, size;
 
 	selected_face = NULL;
 	if (g_qeglobals.d_select_count < 2)
@@ -84,7 +84,7 @@ void Select_Brush (brush_t *brush, qboolean bComplete)
 	if (e)
 	{
 		// select complete entity on first click
-		if (e != world_entity && bComplete == true)
+		if (e != world_entity && complete == true)
 		{
 			for (b=selected_brushes.next ; b != &selected_brushes ; b=b->next)
 				if (b->owner == e)
@@ -107,10 +107,10 @@ singleselect:
 			UpdateEntitySel(brush->owner->eclass);
 		}
 	}
-	Select_GetBounds (vMin, vMax);
-	VectorSubtract(vMax, vMin, vSize);
+	Select_GetBounds (mins, maxs);
+	VectorSubtract(maxs, mins, size);
 	name = ValueForKey (brush->owner, "classname");
-	sprintf (selectionstring, "Selected object: %s (%i %i %i)", name, (int)vSize[0], (int)vSize[1], (int)vSize[2]);
+	sprintf (selectionstring, "Selected object: %s (%i %i %i)", name, (int)size[0], (int)size[1], (int)size[2]);
 	Sys_Status (selectionstring, 3);
 }
 
@@ -180,19 +180,19 @@ void Select_Delete (void)
 // update the workzone to a given brush
 void UpdateWorkzone_ForBrush( brush_t* b )
 {
-	int nDim1, nDim2;
+	int dim1, dim2;
 
 	VectorCopy( b->mins, g_qeglobals.d_work_min );
 	VectorCopy( b->maxs, g_qeglobals.d_work_max );
 
 	// will update the workzone to the given brush
-	nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-	nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+	dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+	dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
-	g_qeglobals.d_work_min[nDim1] = b->mins[nDim1];
-	g_qeglobals.d_work_max[nDim1] = b->maxs[nDim1];
-	g_qeglobals.d_work_min[nDim2] = b->mins[nDim2];
-	g_qeglobals.d_work_max[nDim2] = b->maxs[nDim2];
+	g_qeglobals.d_work_min[dim1] = b->mins[dim1];
+	g_qeglobals.d_work_max[dim1] = b->maxs[dim1];
+	g_qeglobals.d_work_min[dim2] = b->mins[dim2];
+	g_qeglobals.d_work_max[dim2] = b->maxs[dim2];
 
 }
 
@@ -470,11 +470,11 @@ void Select_FlipAxis (int axis)
 Clamp
 ================
 */
-void Clamp(float *f, int nClamp)
+void Clamp(float *f, int clamp)
 {
-  float fFrac = *f - (int)*f;
-  *f = (int)*f % nClamp;
-  *f += fFrac;
+  float frac = *f - (int)*f;
+  *f = (int)*f % clamp;
+  *f += frac;
 }
 
 
@@ -628,11 +628,11 @@ void AbsoluteToLocal(plane_t normal2, face_t *f, vec3_t p1, vec3_t p2, vec3_t p3
 }
 
 
-void RotateFaceTexture(face_t* f, int nAxis, float fDeg)
+void RotateFaceTexture(face_t* f, int axis, float deg)
 {
 	vec3_t	p1,p2,p3, rota;   
 	plane_t	normal2;
-	vec3_t	vNormal;
+	vec3_t	normal;
 
 	p1[0] = p1[1] = p1[2] = 0;
 	VectorCopy(p1, p2);
@@ -640,23 +640,23 @@ void RotateFaceTexture(face_t* f, int nAxis, float fDeg)
 	VectorCopy(p1, rota);
 	ComputeAbsolute(f, p1, p2, p3);
   
-	rota[nAxis] = fDeg;
+	rota[axis] = deg;
 	VectorRotate2(p1, rota, select_origin, p1);
 	VectorRotate2(p2, rota, select_origin, p2);
 	VectorRotate2(p3, rota, select_origin, p3);
 
-	vNormal[0] = f->plane.normal[0];
-	vNormal[1] = f->plane.normal[1];
-	vNormal[2] = f->plane.normal[2];
-	VectorRotate(vNormal, rota, vNormal);
-	normal2.normal[0] = vNormal[0];
-	normal2.normal[1] = vNormal[1];
-	normal2.normal[2] = vNormal[2];
+	normal[0] = f->plane.normal[0];
+	normal[1] = f->plane.normal[1];
+	normal[2] = f->plane.normal[2];
+	VectorRotate(normal, rota, normal);
+	normal2.normal[0] = normal[0];
+	normal2.normal[1] = normal[1];
+	normal2.normal[2] = normal[2];
 	AbsoluteToLocal(normal2, f, p1, p2 ,p3);
 }
 
 
-void RotateTextures(int nAxis, float fDeg, vec3_t vOrigin)
+void RotateTextures(int axis, float deg, vec3_t origin)
 {
 	brush_t *b;
 	face_t *f;
@@ -665,7 +665,7 @@ void RotateTextures(int nAxis, float fDeg, vec3_t vOrigin)
 	{
 		for (f=b->brush_faces ; f ; f=f->next)
 		{
-			RotateFaceTexture(f, nAxis, fDeg);
+			RotateFaceTexture(f, axis, deg);
 			Brush_Build(b);
 		}
 		Brush_Build(b);
@@ -801,7 +801,7 @@ void Select_RotateAxis (int axis, float deg)
 }
 
 
-void Select_FitTexture(int nHeight, int nWidth)
+void Select_FitTexture(int height, int width)
 {
 	brush_t		*b;
 	
@@ -810,14 +810,14 @@ void Select_FitTexture(int nHeight, int nWidth)
 	
 	for (b=selected_brushes.next ; b != &selected_brushes ; b=b->next)
 	{
-		Brush_FitTexture(b, nHeight, nWidth);
+		Brush_FitTexture(b, height, width);
 		Brush_Build(b);
 	}
 
 	
 	if (selected_face)
 	{
-		Face_FitTexture(selected_face, nHeight, nWidth);
+		Face_FitTexture(selected_face, height, width);
 		Brush_Build(selected_face_brush);
 	}
 	
@@ -838,7 +838,7 @@ void Select_CompleteTall (void)
 	brush_t	*b, *next;
 //	int		i;
 	vec3_t	mins, maxs;
-	int nDim1, nDim2;
+	int dim1, dim2;
 
 	if (!QE_SingleBrush ())
 		return;
@@ -849,15 +849,15 @@ void Select_CompleteTall (void)
 	VectorCopy (selected_brushes.next->maxs, maxs);
 	Select_Delete ();
 
-	nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-	nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+	dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+	dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
 	for (b=active_brushes.next ; b != &active_brushes ; b=next)
 	{
 		next = b->next;
 
-		if ( (b->maxs[nDim1] > maxs[nDim1] || b->mins[nDim1] < mins[nDim1]) 
-			|| (b->maxs[nDim2] > maxs[nDim2] || b->mins[nDim2] < mins[nDim2]) )
+		if ( (b->maxs[dim1] > maxs[dim1] || b->mins[dim1] < mins[dim1]) 
+			|| (b->maxs[dim2] > maxs[dim2] || b->mins[dim2] < mins[dim2]) )
 			continue;
 
 	 	if (FilterBrush (b))
@@ -885,7 +885,7 @@ void Select_PartialTall (void)
 	brush_t	*b, *next;
 //	int		i;
 	vec3_t	mins, maxs;
-	int nDim1, nDim2;
+	int dim1, dim2;
 
 	if (!QE_SingleBrush ())
 		return;
@@ -896,15 +896,15 @@ void Select_PartialTall (void)
 	VectorCopy (selected_brushes.next->maxs, maxs);
 	Select_Delete ();
 
-	nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-	nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+	dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+	dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
 	for (b=active_brushes.next ; b != &active_brushes ; b=next)
 	{
 		next = b->next;
 
-		if ( (b->mins[nDim1] > maxs[nDim1] || b->maxs[nDim1] < mins[nDim1]) 
-			|| (b->mins[nDim2] > maxs[nDim2] || b->maxs[nDim2] < mins[nDim2]) )
+		if ( (b->mins[dim1] > maxs[dim1] || b->maxs[dim1] < mins[dim1]) 
+			|| (b->mins[dim2] > maxs[dim2] || b->maxs[dim2] < mins[dim2]) )
 			continue;
 
 	 	if (FilterBrush (b))
@@ -1069,7 +1069,7 @@ void Select_Hide (void)
 	brush_t *b;
 
 	for (b=selected_brushes.next ; b && b != &selected_brushes ; b=b->next)
-		b->hiddenBrush = true;
+		b->hiddenbrush = true;
 
 	Sys_UpdateWindows (W_ALL);
 }
@@ -1079,36 +1079,36 @@ void Select_ShowAllHidden (void)
 	brush_t *b;
 
 	for (b=selected_brushes.next ; b && b != &selected_brushes ; b=b->next)
-		b->hiddenBrush = false;
+		b->hiddenbrush = false;
 
 	for (b=active_brushes.next ; b && b != &active_brushes ; b=b->next)
-		b->hiddenBrush = false;
+		b->hiddenbrush = false;
 
 	Sys_UpdateWindows (W_ALL);
 }
 
-void FindReplaceTextures (char *pFind, char *pReplace, qboolean bSelected, qboolean bForce)
+void FindReplaceTextures (char *find, char *replace, qboolean selected, qboolean force)
 {
-	brush_t		*pList;
-	brush_t		*pBrush;
-	face_t		*pFace;
+	brush_t		*list;
+	brush_t		*brush;
+	face_t		*face;
 
-	pList = (bSelected) ? &selected_brushes : &active_brushes;
-	if (!bSelected)
+	list = (selected) ? &selected_brushes : &active_brushes;
+	if (!selected)
 		Select_Deselect();
 
-	for (pBrush = pList->next ; pBrush != pList; pBrush = pBrush->next)
+	for (brush = list->next ; brush != list; brush = brush->next)
 	{
 		
-		for (pFace = pBrush->brush_faces; pFace; pFace = pFace->next)
+		for (face = brush->brush_faces; face; face = face->next)
 		{
-			if(bForce || strcmpi(pFace->texdef.name, pFind) == 0)
+			if(force || strcmpi(face->texdef.name, find) == 0)
 			{
-				pFace->d_texture = Texture_ForName( pFace->texdef.name );
-				strcpy(pFace->texdef.name, pReplace);
+				face->d_texture = Texture_ForName( face->texdef.name );
+				strcpy(face->texdef.name, replace);
 			}
 		}
-		Brush_Build(pBrush);
+		Brush_Build(brush);
 	}
 	Sys_UpdateWindows (W_CAMERA);
 }

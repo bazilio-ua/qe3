@@ -78,7 +78,7 @@ void CSG_MakeHollow (void)
 	{
 		next = b->next;
 
-	if (b->owner->eclass->fixedsize || b->hiddenBrush)
+	if (b->owner->eclass->fixedsize || b->hiddenbrush)
 		continue;
 
 		for (f = b->brush_faces ; f ; f=f->next)
@@ -550,7 +550,7 @@ void CSG_Subtract (void)
 		{
 			snext = s->next;
 
-			if (s->owner->eclass->fixedsize || s->hiddenBrush)
+			if (s->owner->eclass->fixedsize || s->hiddenbrush)
 				continue;
 
 			for (i=0 ; i<3 ; i++)

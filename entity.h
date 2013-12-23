@@ -54,7 +54,7 @@ typedef struct eclass_s
 	texdef_t	texdef;
 	char	*comments;
 	char	flagnames[MAX_FLAGS][32];
-	unsigned int nShowFlags;
+	unsigned int showflags;
 } eclass_t;
 
 extern	eclass_t	*eclass;

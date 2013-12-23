@@ -93,26 +93,26 @@ char	*TranslateString (char *buf)
 // called whenever we need to open/close/check the console log file
 void Sys_LogFile (void)
 {
-  if (g_qeglobals.d_savedinfo.logconsole && !g_qeglobals.logfile)
+  if (g_qeglobals.d_savedinfo.logconsole && !g_qeglobals.d_logfile)
   {
     // open a file to log the console (if user prefs say so)
-    // the file handle is g_qeglobals.logfile
+    // the file handle is g_qeglobals.d_logfile
     // the log file is erased
     char name[_MAX_PATH];
 	char path[_MAX_PATH];
 	GetCurrentDirectory (_MAX_PATH, path);
     sprintf (name, "%s/qe3.log", path);
-    g_qeglobals.logfile = _open (name, _O_TRUNC | _O_CREAT | _O_WRONLY, _S_IREAD | _S_IWRITE);
-    if (g_qeglobals.logfile)
+    g_qeglobals.d_logfile = _open (name, _O_TRUNC | _O_CREAT | _O_WRONLY, _S_IREAD | _S_IWRITE);
+    if (g_qeglobals.d_logfile)
       Sys_Printf("Started logging\n");
     else
       MessageBox( g_qeglobals.d_hwndMain, "Failed to create log file, check write permissions in qe3 directory.\n", "Console logging", MB_OK );
   }
-  else if (g_qeglobals.logfile)
+  else if (g_qeglobals.d_logfile)
   {
     Sys_Printf("Closing log file\n");
-    _close (g_qeglobals.logfile);
-    g_qeglobals.logfile = 0;
+    _close (g_qeglobals.d_logfile);
+    g_qeglobals.d_logfile = 0;
   }
 }
 
@@ -140,10 +140,10 @@ void Sys_Printf (char *text, ...)
 	vsprintf (buf, text,argptr);
 	va_end (argptr);
 
-	if (g_qeglobals.logfile)
+	if (g_qeglobals.d_logfile)
 	{
-		_write(g_qeglobals.logfile, buf, strlen(buf));
-		_commit(g_qeglobals.logfile);
+		_write(g_qeglobals.d_logfile, buf, strlen(buf));
+		_commit(g_qeglobals.d_logfile);
 	}
 
 	out = TranslateString (buf);
@@ -170,7 +170,7 @@ void Sys_Printf (char *text, ...)
 //PGM
 
 	SendMessage (g_qeglobals.d_hwndConsole, EM_REPLACESEL, 0, (LPARAM)out);
-	SendMessage (g_qeglobals.d_hwndConsole, EM_SCROLLCARET, 0, 0); // eerie
+	SendMessage (g_qeglobals.d_hwndConsole, EM_SCROLLCARET, 0, 0); // EER1
 
 #endif
 

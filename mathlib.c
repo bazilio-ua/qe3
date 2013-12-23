@@ -109,44 +109,44 @@ void VectorScale (vec3_t v, vec_t scale, vec3_t out)
 }
 
 
-void VectorRotate (vec3_t vIn, vec3_t vRotation, vec3_t out)
+void VectorRotate (vec3_t in, vec3_t rotation, vec3_t out)
 {
-	vec3_t	vWork, va;
-	int		nIndex[3][2];
+	vec3_t	work, va;
+	int		index[3][2];
 	int		i;
-	double	dAngle;
+	double	angle;
 	double	c;
 	double	s;
 	
-	VectorCopy(vIn, va);
-	VectorCopy(va, vWork);
-	nIndex[0][0] = 1; nIndex[0][1] = 2;
-	nIndex[1][0] = 2; nIndex[1][1] = 0;
-	nIndex[2][0] = 0; nIndex[2][1] = 1;
+	VectorCopy(in, va);
+	VectorCopy(va, work);
+	index[0][0] = 1; index[0][1] = 2;
+	index[1][0] = 2; index[1][1] = 0;
+	index[2][0] = 0; index[2][1] = 1;
 	
 	for (i = 0; i < 3; i++)
 	{
-		if (vRotation[i] != 0)
+		if (rotation[i] != 0)
 		{
-			dAngle = vRotation[i] * Q_PI / 180.0;
-			c = cos(dAngle);
-			s = sin(dAngle);
-			vWork[nIndex[i][0]] = va[nIndex[i][0]] * (vec_t)c - va[nIndex[i][1]] * (vec_t)s;
-			vWork[nIndex[i][1]] = va[nIndex[i][0]] * (vec_t)s + va[nIndex[i][1]] * (vec_t)c;
+			angle = rotation[i] * Q_PI / 180.0;
+			c = cos(angle);
+			s = sin(angle);
+			work[index[i][0]] = va[index[i][0]] * (vec_t)c - va[index[i][1]] * (vec_t)s;
+			work[index[i][1]] = va[index[i][0]] * (vec_t)s + va[index[i][1]] * (vec_t)c;
 		}
-		VectorCopy(vWork, va);
+		VectorCopy(work, va);
 	}
-	VectorCopy(vWork, out);
+	VectorCopy(work, out);
 }
 
 
-void VectorRotate2 (vec3_t vIn, vec3_t vRotation, vec3_t vOrigin, vec3_t out)
+void VectorRotate2 (vec3_t in, vec3_t rotation, vec3_t origin, vec3_t out)
 {
-	vec3_t vTemp, vTemp2;
+	vec3_t temp, temp2;
 	
-	VectorSubtract(vIn, vOrigin, vTemp);
-	VectorRotate(vTemp, vRotation, vTemp2);
-	VectorAdd(vTemp2, vOrigin, out);
+	VectorSubtract(in, origin, temp);
+	VectorRotate(temp, rotation, temp2);
+	VectorAdd(temp2, origin, out);
 }
 
 

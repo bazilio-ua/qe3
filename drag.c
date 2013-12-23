@@ -222,7 +222,7 @@ void Drag_Begin (int x, int y, int buttons,
 {
 	trace_t	t;
 
-	int nDim1, nDim2;
+	int dim1, dim2;
 
 	drag_ok = false;
 	VectorCopy (vec3_origin, pressdelta);
@@ -261,13 +261,13 @@ void Drag_Begin (int x, int y, int buttons,
 		t = Test_Ray (origin, dir, false);
 		if (t.face)
 		{
-			nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-			nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+			dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+			dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
-			g_qeglobals.d_work_min[nDim1] = t.brush->mins[nDim1];
-			g_qeglobals.d_work_max[nDim1] = t.brush->maxs[nDim1];
-			g_qeglobals.d_work_min[nDim2] = t.brush->mins[nDim2];
-			g_qeglobals.d_work_max[nDim2] = t.brush->maxs[nDim2];
+			g_qeglobals.d_work_min[dim1] = t.brush->mins[dim1];
+			g_qeglobals.d_work_max[dim1] = t.brush->maxs[dim1];
+			g_qeglobals.d_work_min[dim2] = t.brush->mins[dim2];
+			g_qeglobals.d_work_max[dim2] = t.brush->maxs[dim2];
 
 //			g_qeglobals.d_new_brush_bottom_z = t.brush->mins[2];
 //			g_qeglobals.d_new_brush_top_z = t.brush->maxs[2];

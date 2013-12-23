@@ -3,13 +3,13 @@
 
 #define	PAGEFLIPS	2
 
-const char *DimStrings[] = {"x:%.f", "y:%.f", "z:%.f"};
-const char *OrgStrings[] = {"(x:%.f  y:%.f)", "(x:%.f  z:%.f)", "(y:%.f  z:%.f)"};
+const char *dimstrings[] = {"x:%.f", "y:%.f", "z:%.f"};
+const char *orgstrings[] = {"(x:%.f  y:%.f)", "(x:%.f  z:%.f)", "(y:%.f  z:%.f)"};
 
-clipPoint_t	Clip1;
-clipPoint_t	Clip2;
-clipPoint_t	Clip3;
-clipPoint_t	*pMovingClip;
+clippoint_t	clip1;
+clippoint_t	clip2;
+clippoint_t	clip3;
+clippoint_t	*movingclip;
 
 /*
 ============
@@ -27,22 +27,22 @@ void XY_Init (void)
 
 void PositionView (void)
 {
-	int			nDim1, nDim2;
+	int			dim1, dim2;
 	brush_t		*b;
 
-	nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-	nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+	dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+	dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
 	b = selected_brushes.next;
 	if (b && b->next != b)
 	{
-	  g_qeglobals.d_xyz.origin[nDim1] = b->mins[nDim1];
-	  g_qeglobals.d_xyz.origin[nDim2] = b->mins[nDim2];
+	  g_qeglobals.d_xyz.origin[dim1] = b->mins[dim1];
+	  g_qeglobals.d_xyz.origin[dim2] = b->mins[dim2];
 	}
 	else
 	{
-	  g_qeglobals.d_xyz.origin[nDim1] = g_qeglobals.d_camera.origin[nDim1];
-	  g_qeglobals.d_xyz.origin[nDim2] = g_qeglobals.d_camera.origin[nDim2];
+	  g_qeglobals.d_xyz.origin[dim1] = g_qeglobals.d_camera.origin[dim1];
+	  g_qeglobals.d_xyz.origin[dim2] = g_qeglobals.d_camera.origin[dim2];
 	}
 }
 
@@ -64,13 +64,13 @@ float fDiff (float f1, float f2)
 
 void VectorCopyXY (vec3_t in, vec3_t out)
 {
-  if (g_qeglobals.ViewType == XY)
+  if (g_qeglobals.d_viewtype == XY)
   {
 	  out[0] = in[0];
 	  out[1] = in[1];
   }
   else
-  if (g_qeglobals.ViewType == XZ)
+  if (g_qeglobals.d_viewtype == XZ)
   {
 	  out[0] = in[0];
 	  out[2] = in[2];
@@ -90,8 +90,8 @@ void VectorCopyXY (vec3_t in, vec3_t out)
 */
 void SetClipMode (void)
 {
-	g_qeglobals.clipmode ^= 1;
-	CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_VIEW_CLIPPER, MF_BYCOMMAND | (g_qeglobals.clipmode ? MF_CHECKED : MF_UNCHECKED)  );
+	g_qeglobals.d_clipmode ^= 1;
+	CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_VIEW_CLIPPER, MF_BYCOMMAND | (g_qeglobals.d_clipmode ? MF_CHECKED : MF_UNCHECKED)  );
 
 	ResetClipMode ();
 	Sys_UpdateGridStatusBar ();
@@ -99,8 +99,8 @@ void SetClipMode (void)
 
 void UnsetClipMode (void)
 {
-	g_qeglobals.clipmode = false;
-	CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_VIEW_CLIPPER, MF_BYCOMMAND | (g_qeglobals.clipmode ? MF_CHECKED : MF_UNCHECKED)  );
+	g_qeglobals.d_clipmode = false;
+	CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_VIEW_CLIPPER, MF_BYCOMMAND | (g_qeglobals.d_clipmode ? MF_CHECKED : MF_UNCHECKED)  );
 
 	ResetClipMode ();
 	Sys_UpdateGridStatusBar ();
@@ -108,127 +108,127 @@ void UnsetClipMode (void)
 
 void ResetClipMode (void)
 {
-  if (g_qeglobals.clipmode)
+  if (g_qeglobals.d_clipmode)
   {
-	Clip1.ptClip[0] = Clip1.ptClip[1] = Clip1.ptClip[2] = 0.0;
-	Clip1.bSet = false;
-	Clip2.ptClip[0] = Clip2.ptClip[1] = Clip2.ptClip[2] = 0.0;
-	Clip2.bSet = false;
-	Clip3.ptClip[0] = Clip3.ptClip[1] = Clip3.ptClip[2] = 0.0;
-	Clip3.bSet = false;
+	clip1.ptclip[0] = clip1.ptclip[1] = clip1.ptclip[2] = 0.0;
+	clip1.ptset = false;
+	clip2.ptclip[0] = clip2.ptclip[1] = clip2.ptclip[2] = 0.0;
+	clip2.ptset = false;
+	clip3.ptclip[0] = clip3.ptclip[1] = clip3.ptclip[2] = 0.0;
+	clip3.ptset = false;
 
-    CleanList(&g_qeglobals.brFrontSplits);
-    CleanList(&g_qeglobals.brBackSplits);
+    CleanList(&g_qeglobals.d_frontsplits);
+    CleanList(&g_qeglobals.d_backsplits);
 
-    g_qeglobals.brFrontSplits.next = &g_qeglobals.brFrontSplits;
-    g_qeglobals.brBackSplits.next = &g_qeglobals.brBackSplits;
+    g_qeglobals.d_frontsplits.next = &g_qeglobals.d_frontsplits;
+    g_qeglobals.d_backsplits.next = &g_qeglobals.d_backsplits;
   }
   else
   {
-    if (pMovingClip)
+    if (movingclip)
     {
       ReleaseCapture();
-      pMovingClip = NULL;
+      movingclip = NULL;
     }
-    CleanList(&g_qeglobals.brFrontSplits);
-    CleanList(&g_qeglobals.brBackSplits);
+    CleanList(&g_qeglobals.d_frontsplits);
+    CleanList(&g_qeglobals.d_backsplits);
 
-    g_qeglobals.brFrontSplits.next = &g_qeglobals.brFrontSplits;
-    g_qeglobals.brBackSplits.next = &g_qeglobals.brBackSplits;
+    g_qeglobals.d_frontsplits.next = &g_qeglobals.d_frontsplits;
+    g_qeglobals.d_backsplits.next = &g_qeglobals.d_backsplits;
 
 	Sys_UpdateWindows (W_ALL);
   }
 }
 
 
-void CleanList (brush_t *pList)
+void CleanList (brush_t *list)
 {
-	brush_t		*pBrush;
-	brush_t		*pNext;
+	brush_t		*brush;
+	brush_t		*next;
 
-	pBrush = pList->next; 
-	while (pBrush != NULL && pBrush != pList)
+	brush = list->next; 
+	while (brush != NULL && brush != list)
 	{
-		pNext = pBrush->next;
-		Brush_Free(pBrush);
-		pBrush = pNext;
+		next = brush->next;
+		Brush_Free(brush);
+		brush = next;
 	}
 }
 
 void ProduceSplitLists (void)
 {
-	brush_t		*pBrush;
-	brush_t		*pFront;
-	brush_t		*pBack;
+	brush_t		*brush;
+	brush_t		*front;
+	brush_t		*back;
 	face_t		face;
 
-  CleanList (&g_qeglobals.brFrontSplits);
-  CleanList (&g_qeglobals.brBackSplits);
+  CleanList (&g_qeglobals.d_frontsplits);
+  CleanList (&g_qeglobals.d_backsplits);
 
-  g_qeglobals.brFrontSplits.next = &g_qeglobals.brFrontSplits;
-  g_qeglobals.brBackSplits.next = &g_qeglobals.brBackSplits;
+  g_qeglobals.d_frontsplits.next = &g_qeglobals.d_frontsplits;
+  g_qeglobals.d_backsplits.next = &g_qeglobals.d_backsplits;
 
-  for (pBrush = selected_brushes.next ; pBrush != NULL && pBrush != &selected_brushes ; pBrush=pBrush->next)
+  for (brush = selected_brushes.next ; brush != NULL && brush != &selected_brushes ; brush=brush->next)
   {
-    pFront = NULL;
-    pBack = NULL;
+    front = NULL;
+    back = NULL;
     
-      if (Clip1.bSet && Clip2.bSet)
+      if (clip1.ptset && clip2.ptset)
       {
         
-        VectorCopy (Clip1.ptClip, face.planepts[0]);
-        VectorCopy (Clip2.ptClip, face.planepts[1]);
-        VectorCopy (Clip3.ptClip, face.planepts[2]);
-        if (Clip3.bSet == false)
+        VectorCopy (clip1.ptclip, face.planepts[0]);
+        VectorCopy (clip2.ptclip, face.planepts[1]);
+        VectorCopy (clip3.ptclip, face.planepts[2]);
+        if (clip3.ptset == false)
         {
-          if (g_qeglobals.ViewType == XY)
+          if (g_qeglobals.d_viewtype == XY)
           {
-            face.planepts[0][2] = pBrush->mins[2];
-            face.planepts[1][2] = pBrush->mins[2];
-            face.planepts[2][0] = Betwixt (Clip1.ptClip[0], Clip2.ptClip[0]);
-            face.planepts[2][1] = Betwixt (Clip1.ptClip[1], Clip2.ptClip[1]);
-            face.planepts[2][2] = pBrush->maxs[2];
+            face.planepts[0][2] = brush->mins[2];
+            face.planepts[1][2] = brush->mins[2];
+            face.planepts[2][0] = Betwixt (clip1.ptclip[0], clip2.ptclip[0]);
+            face.planepts[2][1] = Betwixt (clip1.ptclip[1], clip2.ptclip[1]);
+            face.planepts[2][2] = brush->maxs[2];
           }
-          else if (g_qeglobals.ViewType == YZ)
+          else if (g_qeglobals.d_viewtype == YZ)
           {
-            face.planepts[0][0] = pBrush->mins[0];
-            face.planepts[1][0] = pBrush->mins[0];
-            face.planepts[2][1] = Betwixt (Clip1.ptClip[1], Clip2.ptClip[1]);
-            face.planepts[2][2] = Betwixt (Clip1.ptClip[2], Clip2.ptClip[2]);
-            face.planepts[2][0] = pBrush->maxs[0];
+            face.planepts[0][0] = brush->mins[0];
+            face.planepts[1][0] = brush->mins[0];
+            face.planepts[2][1] = Betwixt (clip1.ptclip[1], clip2.ptclip[1]);
+            face.planepts[2][2] = Betwixt (clip1.ptclip[2], clip2.ptclip[2]);
+            face.planepts[2][0] = brush->maxs[0];
           }
           else
           {
-            face.planepts[0][1] = pBrush->mins[1];
-            face.planepts[1][1] = pBrush->mins[1];
-            face.planepts[2][0] = Betwixt (Clip1.ptClip[0], Clip2.ptClip[0]);
-            face.planepts[2][2] = Betwixt (Clip1.ptClip[2], Clip2.ptClip[2]);
-            face.planepts[2][1] = pBrush->maxs[1];
+            face.planepts[0][1] = brush->mins[1];
+            face.planepts[1][1] = brush->mins[1];
+            face.planepts[2][0] = Betwixt (clip1.ptclip[0], clip2.ptclip[0]);
+            face.planepts[2][2] = Betwixt (clip1.ptclip[2], clip2.ptclip[2]);
+            face.planepts[2][1] = brush->maxs[1];
           }
         }
-        CSG_SplitBrushByFace (pBrush, &face, &pFront, &pBack);
-        if (pBack)
-          Brush_AddToList(pBack, &g_qeglobals.brBackSplits);
-        if (pFront)
-          Brush_AddToList(pFront, &g_qeglobals.brFrontSplits);
+        CSG_SplitBrushByFace (brush, &face, &front, &back);
+        if (back)
+          Brush_AddToList(back, &g_qeglobals.d_backsplits);
+        if (front)
+          Brush_AddToList(front, &g_qeglobals.d_frontsplits);
       }
 
   }
 }
 
-void Brush_CopyList (brush_t *pFrom, brush_t *pTo)
+void Brush_CopyList (brush_t *from, brush_t *to)
 {
-	brush_t *pBrush;
-	brush_t *pNext;
+	brush_t *brush;
+	brush_t *next;
 
-	pBrush = pFrom->next;
+	brush = from->next;
 
-	while (pBrush != NULL && pBrush != pFrom)
+	while (brush != NULL && brush != from)
 	{
-		pNext = pBrush->next;
-		Brush_RemoveFromList(pBrush);
-		Brush_AddToList(pBrush, pTo);
-		pBrush = pNext;
+		next = brush->next;
+		Brush_RemoveFromList(brush);
+		Brush_AddToList(brush, to);
+		brush = next;
 	}
 }
 
@@ -236,20 +236,20 @@ void Brush_CopyList (brush_t *pFrom, brush_t *pTo)
 brush_t hold_brushes;
 void Clip (void)
 {
-	brush_t		*pList;
+	brush_t		*list;
 
-  if (g_qeglobals.clipmode)
+  if (g_qeglobals.d_clipmode)
   {
     hold_brushes.next = &hold_brushes;
     ProduceSplitLists();
 
-	pList = ( (g_qeglobals.ViewType == XZ) ? !g_qeglobals.clipbSwitch : g_qeglobals.clipbSwitch) ? &g_qeglobals.brFrontSplits : &g_qeglobals.brBackSplits;
+	list = ( (g_qeglobals.d_viewtype == XZ) ? !g_qeglobals.d_clipswitch : g_qeglobals.d_clipswitch) ? &g_qeglobals.d_frontsplits : &g_qeglobals.d_backsplits;
     
-	if (pList->next != pList)
+	if (list->next != list)
     {
-      Brush_CopyList(pList, &hold_brushes);
-      CleanList(&g_qeglobals.brFrontSplits);
-      CleanList(&g_qeglobals.brBackSplits);
+      Brush_CopyList(list, &hold_brushes);
+      CleanList(&g_qeglobals.d_frontsplits);
+      CleanList(&g_qeglobals.d_backsplits);
       Select_Delete();
       Brush_CopyList(&hold_brushes, &selected_brushes);
 	}
@@ -261,18 +261,18 @@ void Clip (void)
 
 void SplitClip (void)
 {
-  if (g_qeglobals.clipmode)
+  if (g_qeglobals.d_clipmode)
   {
 
 	ProduceSplitLists();
-	if ((g_qeglobals.brFrontSplits.next != &g_qeglobals.brFrontSplits) &&
-		(g_qeglobals.brBackSplits.next != &g_qeglobals.brBackSplits))
+	if ((g_qeglobals.d_frontsplits.next != &g_qeglobals.d_frontsplits) &&
+		(g_qeglobals.d_backsplits.next != &g_qeglobals.d_backsplits))
 	{
 		Select_Delete();
-		Brush_CopyList(&g_qeglobals.brFrontSplits, &selected_brushes);
-		Brush_CopyList(&g_qeglobals.brBackSplits, &selected_brushes);
-		CleanList(&g_qeglobals.brFrontSplits);
-		CleanList(&g_qeglobals.brBackSplits);
+		Brush_CopyList(&g_qeglobals.d_frontsplits, &selected_brushes);
+		Brush_CopyList(&g_qeglobals.d_backsplits, &selected_brushes);
+		CleanList(&g_qeglobals.d_frontsplits);
+		CleanList(&g_qeglobals.d_backsplits);
 	}
 	ResetClipMode ();
 	Sys_UpdateWindows (W_ALL);
@@ -281,9 +281,9 @@ void SplitClip (void)
 
 void FlipClip (void)
 {
-  if (g_qeglobals.clipmode)
+  if (g_qeglobals.d_clipmode)
   {
-	g_qeglobals.clipbSwitch = !g_qeglobals.clipbSwitch;
+	g_qeglobals.d_clipswitch = !g_qeglobals.d_clipswitch;
 	Sys_UpdateWindows (W_ALL);
   }
 }
@@ -305,13 +305,13 @@ static	qboolean	press_selection;
 
 void XY_ToPoint (int x, int y, vec3_t point)
 {
-	if (g_qeglobals.ViewType == XY)
+	if (g_qeglobals.d_viewtype == XY)
 	{
 		point[0] = g_qeglobals.d_xyz.origin[0] + (x - g_qeglobals.d_xyz.width/2)/g_qeglobals.d_xyz.scale;
 		point[1] = g_qeglobals.d_xyz.origin[1] + (y - g_qeglobals.d_xyz.height/2)/g_qeglobals.d_xyz.scale;
 		point[2] = 0;
 	}
-	else if (g_qeglobals.ViewType == YZ)
+	else if (g_qeglobals.d_viewtype == YZ)
 	{
 		point[0] = 0;
 		point[1] = g_qeglobals.d_xyz.origin[1] + (x - g_qeglobals.d_xyz.width/2)/g_qeglobals.d_xyz.scale;
@@ -327,7 +327,7 @@ void XY_ToPoint (int x, int y, vec3_t point)
 
 void XY_ToGridPoint (int x, int y, vec3_t point)
 {
-	if (g_qeglobals.ViewType == XY)
+	if (g_qeglobals.d_viewtype == XY)
 	{
 		point[0] = g_qeglobals.d_xyz.origin[0] + (x - g_qeglobals.d_xyz.width/2)/g_qeglobals.d_xyz.scale;
 		point[1] = g_qeglobals.d_xyz.origin[1] + (y - g_qeglobals.d_xyz.height/2)/g_qeglobals.d_xyz.scale;
@@ -336,7 +336,7 @@ void XY_ToGridPoint (int x, int y, vec3_t point)
 		point[0] = floor(point[0]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
 		point[1] = floor(point[1]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
 	}
-	else if (g_qeglobals.ViewType == YZ)
+	else if (g_qeglobals.d_viewtype == YZ)
 	{
 		point[0] = 0;
 		point[1] = g_qeglobals.d_xyz.origin[1] + (x - g_qeglobals.d_xyz.width/2)/g_qeglobals.d_xyz.scale;
@@ -381,12 +381,12 @@ void XY_MouseDown (int x, int y, int buttons)
 	vec3_t	origin, dir, right, up;
 
 	int n1, n2;
-	int nAngle;
+	int angle;
 
 	buttonstate = buttons;
 
 	// clipper
-	if ((buttonstate & MK_LBUTTON) && g_qeglobals.clipmode)
+	if ((buttonstate & MK_LBUTTON) && g_qeglobals.d_clipmode)
 	{
 		DropClipPoint (x, y);
 		Sys_UpdateWindows (W_ALL);
@@ -404,7 +404,7 @@ void XY_MouseDown (int x, int y, int buttons)
 	VectorCopy (point, origin);
 
 	dir[0] = 0; dir[1] = 0; dir[2] = 0;
-	if (g_qeglobals.ViewType == XY)
+	if (g_qeglobals.d_viewtype == XY)
 	{
 		origin[2] = 8192;
 		dir[2] = -1;
@@ -417,7 +417,7 @@ void XY_MouseDown (int x, int y, int buttons)
 		up[1] = 1/g_qeglobals.d_xyz.scale;
 		up[2] = 0;
 	}
-	else if (g_qeglobals.ViewType == YZ)
+	else if (g_qeglobals.d_viewtype == YZ)
 	{
 		origin[0] = 8192;
 		dir[0] = -1;
@@ -477,13 +477,13 @@ void XY_MouseDown (int x, int y, int buttons)
 	{	
 		VectorSubtract (point, g_qeglobals.d_camera.origin, point);
 
-		n1 = (g_qeglobals.ViewType == XY) ? 1 : 2;
-		n2 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-		nAngle = (g_qeglobals.ViewType == XY) ? YAW : PITCH;
+		n1 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
+		n2 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+		angle = (g_qeglobals.d_viewtype == XY) ? YAW : PITCH;
 
 		if (point[n1] || point[n2])
 		{
-			g_qeglobals.d_camera.angles[nAngle] = 180/Q_PI*atan2 (point[n1], point[n2]);
+			g_qeglobals.d_camera.angles[angle] = 180/Q_PI*atan2 (point[n1], point[n2]);
 			Sys_UpdateWindows (W_CAMERA|W_XY_OVERLAY|W_Z);
 		}
 	}
@@ -494,12 +494,12 @@ void XY_MouseDown (int x, int y, int buttons)
 //		XY_ToPoint (x, y, point);
 		SnapToPoint (x, y, point);
 
-		if (g_qeglobals.ViewType == XY)
+		if (g_qeglobals.d_viewtype == XY)
 		{
 			g_qeglobals.d_z.origin[0] = point[0];
 			g_qeglobals.d_z.origin[1] = point[1];
 		}
-		else if (g_qeglobals.ViewType == YZ)
+		else if (g_qeglobals.d_viewtype == YZ)
 		{
 			g_qeglobals.d_z.origin[0] = point[1];
 			g_qeglobals.d_z.origin[1] = point[2];
@@ -527,7 +527,7 @@ void XY_MouseUp (int x, int y, int buttons)
 {
 
 	// clipper
-	if (g_qeglobals.clipmode)
+	if (g_qeglobals.d_clipmode)
 		EndClipPoint ();
 	else
 		{
@@ -582,7 +582,7 @@ void NewBrushDrag (int x, int y)
 	int		i;
 	float	temp;
 	brush_t	*n;
-	int nDim;
+	int dim;
 
 	if (!DragDelta (x,y, junk))
 		return;
@@ -594,22 +594,22 @@ void NewBrushDrag (int x, int y)
 //	XY_ToGridPoint (pressx, pressy, mins);
 	SnapToPoint (pressx, pressy, mins);
 
-	nDim = (g_qeglobals.ViewType == XY) ? 2 : (g_qeglobals.ViewType == YZ) ? 0 : 1;
+	dim = (g_qeglobals.d_viewtype == XY) ? 2 : (g_qeglobals.d_viewtype == YZ) ? 0 : 1;
 
 //	mins[2] = g_qeglobals.d_gridsize * ((int)(g_qeglobals.d_new_brush_bottom_z/g_qeglobals.d_gridsize));
-	mins[nDim] = g_qeglobals.d_gridsize * ((int)(g_qeglobals.d_work_min[nDim]/g_qeglobals.d_gridsize));
+	mins[dim] = g_qeglobals.d_gridsize * ((int)(g_qeglobals.d_work_min[dim]/g_qeglobals.d_gridsize));
 
 //	XY_ToGridPoint (x, y, maxs);
 	SnapToPoint (x, y, maxs);
 
 //	maxs[2] = g_qeglobals.d_gridsize * ((int)(g_qeglobals.d_new_brush_top_z/g_qeglobals.d_gridsize));
-	maxs[nDim] = g_qeglobals.d_gridsize * ((int)(g_qeglobals.d_work_max[nDim]/g_qeglobals.d_gridsize));
+	maxs[dim] = g_qeglobals.d_gridsize * ((int)(g_qeglobals.d_work_max[dim]/g_qeglobals.d_gridsize));
 
 //	if (maxs[2] <= mins[2])
 //		maxs[2] = mins[2] + g_qeglobals.d_gridsize;
 
-	if (maxs[nDim] <= mins[nDim])
-		maxs[nDim] = mins[nDim] + g_qeglobals.d_gridsize;
+	if (maxs[dim] <= mins[dim])
+		maxs[dim] = mins[dim] + g_qeglobals.d_gridsize;
 
 	for (i=0 ; i<3 ; i++)
 	{
@@ -648,8 +648,8 @@ void XY_MouseMoved (int x, int y, int buttons)
 	vec3_t	point;
 
     int n1, n2;
-    int nAngle;
-	int nDim1, nDim2;
+    int angle;
+	int dim1, dim2;
 
 	vec3_t	tdp;
 	char	xystring[256];
@@ -662,7 +662,7 @@ void XY_MouseMoved (int x, int y, int buttons)
 	}
 
 	// clipper
-	if ((!buttonstate || buttonstate & MK_LBUTTON) && g_qeglobals.clipmode)
+	if ((!buttonstate || buttonstate & MK_LBUTTON) && g_qeglobals.d_clipmode)
 	{
 		MoveClipPoint (x, y);
 		Sys_UpdateWindows (W_ALL);
@@ -710,12 +710,12 @@ void XY_MouseMoved (int x, int y, int buttons)
 //		XY_ToPoint (x, y, point);
 		SnapToPoint (x, y, point);
 
-		if (g_qeglobals.ViewType == XY)
+		if (g_qeglobals.d_viewtype == XY)
 		{
 			g_qeglobals.d_z.origin[0] = point[0];
 			g_qeglobals.d_z.origin[1] = point[1];
 		}
-		else if (g_qeglobals.ViewType == YZ)
+		else if (g_qeglobals.d_viewtype == YZ)
 		{
 			g_qeglobals.d_z.origin[0] = point[1];
 			g_qeglobals.d_z.origin[1] = point[2];
@@ -735,13 +735,13 @@ void XY_MouseMoved (int x, int y, int buttons)
 		SnapToPoint (x, y, point);
 		VectorSubtract (point, g_qeglobals.d_camera.origin, point);
 
-		n1 = (g_qeglobals.ViewType == XY) ? 1 : 2;
-		n2 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-		nAngle = (g_qeglobals.ViewType == XY) ? YAW : PITCH;
+		n1 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
+		n2 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+		angle = (g_qeglobals.d_viewtype == XY) ? YAW : PITCH;
 
 		if (point[n1] || point[n2])
 		{
-			g_qeglobals.d_camera.angles[nAngle] = 180/Q_PI*atan2 (point[n1], point[n2]);
+			g_qeglobals.d_camera.angles[angle] = 180/Q_PI*atan2 (point[n1], point[n2]);
 			Sys_UpdateWindows (W_XY_OVERLAY | W_CAMERA);
 		}
 		return;
@@ -754,11 +754,11 @@ void XY_MouseMoved (int x, int y, int buttons)
 		Sys_GetCursorPos (&x, &y);
 		if (x != cursorx || y != cursory)
 		{
-			nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-			nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+			dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+			dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
-			g_qeglobals.d_xyz.origin[nDim1] -= (x-cursorx)/g_qeglobals.d_xyz.scale;
-			g_qeglobals.d_xyz.origin[nDim2] += (y-cursory)/g_qeglobals.d_xyz.scale;
+			g_qeglobals.d_xyz.origin[dim1] -= (x-cursorx)/g_qeglobals.d_xyz.scale;
+			g_qeglobals.d_xyz.origin[dim2] += (y-cursory)/g_qeglobals.d_xyz.scale;
 
 			Sys_SetCursorPos (cursorx, cursory);
 			Sys_UpdateWindows (W_XY | W_XY_OVERLAY| W_Z);
@@ -790,46 +790,46 @@ DropClipPoint
 */
 void DropClipPoint (int x, int y)
 {
-	clipPoint_t *pPt;
-	int nViewType;
-	int nDim;
+	clippoint_t *pt;
+	int viewtype;
+	int dim;
 
-	if (pMovingClip)
+	if (movingclip)
 	{
-		SnapToPoint (x, y, pMovingClip->ptClip);
+		SnapToPoint (x, y, movingclip->ptclip);
 	}
 	else
 	{
-		pPt = NULL;
-		if (Clip1.bSet == false)
+		pt = NULL;
+		if (clip1.ptset == false)
 		{
-			pPt = &Clip1;
-			Clip1.bSet = true;
+			pt = &clip1;
+			clip1.ptset = true;
 		}
 		else 
-		if (Clip2.bSet == false)
+		if (clip2.ptset == false)
 		{
-			pPt = &Clip2;
-			Clip2.bSet = true;
+			pt = &clip2;
+			clip2.ptset = true;
 		}
 		else 
-		if (Clip3.bSet == false)
+		if (clip3.ptset == false)
 		{
-			pPt = &Clip3;
-			Clip3.bSet = true;
+			pt = &clip3;
+			clip3.ptset = true;
 		}
 		else 
 		{
 			ResetClipMode ();
-			pPt = &Clip1;
-			Clip1.bSet = true;
+			pt = &clip1;
+			clip1.ptset = true;
 		}
-		SnapToPoint (x, y, pPt->ptClip);
+		SnapToPoint (x, y, pt->ptclip);
 		// third coordinates for clip point: use d_work_max
 		// cf VIEWTYPE defintion: enum VIEWTYPE {YZ, XZ, XY};
-		nViewType = g_qeglobals.ViewType;
-		nDim = (nViewType == YZ ) ? 0 : ( (nViewType == XZ) ? 1 : 2 );
-		(pPt->ptClip)[nDim] = g_qeglobals.d_work_max[nDim];
+		viewtype = g_qeglobals.d_viewtype;
+		dim = (viewtype == YZ ) ? 0 : ( (viewtype == XZ) ? 1 : 2 );
+		(pt->ptclip)[dim] = g_qeglobals.d_work_max[dim];
 	}
 	Sys_UpdateWindows (W_XY | W_XY_OVERLAY| W_Z);
 }
@@ -843,43 +843,43 @@ MoveClipPoint
 vec3_t tdp;
 void MoveClipPoint (int x, int y)
 {
-	int nDim1, nDim2;
+	int dim1, dim2;
 
 	tdp[0] = tdp[1] = tdp[2] = 0.0;
 
 	SnapToPoint (x, y, tdp);
 
-	if (pMovingClip && GetCapture() == g_qeglobals.d_hwndXY)
+	if (movingclip && GetCapture() == g_qeglobals.d_hwndXY)
 	{
-		SnapToPoint (x, y, pMovingClip->ptClip);
+		SnapToPoint (x, y, movingclip->ptclip);
 	}
 	else
 	{
-		pMovingClip = NULL;
-		nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-		nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
-		if (Clip1.bSet)
+		movingclip = NULL;
+		dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+		dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
+		if (clip1.ptset)
 		{
-			if ( fDiff(Clip1.ptClip[nDim1], tdp[nDim1]) < 1 &&
-				 fDiff(Clip1.ptClip[nDim2], tdp[nDim2]) < 1 )
+			if ( fDiff(clip1.ptclip[dim1], tdp[dim1]) < 1 &&
+				 fDiff(clip1.ptclip[dim2], tdp[dim2]) < 1 )
 			{
-				pMovingClip = &Clip1;
+				movingclip = &clip1;
 			}
 		}
-		if (Clip2.bSet)
+		if (clip2.ptset)
 		{
-			if ( fDiff(Clip2.ptClip[nDim1], tdp[nDim1]) < 1 &&
-				 fDiff(Clip2.ptClip[nDim2], tdp[nDim2]) < 1 )
+			if ( fDiff(clip2.ptclip[dim1], tdp[dim1]) < 1 &&
+				 fDiff(clip2.ptclip[dim2], tdp[dim2]) < 1 )
 			{
-				pMovingClip = &Clip2;
+				movingclip = &clip2;
 			}
 		}
-		if (Clip3.bSet)
+		if (clip3.ptset)
 		{
-			if ( fDiff(Clip3.ptClip[nDim1], tdp[nDim1]) < 1 &&
-				 fDiff(Clip3.ptClip[nDim2], tdp[nDim2]) < 1 )
+			if ( fDiff(clip3.ptclip[dim1], tdp[dim1]) < 1 &&
+				 fDiff(clip3.ptclip[dim2], tdp[dim2]) < 1 )
 			{
-				pMovingClip = &Clip3;
+				movingclip = &clip3;
 			}
 		}
 	}
@@ -893,18 +893,18 @@ DrawClipPoint
 */
 void DrawClipPoint (void)
 {
-	char strMsg[128];
-	brush_t *pBrush;
-	brush_t *pList;
+	char strmsg[128];
+	brush_t *brush;
+	brush_t *list;
 	face_t *face;
 	winding_t *w;
 	int order;
 	int i;
 	
-	if (g_qeglobals.ViewType != XY)
+	if (g_qeglobals.d_viewtype != XY)
 	{
 		glPushMatrix();
-		if (g_qeglobals.ViewType == YZ)
+		if (g_qeglobals.d_viewtype == YZ)
 			glRotatef (-90,  0, 1, 0);	    // put Z going up
 		glRotatef (-90,  1, 0, 0);	    // put Z going up
 	}
@@ -913,43 +913,43 @@ void DrawClipPoint (void)
 	glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER]);
 	glBegin (GL_POINTS);
 
-	if (Clip1.bSet)
-		glVertex3fv (Clip1.ptClip);
-	if (Clip2.bSet)
-		glVertex3fv (Clip2.ptClip);
-	if (Clip3.bSet)
-		glVertex3fv (Clip3.ptClip);
+	if (clip1.ptset)
+		glVertex3fv (clip1.ptclip);
+	if (clip2.ptset)
+		glVertex3fv (clip2.ptclip);
+	if (clip3.ptset)
+		glVertex3fv (clip3.ptclip);
 
 	glEnd ();
 	glPointSize (1);
      
-	if (Clip1.bSet)
+	if (clip1.ptset)
 	{
-		glRasterPos3f (Clip1.ptClip[0]+2, Clip1.ptClip[1]+2, Clip1.ptClip[2]+2);
-		strcpy (strMsg, "1");
-		glCallLists (strlen(strMsg), GL_UNSIGNED_BYTE, strMsg);
+		glRasterPos3f (clip1.ptclip[0]+2, clip1.ptclip[1]+2, clip1.ptclip[2]+2);
+		strcpy (strmsg, "1");
+		glCallLists (strlen(strmsg), GL_UNSIGNED_BYTE, strmsg);
 	}
-	if (Clip2.bSet)
+	if (clip2.ptset)
 	{
-		glRasterPos3f (Clip2.ptClip[0]+2, Clip2.ptClip[1]+2, Clip2.ptClip[2]+2);
-		strcpy (strMsg, "2");
-		glCallLists (strlen(strMsg), GL_UNSIGNED_BYTE, strMsg);
+		glRasterPos3f (clip2.ptclip[0]+2, clip2.ptclip[1]+2, clip2.ptclip[2]+2);
+		strcpy (strmsg, "2");
+		glCallLists (strlen(strmsg), GL_UNSIGNED_BYTE, strmsg);
 	}
-	if (Clip3.bSet)
+	if (clip3.ptset)
 	{
-		glRasterPos3f (Clip3.ptClip[0]+2, Clip3.ptClip[1]+2, Clip3.ptClip[2]+2);
-		strcpy (strMsg, "3");
-		glCallLists (strlen(strMsg), GL_UNSIGNED_BYTE, strMsg);
+		glRasterPos3f (clip3.ptclip[0]+2, clip3.ptclip[1]+2, clip3.ptclip[2]+2);
+		strcpy (strmsg, "3");
+		glCallLists (strlen(strmsg), GL_UNSIGNED_BYTE, strmsg);
 	}
-	if (Clip1.bSet && Clip2.bSet)
+	if (clip1.ptset && clip2.ptset)
 	{
 		ProduceSplitLists();
-		pList = ( (g_qeglobals.ViewType == XZ) ? !g_qeglobals.clipbSwitch : g_qeglobals.clipbSwitch) ? &g_qeglobals.brFrontSplits : &g_qeglobals.brBackSplits;
+		list = ( (g_qeglobals.d_viewtype == XZ) ? !g_qeglobals.d_clipswitch : g_qeglobals.d_clipswitch) ? &g_qeglobals.d_frontsplits : &g_qeglobals.d_backsplits;
 
-		for (pBrush = pList->next ; pBrush != NULL && pBrush != pList ; pBrush=pBrush->next)
+		for (brush = list->next ; brush != NULL && brush != list ; brush=brush->next)
 		{
 			glColor3f (1,1,0);
-			for (face = pBrush->brush_faces,order = 0 ; face ; face=face->next, order++)
+			for (face = brush->brush_faces,order = 0 ; face ; face=face->next, order++)
 			{
 				w = face->face_winding;
 				if (!w)
@@ -962,7 +962,7 @@ void DrawClipPoint (void)
 			}
 		}
 	}
-	if (g_qeglobals.ViewType != XY)
+	if (g_qeglobals.d_viewtype != XY)
 		glPopMatrix();
 }
 
@@ -974,9 +974,9 @@ EndClipPoint
 */
 void EndClipPoint (void)
 {
-	if (pMovingClip)
+	if (movingclip)
 	{
-		pMovingClip = NULL;
+		movingclip = NULL;
 		ReleaseCapture ();
 	}
 }
@@ -1001,8 +1001,8 @@ void XY_DrawGrid (void)
 	float	x, y, xb, xe, yb, ye;
 	int		w, h;
 	char	text[32];
-	int		nDim1, nDim2;
-	char	cView[20];
+	int		dim1, dim2;
+	char	view[20];
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_1D);
@@ -1012,27 +1012,27 @@ void XY_DrawGrid (void)
 	w = g_qeglobals.d_xyz.width/2 / g_qeglobals.d_xyz.scale;
 	h = g_qeglobals.d_xyz.height/2 / g_qeglobals.d_xyz.scale;
 
-	nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-	nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+	dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+	dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
-	xb = g_qeglobals.d_xyz.origin[nDim1] - w;
-	if (xb < region_mins[nDim1])
-		xb = region_mins[nDim1];
+	xb = g_qeglobals.d_xyz.origin[dim1] - w;
+	if (xb < region_mins[dim1])
+		xb = region_mins[dim1];
 	xb = 64 * floor (xb/64);
 
-	xe = g_qeglobals.d_xyz.origin[nDim1] + w;
-	if (xe > region_maxs[nDim1])
-		xe = region_maxs[nDim1];
+	xe = g_qeglobals.d_xyz.origin[dim1] + w;
+	if (xe > region_maxs[dim1])
+		xe = region_maxs[dim1];
 	xe = 64 * ceil (xe/64);
 
-	yb = g_qeglobals.d_xyz.origin[nDim2] - h;
-	if (yb < region_mins[nDim2])
-		yb = region_mins[nDim2];
+	yb = g_qeglobals.d_xyz.origin[dim2] - h;
+	if (yb < region_mins[dim2])
+		yb = region_mins[dim2];
 	yb = 64 * floor (yb/64);
 
-	ye = g_qeglobals.d_xyz.origin[nDim2] + h;
-	if (ye > region_maxs[nDim2])
-		ye = region_maxs[nDim2];
+	ye = g_qeglobals.d_xyz.origin[dim2] + h;
+	if (ye > region_maxs[dim2])
+		ye = region_maxs[dim2];
 	ye = 64 * ceil (ye/64);
 
 	// draw major blocks
@@ -1091,28 +1091,28 @@ void XY_DrawGrid (void)
 
 		for (x=xb ; x<xe ; x+=64)
 		{
-			glRasterPos2f (x, g_qeglobals.d_xyz.origin[nDim2] + h - 6/g_qeglobals.d_xyz.scale);
+			glRasterPos2f (x, g_qeglobals.d_xyz.origin[dim2] + h - 6/g_qeglobals.d_xyz.scale);
 			sprintf (text, "%i",(int)x);
 			glCallLists (strlen(text), GL_UNSIGNED_BYTE, text);
 		}
 		for (y=yb ; y<ye ; y+=64)
 		{
-			glRasterPos2f (g_qeglobals.d_xyz.origin[nDim1] - w + 1, y);
+			glRasterPos2f (g_qeglobals.d_xyz.origin[dim1] - w + 1, y);
 			sprintf (text, "%i",(int)y);
 			glCallLists (strlen(text), GL_UNSIGNED_BYTE, text);
 		}
 		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME]);
 
-		glRasterPos2f ( g_qeglobals.d_xyz.origin[nDim1] - w + 35 / g_qeglobals.d_xyz.scale, g_qeglobals.d_xyz.origin[nDim2] + h - 20 / g_qeglobals.d_xyz.scale );
+		glRasterPos2f ( g_qeglobals.d_xyz.origin[dim1] - w + 35 / g_qeglobals.d_xyz.scale, g_qeglobals.d_xyz.origin[dim2] + h - 20 / g_qeglobals.d_xyz.scale );
    
-		if (g_qeglobals.ViewType == XY)
-			strcpy(cView, "XY Top");
-		else if (g_qeglobals.ViewType == XZ)
-			strcpy(cView, "XZ Front");
+		if (g_qeglobals.d_viewtype == XY)
+			strcpy(view, "XY Top");
+		else if (g_qeglobals.d_viewtype == XZ)
+			strcpy(view, "XZ Front");
 		else
-			strcpy(cView, "YZ Side");
+			strcpy(view, "YZ Side");
 
-		glCallLists (strlen(cView), GL_UNSIGNED_BYTE, cView);
+		glCallLists (strlen(view), GL_UNSIGNED_BYTE, view);
 	}
 
 	// show current work zone?
@@ -1121,14 +1121,14 @@ void XY_DrawGrid (void)
 	{
 		glColor3f( 1.0f, 0.0f, 0.0f );
 		glBegin( GL_LINES );
-		glVertex2f( xb, g_qeglobals.d_work_min[nDim2] );
-		glVertex2f( xe, g_qeglobals.d_work_min[nDim2] );
-		glVertex2f( xb, g_qeglobals.d_work_max[nDim2] );
-		glVertex2f( xe, g_qeglobals.d_work_max[nDim2] );
-		glVertex2f( g_qeglobals.d_work_min[nDim1], yb );
-		glVertex2f( g_qeglobals.d_work_min[nDim1], ye );
-		glVertex2f( g_qeglobals.d_work_max[nDim1], yb );
-		glVertex2f( g_qeglobals.d_work_max[nDim1], ye );
+		glVertex2f( xb, g_qeglobals.d_work_min[dim2] );
+		glVertex2f( xe, g_qeglobals.d_work_min[dim2] );
+		glVertex2f( xb, g_qeglobals.d_work_max[dim2] );
+		glVertex2f( xe, g_qeglobals.d_work_max[dim2] );
+		glVertex2f( g_qeglobals.d_work_min[dim1], yb );
+		glVertex2f( g_qeglobals.d_work_min[dim1], ye );
+		glVertex2f( g_qeglobals.d_work_max[dim1], yb );
+		glVertex2f( g_qeglobals.d_work_max[dim1], ye );
 		glEnd();
 	}
 }
@@ -1143,7 +1143,7 @@ void XY_DrawBlockGrid (void)
 	float	x, y, xb, xe, yb, ye;
 	int		w, h;
 	char	text[32];
-	int nDim1, nDim2;
+	int dim1, dim2;
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_1D);
@@ -1153,27 +1153,27 @@ void XY_DrawBlockGrid (void)
 	w = g_qeglobals.d_xyz.width/2 / g_qeglobals.d_xyz.scale;
 	h = g_qeglobals.d_xyz.height/2 / g_qeglobals.d_xyz.scale;
 
-	nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-	nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+	dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+	dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
-	xb = g_qeglobals.d_xyz.origin[nDim1] - w;
-	if (xb < region_mins[nDim1])
-		xb = region_mins[nDim1];
+	xb = g_qeglobals.d_xyz.origin[dim1] - w;
+	if (xb < region_mins[dim1])
+		xb = region_mins[dim1];
 	xb = 1024 * floor (xb/1024);
 
-	xe = g_qeglobals.d_xyz.origin[nDim1] + w;
-	if (xe > region_maxs[nDim1])
-		xe = region_maxs[nDim1];
+	xe = g_qeglobals.d_xyz.origin[dim1] + w;
+	if (xe > region_maxs[dim1])
+		xe = region_maxs[dim1];
 	xe = 1024 * ceil (xe/1024);
 
-	yb = g_qeglobals.d_xyz.origin[nDim2] - h;
-	if (yb < region_mins[nDim2])
-		yb = region_mins[nDim2];
+	yb = g_qeglobals.d_xyz.origin[dim2] - h;
+	if (yb < region_mins[dim2])
+		yb = region_mins[dim2];
 	yb = 1024 * floor (yb/1024);
 
-	ye = g_qeglobals.d_xyz.origin[nDim2] + h;
-	if (ye > region_maxs[nDim2])
-		ye = region_maxs[nDim2];
+	ye = g_qeglobals.d_xyz.origin[dim2] + h;
+	if (ye > region_maxs[dim2])
+		ye = region_maxs[dim2];
 	ye = 1024 * ceil (ye/1024);
 
 	// draw major blocks
@@ -1216,13 +1216,13 @@ void DrawCameraIcon (void)
 	float	x, y, a;
 //	char	text[128];
 
-	if (g_qeglobals.ViewType == XY)
+	if (g_qeglobals.d_viewtype == XY)
 	{
 		x = g_qeglobals.d_camera.origin[0];
 		y = g_qeglobals.d_camera.origin[1];
 		a = g_qeglobals.d_camera.angles[YAW]/180*Q_PI;
 	}
-	else if (g_qeglobals.ViewType == YZ)
+	else if (g_qeglobals.d_viewtype == YZ)
 	{
 		x = g_qeglobals.d_camera.origin[1];
 		y = g_qeglobals.d_camera.origin[2];
@@ -1261,7 +1261,7 @@ void DrawZIcon (void)
 {
 	float	x, y;
 
-	if (g_qeglobals.ViewType == XY)
+	if (g_qeglobals.d_viewtype == XY)
 	{
 		x = g_qeglobals.d_z.origin[0];
 		y = g_qeglobals.d_z.origin[1];
@@ -1309,7 +1309,7 @@ BOOL FilterBrush(brush_t *pb)
 	if (!pb->owner)
 		return FALSE;		// during construction
 
-	if (pb->hiddenBrush)
+	if (pb->hiddenbrush)
 		return TRUE;
 
 	if (g_qeglobals.d_savedinfo.exclude & EXCLUDE_CLIP)
@@ -1359,14 +1359,14 @@ BOOL FilterBrush(brush_t *pb)
 */
 	if (g_qeglobals.d_savedinfo.exclude & EXCLUDE_LIGHTS)
 	{
-		return (pb->owner->eclass->nShowFlags & ECLASS_LIGHT);
+		return (pb->owner->eclass->showflags & ECLASS_LIGHT);
 		//if (!strncmp(pb->owner->eclass->name, "light", 5))
 		//	return TRUE;
 	}
 
 	if (g_qeglobals.d_savedinfo.exclude & EXCLUDE_PATHS)
 	{
-		return (pb->owner->eclass->nShowFlags & ECLASS_PATH);
+		return (pb->owner->eclass->showflags & ECLASS_PATH);
 		//if (!strncmp(pb->owner->eclass->name, "path", 4))
 		//	return TRUE;
 	}
@@ -1486,95 +1486,94 @@ void DrawPathLines (void)
 
 // can be greatly simplified but per usual i am in a hurry 
 // which is not an excuse, just a fact
-void PaintSizeInfo (int nDim1, int nDim2, vec3_t vMinBounds, vec3_t vMaxBounds)
+void PaintSizeInfo (int dim1, int dim2, vec3_t minbounds, vec3_t maxbounds)
 {
-
-  vec3_t vSize;
+  vec3_t size;
   char	dimstr[128];
 
-  VectorSubtract(vMaxBounds, vMinBounds, vSize);
+  VectorSubtract(maxbounds, minbounds, size);
 
   glColor3f(g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][0] * .65, 
             g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][1] * .65,
             g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][2] * .65);
 
-  if (g_qeglobals.ViewType == XY)
+  if (g_qeglobals.d_viewtype == XY)
   {
 		glBegin (GL_LINES);
 
-    glVertex3f(vMinBounds[nDim1], vMinBounds[nDim2] - 6.0f  / g_qeglobals.d_xyz.scale, 0.0f);
-    glVertex3f(vMinBounds[nDim1], vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
+    glVertex3f(minbounds[dim1], minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale, 0.0f);
+    glVertex3f(minbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
 
-    glVertex3f(vMinBounds[nDim1], vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
-    glVertex3f(vMaxBounds[nDim1], vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
+    glVertex3f(minbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
+    glVertex3f(maxbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
 
-    glVertex3f(vMaxBounds[nDim1], vMinBounds[nDim2] - 6.0f  / g_qeglobals.d_xyz.scale, 0.0f);
-    glVertex3f(vMaxBounds[nDim1], vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
+    glVertex3f(maxbounds[dim1], minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale, 0.0f);
+    glVertex3f(maxbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
   
 
-    glVertex3f(vMaxBounds[nDim1] + 6.0f  / g_qeglobals.d_xyz.scale, vMinBounds[nDim2], 0.0f);
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, vMinBounds[nDim2], 0.0f);
+    glVertex3f(maxbounds[dim1] + 6.0f  / g_qeglobals.d_xyz.scale, minbounds[dim2], 0.0f);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, minbounds[dim2], 0.0f);
 
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, vMinBounds[nDim2], 0.0f);
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, vMaxBounds[nDim2], 0.0f);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, minbounds[dim2], 0.0f);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, maxbounds[dim2], 0.0f);
   
-    glVertex3f(vMaxBounds[nDim1] + 6.0f  / g_qeglobals.d_xyz.scale, vMaxBounds[nDim2], 0.0f);
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, vMaxBounds[nDim2], 0.0f);
+    glVertex3f(maxbounds[dim1] + 6.0f  / g_qeglobals.d_xyz.scale, maxbounds[dim2], 0.0f);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, maxbounds[dim2], 0.0f);
 
     glEnd();
 
-    glRasterPos3f (Betwixt(vMinBounds[nDim1], vMaxBounds[nDim1]),  vMinBounds[nDim2] - 20.0  / g_qeglobals.d_xyz.scale, 0.0f);
+    glRasterPos3f (Betwixt(minbounds[dim1], maxbounds[dim1]),  minbounds[dim2] - 20.0  / g_qeglobals.d_xyz.scale, 0.0f);
 
-    sprintf(dimstr, DimStrings[nDim1], vSize[nDim1]);
+    sprintf(dimstr, dimstrings[dim1], size[dim1]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
     
-    glRasterPos3f (vMaxBounds[nDim1] + 16.0  / g_qeglobals.d_xyz.scale, Betwixt(vMinBounds[nDim2], vMaxBounds[nDim2]), 0.0f);
+    glRasterPos3f (maxbounds[dim1] + 16.0  / g_qeglobals.d_xyz.scale, Betwixt(minbounds[dim2], maxbounds[dim2]), 0.0f);
 
-    sprintf(dimstr, DimStrings[nDim2], vSize[nDim2]);
+    sprintf(dimstr, dimstrings[dim2], size[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
 
-    glRasterPos3f (vMinBounds[nDim1] + 4, vMaxBounds[nDim2] + 8 / g_qeglobals.d_xyz.scale, 0.0f);
+    glRasterPos3f (minbounds[dim1] + 4, maxbounds[dim2] + 8 / g_qeglobals.d_xyz.scale, 0.0f);
 
-    sprintf(dimstr, OrgStrings[0], vMinBounds[nDim1], vMaxBounds[nDim2]);
+    sprintf(dimstr, orgstrings[0], minbounds[dim1], maxbounds[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
 
 
 	}
-	else if (g_qeglobals.ViewType == XZ)
+	else if (g_qeglobals.d_viewtype == XZ)
 	{
 		glBegin (GL_LINES);
 
-    glVertex3f(vMinBounds[nDim1], 0.0f, vMinBounds[nDim2] - 6.0f  / g_qeglobals.d_xyz.scale);
-    glVertex3f(vMinBounds[nDim1], 0.0f, vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale);
+    glVertex3f(minbounds[dim1], 0.0f, minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale);
+    glVertex3f(minbounds[dim1], 0.0f, minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
 
-    glVertex3f(vMinBounds[nDim1], 0.0f, vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale);
-    glVertex3f(vMaxBounds[nDim1], 0.0f, vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale);
+    glVertex3f(minbounds[dim1], 0.0f, minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
+    glVertex3f(maxbounds[dim1], 0.0f, minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
 
-    glVertex3f(vMaxBounds[nDim1], 0.0f, vMinBounds[nDim2] - 6.0f  / g_qeglobals.d_xyz.scale);
-    glVertex3f(vMaxBounds[nDim1], 0.0f, vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale);
+    glVertex3f(maxbounds[dim1], 0.0f, minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale);
+    glVertex3f(maxbounds[dim1], 0.0f, minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
   
 
-    glVertex3f(vMaxBounds[nDim1] + 6.0f  / g_qeglobals.d_xyz.scale, 0.0f, vMinBounds[nDim2]);
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, vMinBounds[nDim2]);
+    glVertex3f(maxbounds[dim1] + 6.0f  / g_qeglobals.d_xyz.scale, 0.0f, minbounds[dim2]);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, minbounds[dim2]);
 
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, vMinBounds[nDim2]);
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, vMaxBounds[nDim2]);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, minbounds[dim2]);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, maxbounds[dim2]);
   
-    glVertex3f(vMaxBounds[nDim1] + 6.0f  / g_qeglobals.d_xyz.scale, 0.0f, vMaxBounds[nDim2]);
-    glVertex3f(vMaxBounds[nDim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, vMaxBounds[nDim2]);
+    glVertex3f(maxbounds[dim1] + 6.0f  / g_qeglobals.d_xyz.scale, 0.0f, maxbounds[dim2]);
+    glVertex3f(maxbounds[dim1] + 10.0f / g_qeglobals.d_xyz.scale, 0.0f, maxbounds[dim2]);
 
     glEnd();
 
-    glRasterPos3f (Betwixt(vMinBounds[nDim1], vMaxBounds[nDim1]), 0.0f, vMinBounds[nDim2] - 20.0  / g_qeglobals.d_xyz.scale);
-    sprintf(dimstr, DimStrings[nDim1], vSize[nDim1]);
+    glRasterPos3f (Betwixt(minbounds[dim1], maxbounds[dim1]), 0.0f, minbounds[dim2] - 20.0  / g_qeglobals.d_xyz.scale);
+    sprintf(dimstr, dimstrings[dim1], size[dim1]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
     
-    glRasterPos3f (vMaxBounds[nDim1] + 16.0  / g_qeglobals.d_xyz.scale, 0.0f, Betwixt(vMinBounds[nDim2], vMaxBounds[nDim2]));
-    sprintf(dimstr, DimStrings[nDim2], vSize[nDim2]);
+    glRasterPos3f (maxbounds[dim1] + 16.0  / g_qeglobals.d_xyz.scale, 0.0f, Betwixt(minbounds[dim2], maxbounds[dim2]));
+    sprintf(dimstr, dimstrings[dim2], size[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
 
-    glRasterPos3f (vMinBounds[nDim1] + 4, 0.0f, vMaxBounds[nDim2] + 8 / g_qeglobals.d_xyz.scale);
-    sprintf(dimstr, OrgStrings[1], vMinBounds[nDim1], vMaxBounds[nDim2]);
+    glRasterPos3f (minbounds[dim1] + 4, 0.0f, maxbounds[dim2] + 8 / g_qeglobals.d_xyz.scale);
+    sprintf(dimstr, orgstrings[1], minbounds[dim1], maxbounds[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
 
   }
@@ -1582,37 +1581,37 @@ void PaintSizeInfo (int nDim1, int nDim2, vec3_t vMinBounds, vec3_t vMaxBounds)
   {
 		glBegin (GL_LINES);
 
-    glVertex3f(0.0f, vMinBounds[nDim1], vMinBounds[nDim2] - 6.0f  / g_qeglobals.d_xyz.scale);
-    glVertex3f(0.0f, vMinBounds[nDim1], vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale);
+    glVertex3f(0.0f, minbounds[dim1], minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale);
+    glVertex3f(0.0f, minbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
 
-    glVertex3f(0.0f, vMinBounds[nDim1], vMinBounds[nDim2] - 10.0f  / g_qeglobals.d_xyz.scale);
-    glVertex3f(0.0f, vMaxBounds[nDim1], vMinBounds[nDim2] - 10.0f  / g_qeglobals.d_xyz.scale);
+    glVertex3f(0.0f, minbounds[dim1], minbounds[dim2] - 10.0f  / g_qeglobals.d_xyz.scale);
+    glVertex3f(0.0f, maxbounds[dim1], minbounds[dim2] - 10.0f  / g_qeglobals.d_xyz.scale);
 
-    glVertex3f(0.0f, vMaxBounds[nDim1], vMinBounds[nDim2] - 6.0f  / g_qeglobals.d_xyz.scale);
-    glVertex3f(0.0f, vMaxBounds[nDim1], vMinBounds[nDim2] - 10.0f / g_qeglobals.d_xyz.scale);
+    glVertex3f(0.0f, maxbounds[dim1], minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale);
+    glVertex3f(0.0f, maxbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
   
 
-    glVertex3f(0.0f, vMaxBounds[nDim1] + 6.0f  / g_qeglobals.d_xyz.scale, vMinBounds[nDim2]);
-    glVertex3f(0.0f, vMaxBounds[nDim1] + 10.0f  / g_qeglobals.d_xyz.scale, vMinBounds[nDim2]);
+    glVertex3f(0.0f, maxbounds[dim1] + 6.0f  / g_qeglobals.d_xyz.scale, minbounds[dim2]);
+    glVertex3f(0.0f, maxbounds[dim1] + 10.0f  / g_qeglobals.d_xyz.scale, minbounds[dim2]);
 
-    glVertex3f(0.0f, vMaxBounds[nDim1] + 10.0f  / g_qeglobals.d_xyz.scale, vMinBounds[nDim2]);
-    glVertex3f(0.0f, vMaxBounds[nDim1] + 10.0f  / g_qeglobals.d_xyz.scale, vMaxBounds[nDim2]);
+    glVertex3f(0.0f, maxbounds[dim1] + 10.0f  / g_qeglobals.d_xyz.scale, minbounds[dim2]);
+    glVertex3f(0.0f, maxbounds[dim1] + 10.0f  / g_qeglobals.d_xyz.scale, maxbounds[dim2]);
   
-    glVertex3f(0.0f, vMaxBounds[nDim1] + 6.0f  / g_qeglobals.d_xyz.scale, vMaxBounds[nDim2]);
-    glVertex3f(0.0f, vMaxBounds[nDim1] + 10.0f  / g_qeglobals.d_xyz.scale, vMaxBounds[nDim2]);
+    glVertex3f(0.0f, maxbounds[dim1] + 6.0f  / g_qeglobals.d_xyz.scale, maxbounds[dim2]);
+    glVertex3f(0.0f, maxbounds[dim1] + 10.0f  / g_qeglobals.d_xyz.scale, maxbounds[dim2]);
 
     glEnd();
 
-    glRasterPos3f (0.0f, Betwixt(vMinBounds[nDim1], vMaxBounds[nDim1]),  vMinBounds[nDim2] - 20.0  / g_qeglobals.d_xyz.scale);
-    sprintf(dimstr, DimStrings[nDim1], vSize[nDim1]);
+    glRasterPos3f (0.0f, Betwixt(minbounds[dim1], maxbounds[dim1]),  minbounds[dim2] - 20.0  / g_qeglobals.d_xyz.scale);
+    sprintf(dimstr, dimstrings[dim1], size[dim1]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
     
-    glRasterPos3f (0.0f, vMaxBounds[nDim1] + 16.0  / g_qeglobals.d_xyz.scale, Betwixt(vMinBounds[nDim2], vMaxBounds[nDim2]));
-    sprintf(dimstr, DimStrings[nDim2], vSize[nDim2]);
+    glRasterPos3f (0.0f, maxbounds[dim1] + 16.0  / g_qeglobals.d_xyz.scale, Betwixt(minbounds[dim2], maxbounds[dim2]));
+    sprintf(dimstr, dimstrings[dim2], size[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
 
-    glRasterPos3f (0.0f, vMinBounds[nDim1] + 4.0, vMaxBounds[nDim2] + 8 / g_qeglobals.d_xyz.scale);
-    sprintf(dimstr, OrgStrings[2], vMinBounds[nDim1], vMaxBounds[nDim2]);
+    glRasterPos3f (0.0f, minbounds[dim1] + 4.0, maxbounds[dim2] + 8 / g_qeglobals.d_xyz.scale);
+    sprintf(dimstr, orgstrings[2], minbounds[dim1], maxbounds[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
 
   }
@@ -1634,10 +1633,10 @@ void XY_Draw (void)
 	vec3_t	mins, maxs;
 	int		drawn, culled;
 	int		i;
-	int nDim1, nDim2;
-	int nSaveDrawn;
-	qboolean bFixedSize;
-	vec3_t vMinBounds, vMaxBounds;
+	int dim1, dim2;
+	int savedrawn;
+	qboolean fixedsize;
+	vec3_t minbounds, maxbounds;
 
 
 	if (!active_brushes.next)
@@ -1669,13 +1668,13 @@ void XY_Draw (void)
 	w = g_qeglobals.d_xyz.width/2 / g_qeglobals.d_xyz.scale;
 	h = g_qeglobals.d_xyz.height/2 / g_qeglobals.d_xyz.scale;
 
-	nDim1 = (g_qeglobals.ViewType == YZ) ? 1 : 0;
-	nDim2 = (g_qeglobals.ViewType == XY) ? 1 : 2;
+	dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+	dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
 
-	mins[0] = g_qeglobals.d_xyz.origin[nDim1] - w;
-	maxs[0] = g_qeglobals.d_xyz.origin[nDim1] + w;
-	mins[1] = g_qeglobals.d_xyz.origin[nDim2] - h;
-	maxs[1] = g_qeglobals.d_xyz.origin[nDim2] + h;
+	mins[0] = g_qeglobals.d_xyz.origin[dim1] - w;
+	maxs[0] = g_qeglobals.d_xyz.origin[dim1] + w;
+	mins[1] = g_qeglobals.d_xyz.origin[dim2] - h;
+	maxs[1] = g_qeglobals.d_xyz.origin[dim2] + h;
 
 	glOrtho (mins[0], maxs[0], mins[1], maxs[1], -8192, 8192);
 
@@ -1697,10 +1696,10 @@ void XY_Draw (void)
 
 	drawn = culled = 0;
 
-	if (g_qeglobals.ViewType != XY)
+	if (g_qeglobals.d_viewtype != XY)
 	{
 		glPushMatrix();
-		if (g_qeglobals.ViewType == YZ)
+		if (g_qeglobals.d_viewtype == YZ)
 			glRotatef (-90,  0, 1, 0);	    // put Z going up
 		//else
 			glRotatef (-90,  1, 0, 0);	    // put Z going up
@@ -1710,10 +1709,10 @@ void XY_Draw (void)
 	e = world_entity;
 	for (brush = active_brushes.next ; brush != &active_brushes ; brush=brush->next)
 	{
-		if (brush->mins[nDim1] > maxs[0]
-			|| brush->mins[nDim2] > maxs[1]
-			|| brush->maxs[nDim1] < mins[0]
-			|| brush->maxs[nDim2] < mins[1]	)
+		if (brush->mins[dim1] > maxs[0]
+			|| brush->mins[dim2] > maxs[1]
+			|| brush->maxs[dim1] < mins[0]
+			|| brush->maxs[dim2] < mins[1]	)
 		{
 			culled++;
 			continue;		// off screen
@@ -1734,7 +1733,7 @@ void XY_Draw (void)
 		{
 			glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES]);
 		}
-		Brush_DrawXY( brush, g_qeglobals.ViewType);
+		Brush_DrawXY( brush, g_qeglobals.d_viewtype);
 	}
 
 	DrawPathLines ();
@@ -1745,7 +1744,7 @@ void XY_Draw (void)
 	if ( g_qeglobals.d_pointfile_display_list)
 		glCallList (g_qeglobals.d_pointfile_display_list);
 
-	if (!(g_qeglobals.ViewType == XY))
+	if (!(g_qeglobals.d_viewtype == XY))
 		glPopMatrix();
 
 	//
@@ -1758,10 +1757,10 @@ void XY_Draw (void)
 	// now draw selected brushes
 	//
 
-	if (g_qeglobals.ViewType != XY)
+	if (g_qeglobals.d_viewtype != XY)
 	{
 		glPushMatrix();
-		if (g_qeglobals.ViewType == YZ)
+		if (g_qeglobals.d_viewtype == YZ)
 			glRotatef (-90,  0, 1, 0);	    // put Z going up
 		//else
 			glRotatef (-90,  1, 0, 0);	    // put Z going up
@@ -1778,33 +1777,33 @@ void XY_Draw (void)
 	glLineWidth (2);
 
 // paint size
-	vMinBounds[0] = vMinBounds[1] = vMinBounds[2] = 8192.0f;
-	vMaxBounds[0] = vMaxBounds[1] = vMaxBounds[2] = -8192.0f;
+	minbounds[0] = minbounds[1] = minbounds[2] = 8192.0f;
+	maxbounds[0] = maxbounds[1] = maxbounds[2] = -8192.0f;
 
-	nSaveDrawn = drawn;
-	bFixedSize = false;
+	savedrawn = drawn;
+	fixedsize = false;
 //
 
 	for (brush = selected_brushes.next ; brush != &selected_brushes ; brush=brush->next)
 	{
 		drawn++;
 
-		Brush_DrawXY( brush, g_qeglobals.ViewType );
+		Brush_DrawXY( brush, g_qeglobals.d_viewtype );
 
 // paint size
 
-	    if (!bFixedSize)
+	    if (!fixedsize)
 	    {
 			if (brush->owner->eclass->fixedsize)
-				bFixedSize = true;
+				fixedsize = true;
 			if (g_qeglobals.d_savedinfo.check_sizepaint)
 			{
 				for (i = 0; i < 3; i++)
 				{
-					if (brush->mins[i] < vMinBounds[i])
-						vMinBounds[i] = brush->mins[i];
-					if (brush->maxs[i] > vMaxBounds[i])
-						vMaxBounds[i] = brush->maxs[i];
+					if (brush->mins[i] < minbounds[i])
+						minbounds[i] = brush->mins[i];
+					if (brush->maxs[i] > maxbounds[i])
+						maxbounds[i] = brush->maxs[i];
 				}
 			}
 		}
@@ -1816,8 +1815,8 @@ void XY_Draw (void)
 
 // paint size
 
-	if (!bFixedSize && drawn - nSaveDrawn > 0 && g_qeglobals.d_savedinfo.check_sizepaint)
-		PaintSizeInfo(nDim1, nDim2, vMinBounds, vMaxBounds);
+	if (!fixedsize && drawn - savedrawn > 0 && g_qeglobals.d_savedinfo.check_sizepaint)
+		PaintSizeInfo(dim1, dim2, minbounds, maxbounds);
 //
 
 	// edge / vertex flags
@@ -1851,11 +1850,11 @@ void XY_Draw (void)
 
 	glTranslatef (-g_qeglobals.d_select_translate[0], -g_qeglobals.d_select_translate[1], -g_qeglobals.d_select_translate[2]);
 
-	if (!(g_qeglobals.ViewType == XY))
+	if (!(g_qeglobals.d_viewtype == XY))
 		glPopMatrix();
 
 	// clipper
-	if (g_qeglobals.clipmode)
+	if (g_qeglobals.d_clipmode)
 		DrawClipPoint ();
 
 	//

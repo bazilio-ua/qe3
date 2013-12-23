@@ -396,7 +396,7 @@ void QE_Init (void)
 	*/
 	g_qeglobals.d_gridsize = 8;
 	g_qeglobals.d_showgrid = true;
-	g_qeglobals.ViewType = XY;
+	g_qeglobals.d_viewtype = XY;
 	g_qeglobals.d_camera.viewdistance = 256;
 
 	Sys_UpdateGridStatusBar ();

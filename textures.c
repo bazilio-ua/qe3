@@ -293,7 +293,7 @@ qtexture_t *Texture_LoadTexture (miptex_t *qtex)
     q->width = width;
     q->height = height;
 /*
-eerie
+EER1
 	q->flags = qtex->flags;
 	q->value = qtex->value;
 	q->contents = qtex->contents;

@@ -119,10 +119,10 @@ eclass_t *Eclass_InitFromText (char *text)
 	e->comments[len] = 0;
 
   // setup show flags
-  e->nShowFlags = 0;
+  e->showflags = 0;
   if (strcmpi(e->name, "light") == 0)
   {
-    e->nShowFlags |= ECLASS_LIGHT;
+    e->showflags |= ECLASS_LIGHT;
   }
 
   if (  (strnicmp(e->name, "info_player_start",			strlen("info_player_start")) == 0)
@@ -134,11 +134,11 @@ eclass_t *Eclass_InitFromText (char *text)
 	  ||(strnicmp(e->name, "path_corner",				strlen("path_corner")) == 0)
 	  ||(strnicmp(e->name, "viewthing",					strlen("viewthing")) == 0) )
   {
-    e->nShowFlags |= ECLASS_ANGLE;
+    e->showflags |= ECLASS_ANGLE;
   }
   if (strcmpi(e->name, "path") == 0)
   {
-    e->nShowFlags |= ECLASS_PATH;
+    e->showflags |= ECLASS_PATH;
   }
 	
 	return e;

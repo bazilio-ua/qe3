@@ -1023,7 +1023,7 @@ void Brush_MakeSided (int sides)
 
 	Brush_Free (b);
 
-	switch(g_qeglobals.ViewType)
+	switch(g_qeglobals.d_viewtype)
 	{
 		case XY: axis = 2; break;
 		case XZ: axis = 1; break;
@@ -1615,91 +1615,91 @@ DrawLight
 */
 void DrawLight(brush_t *b)
 {
-	vec3_t vTriColor;
-	vec3_t vCorners[4];
-	vec3_t vTop, vBottom;
-	vec3_t vSave;
-	qboolean bTriPaint;
-	char *strColor;
-	float fR, fG, fB;
-	float fMid;
+	vec3_t color;
+	vec3_t corners[4];
+	vec3_t top, bottom;
+	vec3_t save;
+	qboolean paint;
+	char *strcolor;
+	float cr, cg, cb;
+	float mid;
 	int n, i;
 
-  bTriPaint = false;
+  paint = false;
 
-  vTriColor[0] = vTriColor[1] = vTriColor[2] = 1.0;
+  color[0] = color[1] = color[2] = 1.0;
 
-  bTriPaint = true;
+  paint = true;
 
-  strColor = ValueForKey(b->owner, "_color");
+  strcolor = ValueForKey(b->owner, "_color");
 
-  if (strColor)
+  if (strcolor)
   {
-	n = sscanf(strColor,"%f %f %f", &fR, &fG, &fB);
+	n = sscanf(strcolor,"%f %f %f", &cr, &cg, &cb);
     if (n == 3)
     {
-      vTriColor[0] = fR;
-      vTriColor[1] = fG;
-      vTriColor[2] = fB;
+      color[0] = cr;
+      color[1] = cg;
+      color[2] = cb;
     }
   }
-  glColor3f(vTriColor[0], vTriColor[1], vTriColor[2]);
+  glColor3f(color[0], color[1], color[2]);
   
-  fMid = b->mins[2] + (b->maxs[2] - b->mins[2]) / 2;
+  mid = b->mins[2] + (b->maxs[2] - b->mins[2]) / 2;
 
-  vCorners[0][0] = b->mins[0];
-  vCorners[0][1] = b->mins[1];
-  vCorners[0][2] = fMid;
+  corners[0][0] = b->mins[0];
+  corners[0][1] = b->mins[1];
+  corners[0][2] = mid;
 
-  vCorners[1][0] = b->mins[0];
-  vCorners[1][1] = b->maxs[1];
-  vCorners[1][2] = fMid;
+  corners[1][0] = b->mins[0];
+  corners[1][1] = b->maxs[1];
+  corners[1][2] = mid;
 
-  vCorners[2][0] = b->maxs[0];
-  vCorners[2][1] = b->maxs[1];
-  vCorners[2][2] = fMid;
+  corners[2][0] = b->maxs[0];
+  corners[2][1] = b->maxs[1];
+  corners[2][2] = mid;
 
-  vCorners[3][0] = b->maxs[0];
-  vCorners[3][1] = b->mins[1];
-  vCorners[3][2] = fMid;
+  corners[3][0] = b->maxs[0];
+  corners[3][1] = b->mins[1];
+  corners[3][2] = mid;
 
-  vTop[0] = b->mins[0] + ((b->maxs[0] - b->mins[0]) / 2);
-  vTop[1] = b->mins[1] + ((b->maxs[1] - b->mins[1]) / 2);
-  vTop[2] = b->maxs[2];
+  top[0] = b->mins[0] + ((b->maxs[0] - b->mins[0]) / 2);
+  top[1] = b->mins[1] + ((b->maxs[1] - b->mins[1]) / 2);
+  top[2] = b->maxs[2];
 
-  VectorCopy(vTop, vBottom);
-  vBottom[2] = b->mins[2];
+  VectorCopy(top, bottom);
+  bottom[2] = b->mins[2];
 
-  VectorCopy(vTriColor, vSave);
+  VectorCopy(color, save);
 
   glBegin(GL_TRIANGLE_FAN);
-  glVertex3fv(vTop);
+  glVertex3fv(top);
   for (i = 0; i <= 3; i++)
   {
-    vTriColor[0] *= (float)0.95;
-    vTriColor[1] *= (float)0.95;
-    vTriColor[2] *= (float)0.95;
-    glColor3f(vTriColor[0], vTriColor[1], vTriColor[2]);
-    glVertex3fv(vCorners[i]);
+    color[0] *= (float)0.95;
+    color[1] *= (float)0.95;
+    color[2] *= (float)0.95;
+    glColor3f(color[0], color[1], color[2]);
+    glVertex3fv(corners[i]);
   }
-  glVertex3fv(vCorners[0]);
+  glVertex3fv(corners[0]);
   glEnd();
   
-  VectorCopy(vSave, vTriColor);
-  vTriColor[0] *= (float)0.95;
-  vTriColor[1] *= (float)0.95;
-  vTriColor[2] *= (float)0.95;
+  VectorCopy(save, color);
+  color[0] *= (float)0.95;
+  color[1] *= (float)0.95;
+  color[2] *= (float)0.95;
 
   glBegin(GL_TRIANGLE_FAN);
-  glVertex3fv(vBottom);
-  glVertex3fv(vCorners[0]);
+  glVertex3fv(bottom);
+  glVertex3fv(corners[0]);
   for (i = 3; i >= 0; i--)
   {
-    vTriColor[0] *= (float)0.95;
-    vTriColor[1] *= (float)0.95;
-    vTriColor[2] *= (float)0.95;
-    glColor3f(vTriColor[0], vTriColor[1], vTriColor[2]);
-    glVertex3fv(vCorners[i]);
+    color[0] *= (float)0.95;
+    color[1] *= (float)0.95;
+    color[2] *= (float)0.95;
+    glColor3f(color[0], color[1], color[2]);
+    glVertex3fv(corners[i]);
   }
   glEnd();
 }
@@ -1712,21 +1712,21 @@ FacingVectors
 */
 void FacingVectors (entity_t *e, vec3_t forward, vec3_t right, vec3_t up)
 {
-	int			angleVal;
+	int			angle;
 	vec3_t		angles;
 
-	angleVal = IntForKey(e, "angle");
-	if (angleVal == -1)				// up
+	angle = IntForKey(e, "angle");
+	if (angle == -1)				// up
 	{
 		VectorSet(angles, 270, 0, 0);
 	}
-	else if(angleVal == -2)		// down
+	else if(angle == -2)		// down
 	{
 		VectorSet(angles, 90, 0, 0);
 	}
 	else
 	{
-		VectorSet(angles, 0, angleVal, 0);
+		VectorSet(angles, 0, angle, 0);
 	}
 
 	AngleVectors(angles, forward, right, up);
@@ -1783,7 +1783,7 @@ void Brush_Draw( brush_t *b )
     qtexture_t		*prev = 0;
 	winding_t *w;
 
-	if (b->hiddenBrush)
+	if (b->hiddenbrush)
 		return;
 
 //	if (b->owner->eclass->fixedsize && g_qeglobals.d_camera.draw_mode == cd_texture)
@@ -1792,12 +1792,12 @@ void Brush_Draw( brush_t *b )
 	if (b->owner->eclass->fixedsize)
 	{
 
-		if (!(g_qeglobals.d_savedinfo.exclude & EXCLUDE_ANGLES) && (b->owner->eclass->nShowFlags & ECLASS_ANGLE))
+		if (!(g_qeglobals.d_savedinfo.exclude & EXCLUDE_ANGLES) && (b->owner->eclass->showflags & ECLASS_ANGLE))
 		{
 			Brush_DrawFacingAngle(b, b->owner);
 		}
 
-		if (g_qeglobals.d_savedinfo.view_radiantlights && (b->owner->eclass->nShowFlags & ECLASS_LIGHT))
+		if (g_qeglobals.d_savedinfo.view_radiantlights && (b->owner->eclass->showflags & ECLASS_LIGHT))
 		{
 			DrawLight(b);
 			return;
@@ -1860,68 +1860,68 @@ void Face_Draw( face_t *f )
 	glEnd();
 }
 
-void Brush_DrawXY(brush_t *b, int nViewType)
+void Brush_DrawXY(brush_t *b, int viewtype)
 {
 	face_t *face;
 	int     order;
 	winding_t *w;
 	int        i;
 
-	vec3_t vCorners[4];
-	vec3_t vTop, vBottom;
-	float fMid;
+	vec3_t corners[4];
+	vec3_t top, bottom;
+	float mid;
 
-	if (b->hiddenBrush)
+	if (b->hiddenbrush)
 		return;
 
 
 	if (b->owner->eclass->fixedsize)
 	{
 //		if (g_qeglobals.d_savedinfo.view_radiantlights && (!strncmp(b->owner->eclass->name, "light", 5)))
-		if (g_qeglobals.d_savedinfo.view_radiantlights && (b->owner->eclass->nShowFlags & ECLASS_LIGHT))
+		if (g_qeglobals.d_savedinfo.view_radiantlights && (b->owner->eclass->showflags & ECLASS_LIGHT))
 		{
     
-			fMid = b->mins[2] + (b->maxs[2] - b->mins[2]) / 2;
+			mid = b->mins[2] + (b->maxs[2] - b->mins[2]) / 2;
 
-			vCorners[0][0] = b->mins[0];
-			vCorners[0][1] = b->mins[1];
-			vCorners[0][2] = fMid;
+			corners[0][0] = b->mins[0];
+			corners[0][1] = b->mins[1];
+			corners[0][2] = mid;
 
-			vCorners[1][0] = b->mins[0];
-			vCorners[1][1] = b->maxs[1];
-			vCorners[1][2] = fMid;
+			corners[1][0] = b->mins[0];
+			corners[1][1] = b->maxs[1];
+			corners[1][2] = mid;
 
-			vCorners[2][0] = b->maxs[0];
-			vCorners[2][1] = b->maxs[1];
-			vCorners[2][2] = fMid;
+			corners[2][0] = b->maxs[0];
+			corners[2][1] = b->maxs[1];
+			corners[2][2] = mid;
 
-			vCorners[3][0] = b->maxs[0];
-			vCorners[3][1] = b->mins[1];
-			vCorners[3][2] = fMid;
+			corners[3][0] = b->maxs[0];
+			corners[3][1] = b->mins[1];
+			corners[3][2] = mid;
 
-			vTop[0] = b->mins[0] + ((b->maxs[0] - b->mins[0]) / 2);
-			vTop[1] = b->mins[1] + ((b->maxs[1] - b->mins[1]) / 2);
-			vTop[2] = b->maxs[2];
+			top[0] = b->mins[0] + ((b->maxs[0] - b->mins[0]) / 2);
+			top[1] = b->mins[1] + ((b->maxs[1] - b->mins[1]) / 2);
+			top[2] = b->maxs[2];
 
-			VectorCopy(vTop, vBottom);
-			vBottom[2] = b->mins[2];
+			VectorCopy(top, bottom);
+			bottom[2] = b->mins[2];
 	    
 			glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 			glBegin(GL_TRIANGLE_FAN);
-			glVertex3fv(vTop);
-			glVertex3fv(vCorners[0]);
-			glVertex3fv(vCorners[1]);
-			glVertex3fv(vCorners[2]);
-			glVertex3fv(vCorners[3]);
-			glVertex3fv(vCorners[0]);
+			glVertex3fv(top);
+			glVertex3fv(corners[0]);
+			glVertex3fv(corners[1]);
+			glVertex3fv(corners[2]);
+			glVertex3fv(corners[3]);
+			glVertex3fv(corners[0]);
 			glEnd();
 			glBegin(GL_TRIANGLE_FAN);
-			glVertex3fv(vBottom);
-			glVertex3fv(vCorners[0]);
-			glVertex3fv(vCorners[3]);
-			glVertex3fv(vCorners[2]);
-			glVertex3fv(vCorners[1]);
-			glVertex3fv(vCorners[0]);
+			glVertex3fv(bottom);
+			glVertex3fv(corners[0]);
+			glVertex3fv(corners[3]);
+			glVertex3fv(corners[2]);
+			glVertex3fv(corners[1]);
+			glVertex3fv(corners[0]);
 			glEnd();
 			DrawBrushEntityName (b);
 			return;
@@ -1935,14 +1935,14 @@ void Brush_DrawXY(brush_t *b, int nViewType)
 //			continue;
 
 		// only draw polygons facing in a direction we care about
-		if (nViewType == XY)
+		if (viewtype == XY)
 		{
 			if (face->plane.normal[2] <= 0)
 				continue;
 		}
 		else
 		{
-			if (nViewType == XZ)
+			if (viewtype == XZ)
 			{
 				if (face->plane.normal[1] <= 0)
 					continue;
@@ -1987,12 +1987,12 @@ void Face_Free( face_t *f )
 }
 
 
-void Face_FitTexture( face_t *face, int nHeight, int nWidth )
+void Face_FitTexture( face_t *face, int height, int width )
 {
 	winding_t *w;
-	vec3_t   mins,maxs;
+	vec3_t   mins, maxs;
 	int i;
-	vec_t width, height, temp;
+	vec_t temp;
 	vec_t rot_width, rot_height;
 	vec_t cosv,sinv,ang;
 	vec_t min_t, min_s, max_t, max_s;
@@ -2001,10 +2001,10 @@ void Face_FitTexture( face_t *face, int nHeight, int nWidth )
 	vec3_t   coords[4];
 	texdef_t	*td;
 	
-	if (nHeight < 1)
-		nHeight = 1;
-	if (nWidth < 1)
-		nWidth = 1;
+	if (height < 1)
+		height = 1;
+	if (width < 1)
+		width = 1;
 	
 	ClearBounds (mins, maxs);
 	
@@ -2033,8 +2033,6 @@ void Face_FitTexture( face_t *face, int nHeight, int nWidth )
 	min_t = DotProduct( mins, vecs[1] );
 	max_s = DotProduct( maxs, vecs[0] );
 	max_t = DotProduct( maxs, vecs[1] );
-	width = max_s - min_s;
-	height = max_t - min_t;
 	coords[0][0] = min_s;
 	coords[0][1] = min_t;
 	coords[1][0] = max_s;
@@ -2080,26 +2078,26 @@ void Face_FitTexture( face_t *face, int nHeight, int nWidth )
 	}
 	rot_width =  (max_s - min_s);
 	rot_height = (max_t - min_t);
-	td->scale[0] = -(rot_width/((float)(face->d_texture->width*nWidth)));
-	td->scale[1] = -(rot_height/((float)(face->d_texture->height*nHeight)));
+	td->scale[0] = -(rot_width/((float)(face->d_texture->width*width)));
+	td->scale[1] = -(rot_height/((float)(face->d_texture->height*height)));
 	td->shift[0] = min_s/td->scale[0];
-	temp = (int)(td->shift[0] / (face->d_texture->width*nWidth));
-	temp = (temp+1)*face->d_texture->width*nWidth;
-	td->shift[0] = (int)(temp - td->shift[0])%(face->d_texture->width*nWidth);
+	temp = (int)(td->shift[0] / (face->d_texture->width*width));
+	temp = (temp+1)*face->d_texture->width*width;
+	td->shift[0] = (int)(temp - td->shift[0])%(face->d_texture->width*width);
 	
 	td->shift[1] = min_t/td->scale[1];
-	temp = (int)(td->shift[1] / (face->d_texture->height*nHeight));
-	temp = (temp+1)*(face->d_texture->height*nHeight);
-	td->shift[1] = (int)(temp - td->shift[1])%(face->d_texture->height*nHeight);
+	temp = (int)(td->shift[1] / (face->d_texture->height*height));
+	temp = (temp+1)*(face->d_texture->height*height);
+	td->shift[1] = (int)(temp - td->shift[1])%(face->d_texture->height*height);
 }
 
 
-void Brush_FitTexture( brush_t *b, int nHeight, int nWidth )
+void Brush_FitTexture( brush_t *b, int height, int width )
 {
 	face_t *face;
 	
 	for (face = b->brush_faces ; face ; face=face->next)
 	{
-		Face_FitTexture( face, nHeight, nWidth );
+		Face_FitTexture( face, height, width );
 	}
 }

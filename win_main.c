@@ -175,7 +175,7 @@ qboolean DoColor(int iIndex)
 	cc.lStructSize = sizeof(cc);
 	cc.hwndOwner = g_qeglobals.d_hwndMain;
 //	cc.hInstance = g_qeglobals.d_hInstance;
-	cc.hInstance = g_qeglobals.d_hInstanceColor; //eerie
+	cc.hInstance = g_qeglobals.d_hInstanceColor; //EER1
 	
 	cc.rgbResult = 
 		(int)(g_qeglobals.d_savedinfo.colors[iIndex][0]*255) +
@@ -335,19 +335,19 @@ LONG WINAPI CommandHandler (
 			break;
 
 		case ID_VIEW_NEXTVIEW:
-			if (g_qeglobals.ViewType == XY)
+			if (g_qeglobals.d_viewtype == XY)
 			{
-				g_qeglobals.ViewType = XZ;
+				g_qeglobals.d_viewtype = XZ;
 				SetWindowText(g_qeglobals.d_hwndXY, "XZ Front");
 			}
-			else if (g_qeglobals.ViewType == XZ)
+			else if (g_qeglobals.d_viewtype == XZ)
 			{
-				g_qeglobals.ViewType = YZ;
+				g_qeglobals.d_viewtype = YZ;
 				SetWindowText(g_qeglobals.d_hwndXY, "YZ Side");
 			}
 			else
 			{
-				g_qeglobals.ViewType = XY;
+				g_qeglobals.d_viewtype = XY;
 				SetWindowText(g_qeglobals.d_hwndXY, "XY Top");
 			}
 			PositionView ();
@@ -355,19 +355,19 @@ LONG WINAPI CommandHandler (
 			break;
 
 		case ID_VIEW_XY:
-			g_qeglobals.ViewType = XY;
+			g_qeglobals.d_viewtype = XY;
 			SetWindowText(g_qeglobals.d_hwndXY, "XY Top");
 			PositionView ();
 			Sys_UpdateWindows (W_XY|W_XY_OVERLAY|W_CAMERA);
 			break;
 		case ID_VIEW_FRONT:
-			g_qeglobals.ViewType = XZ;
+			g_qeglobals.d_viewtype = XZ;
 			SetWindowText(g_qeglobals.d_hwndXY, "XZ Front");
 			PositionView ();
 			Sys_UpdateWindows (W_XY|W_XY_OVERLAY|W_CAMERA);
 			break;
 		case ID_VIEW_SIDE:
-			g_qeglobals.ViewType = YZ;
+			g_qeglobals.d_viewtype = YZ;
 			SetWindowText(g_qeglobals.d_hwndXY, "YZ Side");
 			PositionView ();
 			Sys_UpdateWindows (W_XY|W_XY_OVERLAY|W_CAMERA);
@@ -738,7 +738,7 @@ LONG WINAPI CommandHandler (
 		case ID_MISC_SELECTENTITYCOLOR:
 			{
 				
-				if ( ( g_qeglobals.inspector_mode == W_ENTITY ) && DoColor(COLOR_ENTITY) == true )
+				if ( ( g_qeglobals.d_inspector_mode == W_ENTITY ) && DoColor(COLOR_ENTITY) == true )
 				{
 					extern void AddProp( void );
 					
@@ -960,7 +960,7 @@ LONG WINAPI CommandHandler (
 			Select_Delete ();
 			break;
 		case ID_SELECTION_DESELECT:
-			if (g_qeglobals.clipmode)
+			if (g_qeglobals.d_clipmode)
 				UnsetClipMode ();
 			else
 				Select_Deselect ();
@@ -1382,7 +1382,7 @@ void Sys_UpdateGridStatusBar (void)
 	sprintf( gridstatus, "Grid size: %d Snap to grid: %s Clip mode: %s Texture lock: %s", 
 			g_qeglobals.d_gridsize, 
 			g_qeglobals.d_savedinfo.noclamp?"off":"on", 
-			g_qeglobals.clipmode?"on":"off", 
+			g_qeglobals.d_clipmode?"on":"off", 
 			g_qeglobals.d_textures_lock?"on":"off");
 	Sys_Status( gridstatus, 1 );
 }

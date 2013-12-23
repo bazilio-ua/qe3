@@ -418,7 +418,7 @@ void CreateEntityWindow(HINSTANCE hInstance)
 {
 	HWND hwnd;
 
-	g_qeglobals.inspector_mode = W_ENTITY;
+	g_qeglobals.d_inspector_mode = W_ENTITY;
 
 	WEnt_Create (hInstance);
 
@@ -458,15 +458,15 @@ void SetInspectorMode(int iType)
 
 	if (iType == -1)
 	{
-		if (g_qeglobals.inspector_mode == W_ENTITY)
+		if (g_qeglobals.d_inspector_mode == W_ENTITY)
 			iType = W_TEXTURE;
-		else if (g_qeglobals.inspector_mode == W_TEXTURE)
+		else if (g_qeglobals.d_inspector_mode == W_TEXTURE)
 			iType = W_CONSOLE;
 		else
 			iType = W_ENTITY;
 	}		
 
-	g_qeglobals.inspector_mode = iType;
+	g_qeglobals.d_inspector_mode = iType;
 	switch(iType)
 	{
 		
@@ -878,7 +878,7 @@ void SizeEntityDlg(int iWidth, int iHeight)
 	// console
 	//
 
-	if (g_qeglobals.inspector_mode == W_CONSOLE)
+	if (g_qeglobals.d_inspector_mode == W_CONSOLE)
 		col = 0;
 	else
 		col = iWidth;
@@ -890,7 +890,7 @@ void SizeEntityDlg(int iWidth, int iHeight)
 	//
 	// texture controls
 	//
-	if (g_qeglobals.inspector_mode == W_TEXTURE)
+	if (g_qeglobals.d_inspector_mode == W_TEXTURE)
 		col = 0;
 	else
 		col = iWidth;
@@ -902,7 +902,7 @@ void SizeEntityDlg(int iWidth, int iHeight)
 	//
 	// entity controls
 	//
-	if (g_qeglobals.inspector_mode == W_ENTITY)
+	if (g_qeglobals.d_inspector_mode == W_ENTITY)
 		col = 0;
 	else
 		col = iWidth;

@@ -1,7 +1,7 @@
 
 #include "qe3.h"
 
-//#define	MAX_POINTFILE	4096 //eerie
+//#define	MAX_POINTFILE	4096 //EER1
 #define	MAX_POINTFILE	8192
 static vec3_t	s_pointvecs[MAX_POINTFILE];
 static int		s_num_points, s_check_point;

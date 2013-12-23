@@ -365,9 +365,7 @@ void DoAbout(void)
 }
 
 // FIT:
-int		m_nHeight, m_nWidth;
-m_nWidth = 1;
-m_nHeight = 1;
+int		g_fitwidth = 1, g_fitheight = 1;
 
 /*
 ===================================================
@@ -435,10 +433,10 @@ void SetTexMods(void)
 	sprintf(sz, "%d", (int)pt->rotate);
 	SetWindowText(GetDlgItem(g_surfwin, IDC_ROTATE), sz);
 // FIT:
-	sprintf(sz, "%d", (int)m_nHeight);
+	sprintf(sz, "%d", (int)g_fitheight);
 	SetWindowText(GetDlgItem(g_surfwin, IDC_HFIT), sz);
 
-	sprintf(sz, "%d", (int)m_nWidth);
+	sprintf(sz, "%d", (int)g_fitwidth);
 	SetWindowText(GetDlgItem(g_surfwin, IDC_WFIT), sz);
 //
 //	sprintf(sz, "%d", (int)pt->value);
@@ -495,10 +493,10 @@ void GetTexMods(void)
 
 // FIT:
 	GetWindowText(GetDlgItem(g_surfwin, IDC_HFIT), sz, 127);
-	m_nHeight = atof(sz);
+	g_fitheight = atof(sz);
 
 	GetWindowText(GetDlgItem(g_surfwin, IDC_WFIT), sz, 127);
-	m_nWidth = atof(sz);
+	g_fitwidth = atof(sz);
 //
 
 //	GetWindowText(GetDlgItem(g_surfwin, IDC_VALUE), sz, 127);
@@ -595,17 +593,17 @@ void UpdateSpinners(unsigned uMsg, WPARAM wParam, LPARAM lParam)
 	else if (hwnd == GetDlgItem(g_surfwin, IDC_HFITA))
 	{
 		if (nScrollCode == SB_LINEDOWN)
-			m_nHeight -= 1;
+			g_fitheight -= 1;
 		else
-			m_nHeight += 1;
+			g_fitheight += 1;
 	}
 
 	else if (hwnd == GetDlgItem(g_surfwin, IDC_WFITA))
 	{
 		if (nScrollCode == SB_LINEUP)
-			m_nWidth += 1;
+			g_fitwidth += 1;
 		else
-			m_nWidth -= 1;
+			g_fitwidth -= 1;
 	}
 //
 
@@ -649,15 +647,15 @@ BOOL CALLBACK SurfaceDlgProc (
 			char	sz[128];
 
 			GetWindowText(GetDlgItem(g_surfwin, IDC_HFIT), sz, 127);
-			m_nHeight = atof(sz);
+			g_fitheight = atof(sz);
 			GetWindowText(GetDlgItem(g_surfwin, IDC_WFIT), sz, 127);
-			m_nWidth = atof(sz);
+			g_fitwidth = atof(sz);
 
-			Select_FitTexture(m_nHeight, m_nWidth);
+			Select_FitTexture(g_fitheight, g_fitwidth);
 
-			sprintf(sz, "%d", (int)m_nHeight);
+			sprintf(sz, "%d", (int)g_fitheight);
 			SetWindowText(GetDlgItem(g_surfwin, IDC_HFIT), sz);
-			sprintf(sz, "%d", (int)m_nWidth);
+			sprintf(sz, "%d", (int)g_fitwidth);
 			SetWindowText(GetDlgItem(g_surfwin, IDC_WFIT), sz);
 
 			InvalidateRect(g_qeglobals.d_hwndCamera, NULL, false);
@@ -684,7 +682,7 @@ BOOL CALLBACK SurfaceDlgProc (
 	default:
 		return FALSE;
 	}
-	return FALSE; //eerie
+	return FALSE; //EER1
 }
 
 
@@ -709,7 +707,7 @@ BOOL CALLBACK FindTextureDlgProc (
 	char findstr[256];
 	char replacestr[256];
 
-	qboolean bSelected, bForce;
+	qboolean selected, force;
 
 	texdef_t *pt;
 	pt = &g_qeglobals.d_texturewin.texdef;
@@ -727,8 +725,8 @@ BOOL CALLBACK FindTextureDlgProc (
 		SetWindowText(GetDlgItem(g_ftexwin, IDC_EDIT_FIND), findstr);
 		SetWindowText(GetDlgItem(g_ftexwin, IDC_EDIT_REPLACE), replacestr);
 
-		bSelected = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_SELECTED), BM_GETCHECK, 0, 0);
-		bForce = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_FORCE), BM_GETCHECK, 0, 0);
+		selected = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_SELECTED), BM_GETCHECK, 0, 0);
+		force = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_FORCE), BM_GETCHECK, 0, 0);
 		return FALSE;
 
 	case WM_COMMAND: 
@@ -749,10 +747,10 @@ BOOL CALLBACK FindTextureDlgProc (
 					strcpy (pt->name, "none");
 				}
 
-				bSelected = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_SELECTED), BM_GETCHECK, 0, 0);
-				bForce = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_FORCE), BM_GETCHECK, 0, 0);
+				selected = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_SELECTED), BM_GETCHECK, 0, 0);
+				force = SendMessage(GetDlgItem(g_ftexwin, IDC_CHECK_FORCE), BM_GETCHECK, 0, 0);
 
-				FindReplaceTextures (findstr, replacestr, bSelected, bForce);
+				FindReplaceTextures (findstr, replacestr, selected, force);
 
 				EndDialog(hwndDlg, 1);
 				return TRUE;

@@ -36,7 +36,7 @@ typedef struct brush_s
 	struct brush_s	*oprev, *onext;	// links in entity
 	struct entity_s	*owner;
 	vec3_t	mins, maxs;
-	qboolean	hiddenBrush;
+	qboolean	hiddenbrush;
 
 	face_t     *brush_faces;
 } brush_t;
@@ -49,7 +49,7 @@ brush_t *Brush_Clone (brush_t *b);
 brush_t	*Brush_Create (vec3_t mins, vec3_t maxs, texdef_t *texdef);
 void     Brush_Draw( brush_t *b );
 
-void     Brush_DrawXY(brush_t *b, int nViewType);
+void     Brush_DrawXY(brush_t *b, int viewtype);
 
 void     Brush_Free (brush_t *b);
 void     Brush_MakeSided (int sides);
@@ -75,7 +75,7 @@ void	Face_MoveTexture(face_t *f, vec3_t delta);
 
 void	TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv);
 
-void	Brush_FitTexture			(brush_t *b, int nHeight, int nWidth);
-void	Face_FitTexture				(face_t *face, int nHeight, int nWidth);
+void	Brush_FitTexture			(brush_t *b, int height, int width);
+void	Face_FitTexture				(face_t *face, int height, int width);
 
 void	DrawLight(brush_t *b);

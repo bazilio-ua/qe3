@@ -563,12 +563,12 @@ qboolean CullBrush (brush_t *b)
 
 void DrawClipSplits (void)
 {
-	g_qeglobals.pSplitList = NULL;
-	if (g_qeglobals.clipmode)
+	g_qeglobals.d_splitlist = NULL;
+	if (g_qeglobals.d_clipmode)
 	{
-		if (Clip1.bSet && Clip2.bSet)
+		if (clip1.ptset && clip2.ptset)
 		{
-			g_qeglobals.pSplitList = ( (g_qeglobals.ViewType == XZ) ? !g_qeglobals.clipbSwitch : g_qeglobals.clipbSwitch) ? &g_qeglobals.brFrontSplits : &g_qeglobals.brBackSplits;
+			g_qeglobals.d_splitlist = ( (g_qeglobals.d_viewtype == XZ) ? !g_qeglobals.d_clipswitch : g_qeglobals.d_clipswitch) ? &g_qeglobals.d_frontsplits : &g_qeglobals.d_backsplits;
 		}
 	}
 }
@@ -587,7 +587,7 @@ void Cam_Draw (void)
 	float	yfov;
 	double	start, end;
 	int		i;
-	brush_t *pList;
+	brush_t *list;
 
 	if (!active_brushes.next)
 		return;	// not valid yet
@@ -729,7 +729,7 @@ void Cam_Draw (void)
 
 	DrawClipSplits ();
 
-	pList = (g_qeglobals.clipmode && g_qeglobals.pSplitList) ? g_qeglobals.pSplitList : &selected_brushes;
+	list = (g_qeglobals.d_clipmode && g_qeglobals.d_splitlist) ? g_qeglobals.d_splitlist : &selected_brushes;
 
 /*
 	// draw normally
@@ -739,7 +739,7 @@ void Cam_Draw (void)
 	}
 */
 	// draw normally
-	for (brush = pList->next ; brush != pList ; brush=brush->next)
+	for (brush = list->next ; brush != list ; brush=brush->next)
 	{
 		Brush_Draw(brush);
 	}
@@ -753,7 +753,7 @@ void Cam_Draw (void)
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable (GL_TEXTURE_2D);
 
-	for (brush = pList->next ; brush != pList ; brush=brush->next)
+	for (brush = list->next ; brush != list ; brush=brush->next)
 	{
 		for (face=brush->brush_faces ; face ; face=face->next)
 			Face_Draw( face );
@@ -775,7 +775,7 @@ void Cam_Draw (void)
 	glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 	glColor3f (1, 1, 1);
 
-	for (brush = pList->next ; brush != pList ; brush=brush->next)
+	for (brush = list->next ; brush != list ; brush=brush->next)
 	{
 		for (face=brush->brush_faces ; face ; face=face->next)
 			Face_Draw( face );

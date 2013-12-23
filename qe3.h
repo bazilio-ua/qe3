@@ -109,7 +109,7 @@ typedef struct
 //		      d_new_brush_top_z;
 
 	HINSTANCE d_hInstance;
-	HWND      d_hInstanceColor; //eerie
+	HWND      d_hInstanceColor; //EER1
 
 	HGLRC     d_hglrcBase;
 	HDC       d_hdcBase;
@@ -147,7 +147,7 @@ typedef struct
 	xy_t         d_xyz; // it's now for all view
 	z_t          d_z;
 
-	int          ViewType; // XY = x0,y1; XZ = x0,y2; YZ = x1,y2.
+	int          d_viewtype; // XY = x0,y1; XZ = x0,y2; YZ = x1,y2.
 
 	LPMRUMENU    d_lpMruMenu;
 
@@ -169,18 +169,18 @@ typedef struct
 
 	qboolean     d_textures_lock;
 
-	qboolean     clipmode;
+	qboolean     d_clipmode;
+	qboolean     d_clipswitch;
+	
+	brush_t      d_frontsplits;
+	brush_t      d_backsplits;
+	brush_t     *d_splitlist;
 
-	qboolean     clipbSwitch;
-	brush_t      brFrontSplits;
-	brush_t      brBackSplits;
-	brush_t      *pSplitList;
-
-	int          inspector_mode;		// W_TEXTURE, W_ENTITY, or W_CONSOLE
+	int          d_inspector_mode;		// W_TEXTURE, W_ENTITY, or W_CONSOLE
 
 	// handle to the console log file
 	// we use low level I/O to get rid of buffering and have everything on file if we crash
-	int          logfile;
+	int          d_logfile;
 
 } QEGlobals_t;
 
