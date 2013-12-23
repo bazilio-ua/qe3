@@ -826,6 +826,11 @@ LONG WINAPI CommandHandler (
 			Sys_LogFile();
 			break;
 
+		case ID_MISC_HEXEN2_MAP:
+			g_qeglobals.d_savedinfo.hexen2_map = !g_qeglobals.d_savedinfo.hexen2_map;
+			CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_MISC_HEXEN2_MAP, MF_BYCOMMAND | (g_qeglobals.d_savedinfo.hexen2_map ? MF_CHECKED : MF_UNCHECKED)  );
+			break;
+
 		case ID_MISC_FINDBRUSH:
 			DoFindBrush();
 			break;
@@ -1186,6 +1191,7 @@ void Main_Create (HINSTANCE hInstance)
 		g_qeglobals.d_savedinfo.view_radiantlights = true;
 		g_qeglobals.d_savedinfo.noclamp          = false;
 		g_qeglobals.d_savedinfo.logconsole       = false;
+		g_qeglobals.d_savedinfo.hexen2_map       = false;
 
 		for (i=0 ; i<3 ; i++)
 		{
@@ -1235,7 +1241,10 @@ void Main_Create (HINSTANCE hInstance)
 
 		if ( g_qeglobals.d_savedinfo.logconsole )
 			CheckMenuItem( hMenu, IDC_CHECK_LOG, MF_BYCOMMAND | MF_CHECKED );
-		
+
+		if ( g_qeglobals.d_savedinfo.hexen2_map )
+			CheckMenuItem( hMenu, ID_MISC_HEXEN2_MAP, MF_BYCOMMAND | MF_CHECKED );
+
 		if ( !g_qeglobals.d_savedinfo.check_sizepaint )
 			CheckMenuItem( hMenu, IDC_CHECK_SIZEPAINT, MF_BYCOMMAND | MF_UNCHECKED );
 		//

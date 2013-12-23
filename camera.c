@@ -566,7 +566,7 @@ void DrawClipSplits (void)
 	g_qeglobals.d_splitlist = NULL;
 	if (g_qeglobals.d_clipmode)
 	{
-		if (clip1.ptset && clip2.ptset)
+		if (clip1.set && clip2.set)
 		{
 			g_qeglobals.d_splitlist = ( (g_qeglobals.d_viewtype == XZ) ? !g_qeglobals.d_clipswitch : g_qeglobals.d_clipswitch) ? &g_qeglobals.d_frontsplits : &g_qeglobals.d_backsplits;
 		}

@@ -199,6 +199,8 @@ BEGIN
         MENUITEM "Previous leak spot\tCtrl-P",  ID_MISC_PREVIOUSLEAKSPOT
         MENUITEM "&Print XY View",              ID_MISC_PRINTXY
         MENUITEM "&Select Entity Color\tK",     ID_MISC_SELECTENTITYCOLOR
+        MENUITEM SEPARATOR
+        MENUITEM "Hexen II map format",         ID_MISC_HEXEN2_MAP
     END
     POPUP "&Region"
     BEGIN

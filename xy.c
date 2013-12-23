@@ -111,11 +111,11 @@ void ResetClipMode (void)
   if (g_qeglobals.d_clipmode)
   {
 	clip1.ptclip[0] = clip1.ptclip[1] = clip1.ptclip[2] = 0.0;
-	clip1.ptset = false;
+	clip1.set = false;
 	clip2.ptclip[0] = clip2.ptclip[1] = clip2.ptclip[2] = 0.0;
-	clip2.ptset = false;
+	clip2.set = false;
 	clip3.ptclip[0] = clip3.ptclip[1] = clip3.ptclip[2] = 0.0;
-	clip3.ptset = false;
+	clip3.set = false;
 
     CleanList(&g_qeglobals.d_frontsplits);
     CleanList(&g_qeglobals.d_backsplits);
@@ -173,13 +173,13 @@ void ProduceSplitLists (void)
     front = NULL;
     back = NULL;
     
-      if (clip1.ptset && clip2.ptset)
+      if (clip1.set && clip2.set)
       {
         
         VectorCopy (clip1.ptclip, face.planepts[0]);
         VectorCopy (clip2.ptclip, face.planepts[1]);
         VectorCopy (clip3.ptclip, face.planepts[2]);
-        if (clip3.ptset == false)
+        if (clip3.set == false)
         {
           if (g_qeglobals.d_viewtype == XY)
           {
@@ -801,28 +801,28 @@ void DropClipPoint (int x, int y)
 	else
 	{
 		pt = NULL;
-		if (clip1.ptset == false)
+		if (clip1.set == false)
 		{
 			pt = &clip1;
-			clip1.ptset = true;
+			clip1.set = true;
 		}
 		else 
-		if (clip2.ptset == false)
+		if (clip2.set == false)
 		{
 			pt = &clip2;
-			clip2.ptset = true;
+			clip2.set = true;
 		}
 		else 
-		if (clip3.ptset == false)
+		if (clip3.set == false)
 		{
 			pt = &clip3;
-			clip3.ptset = true;
+			clip3.set = true;
 		}
 		else 
 		{
 			ResetClipMode ();
 			pt = &clip1;
-			clip1.ptset = true;
+			clip1.set = true;
 		}
 		SnapToPoint (x, y, pt->ptclip);
 		// third coordinates for clip point: use d_work_max
@@ -858,7 +858,7 @@ void MoveClipPoint (int x, int y)
 		movingclip = NULL;
 		dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
 		dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
-		if (clip1.ptset)
+		if (clip1.set)
 		{
 			if ( fDiff(clip1.ptclip[dim1], tdp[dim1]) < 1 &&
 				 fDiff(clip1.ptclip[dim2], tdp[dim2]) < 1 )
@@ -866,7 +866,7 @@ void MoveClipPoint (int x, int y)
 				movingclip = &clip1;
 			}
 		}
-		if (clip2.ptset)
+		if (clip2.set)
 		{
 			if ( fDiff(clip2.ptclip[dim1], tdp[dim1]) < 1 &&
 				 fDiff(clip2.ptclip[dim2], tdp[dim2]) < 1 )
@@ -874,7 +874,7 @@ void MoveClipPoint (int x, int y)
 				movingclip = &clip2;
 			}
 		}
-		if (clip3.ptset)
+		if (clip3.set)
 		{
 			if ( fDiff(clip3.ptclip[dim1], tdp[dim1]) < 1 &&
 				 fDiff(clip3.ptclip[dim2], tdp[dim2]) < 1 )
@@ -913,35 +913,35 @@ void DrawClipPoint (void)
 	glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER]);
 	glBegin (GL_POINTS);
 
-	if (clip1.ptset)
+	if (clip1.set)
 		glVertex3fv (clip1.ptclip);
-	if (clip2.ptset)
+	if (clip2.set)
 		glVertex3fv (clip2.ptclip);
-	if (clip3.ptset)
+	if (clip3.set)
 		glVertex3fv (clip3.ptclip);
 
 	glEnd ();
 	glPointSize (1);
      
-	if (clip1.ptset)
+	if (clip1.set)
 	{
 		glRasterPos3f (clip1.ptclip[0]+2, clip1.ptclip[1]+2, clip1.ptclip[2]+2);
 		strcpy (strmsg, "1");
 		glCallLists (strlen(strmsg), GL_UNSIGNED_BYTE, strmsg);
 	}
-	if (clip2.ptset)
+	if (clip2.set)
 	{
 		glRasterPos3f (clip2.ptclip[0]+2, clip2.ptclip[1]+2, clip2.ptclip[2]+2);
 		strcpy (strmsg, "2");
 		glCallLists (strlen(strmsg), GL_UNSIGNED_BYTE, strmsg);
 	}
-	if (clip3.ptset)
+	if (clip3.set)
 	{
 		glRasterPos3f (clip3.ptclip[0]+2, clip3.ptclip[1]+2, clip3.ptclip[2]+2);
 		strcpy (strmsg, "3");
 		glCallLists (strlen(strmsg), GL_UNSIGNED_BYTE, strmsg);
 	}
-	if (clip1.ptset && clip2.ptset)
+	if (clip1.set && clip2.set)
 	{
 		ProduceSplitLists();
 		list = ( (g_qeglobals.d_viewtype == XZ) ? !g_qeglobals.d_clipswitch : g_qeglobals.d_clipswitch) ? &g_qeglobals.d_frontsplits : &g_qeglobals.d_backsplits;

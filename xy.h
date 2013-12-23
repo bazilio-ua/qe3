@@ -17,7 +17,7 @@ typedef struct
 
 typedef struct
 {
-	qboolean	ptset;
+	qboolean	set;
 	vec3_t		ptclip;     // the 3d point
 } clippoint_t;
 

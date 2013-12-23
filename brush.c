@@ -830,7 +830,14 @@ brush_t *Brush_Parse (void)
 		f->texdef.scale[0] = atof(token);
 		GetToken (false);
 		f->texdef.scale[1] = atof(token);
-		
+
+		if ( g_qeglobals.d_savedinfo.hexen2_map )
+		{
+			int	l;
+			GetToken (false);
+			l = atoi(token); // just read hexen2 unused 'light/rad' map flag, needed for h2bsp
+		}
+
 		StringTolower (f->texdef.name);
 
 		// the flags and value field aren't necessarily present
@@ -888,6 +895,12 @@ void Brush_Write (brush_t *b, FILE *f)
 			fprintf (f, "%i", (int)fa->texdef.scale[1]);
 		else
 			fprintf (f, "%f", (float)fa->texdef.scale[1]);
+
+		if ( g_qeglobals.d_savedinfo.hexen2_map )
+		{
+			int	l = 0;
+			fprintf (f, " %i", (int)l); // just write hexen2 unused 'light/rad' map flag, needed for h2bsp
+		}
 
 		// only output flags and value if not default
 /*

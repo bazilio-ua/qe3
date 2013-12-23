@@ -65,7 +65,8 @@ typedef struct
 			  check_sizepaint,
 			  view_radiantlights,
 			  noclamp,
-			  logconsole;
+			  logconsole,
+			  hexen2_map;	// enable hexen2 unused 'light/rad' map flag, needed for h2bsp
 	int       exclude;
 } SavedInfo_t;
 

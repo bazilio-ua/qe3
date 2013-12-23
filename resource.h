@@ -322,13 +322,14 @@
 #define ID_VIEW_LINEAR_ANISOTROPY       40186
 #define ID_VIEW_TEXTURES                40187
 #define ID_TEXTURES_POPUP               40196
+#define ID_MISC_HEXEN2_MAP              40197
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         40197
+#define _APS_NEXT_COMMAND_VALUE         40198
 #define _APS_NEXT_CONTROL_VALUE         1118
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
