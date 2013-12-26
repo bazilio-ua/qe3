@@ -817,7 +817,13 @@ LONG WINAPI CommandHandler (
 			break;
 
 		case ID_MISC_GAMMA:
-			DoGamma();
+			{
+				float g = g_qeglobals.d_savedinfo.fGamma;
+				
+				DoGamma();
+				if (g != g_qeglobals.d_savedinfo.fGamma)
+					MessageBox(g_qeglobals.d_hwndMain, "You must restart QE3 for Gamma settings to take place", "Gamma", MB_OK | MB_ICONINFORMATION); 
+			}
 			break;
 
 		case IDC_CHECK_LOG:

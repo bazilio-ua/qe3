@@ -38,17 +38,8 @@ BOOL CALLBACK GammaDlgProc (
 
 void DoGamma(void)
 {
-	char *psz, sz[256];
 	if ( DialogBox(g_qeglobals.d_hInstance, (char *)IDD_GAMMA, g_qeglobals.d_hwndMain, GammaDlgProc))
 	{
-		psz = ValueForKey(world_entity, "wad");
-		if (psz)
-		{
-			strcpy(sz, psz);
-//			Texture_Init();
-//			Texture_Flush();
-			Texture_ShowInuse();
-		}
 	}
 }		
 
