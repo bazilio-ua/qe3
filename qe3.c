@@ -195,8 +195,7 @@ qboolean QE_KeyDown (int key)
 		break;
 		
 	case '0':
-		g_qeglobals.d_showgrid = !g_qeglobals.d_showgrid;
-		PostMessage( g_qeglobals.d_hwndXY, WM_PAINT, 0, 0 );
+		PostMessage (g_qeglobals.d_hwndMain, WM_COMMAND, ID_SHOWGRID, 0);
 		break;
 	case '1':
 		PostMessage (g_qeglobals.d_hwndMain, WM_COMMAND, ID_GRID_1, 0);
@@ -221,6 +220,9 @@ qboolean QE_KeyDown (int key)
 		break;
 	case '8':
 		PostMessage (g_qeglobals.d_hwndMain, WM_COMMAND, ID_GRID_128, 0);
+		break;
+	case '9':
+		PostMessage (g_qeglobals.d_hwndMain, WM_COMMAND, ID_GRID_256, 0);
 		break;
 		
 	case 'E':

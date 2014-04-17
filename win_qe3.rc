@@ -145,6 +145,9 @@ BEGIN
         MENUITEM "Grid32\t&6",                  ID_GRID_32
         MENUITEM "Grid64\t&7",                  ID_GRID_64
         MENUITEM "Grid128\t&8",                 ID_GRID_128
+        MENUITEM "Grid256\t&9",                 ID_GRID_256
+        MENUITEM SEPARATOR
+        MENUITEM "Show grid\t&0",               ID_SHOWGRID, CHECKED
         MENUITEM SEPARATOR
         MENUITEM "Snap to grid",                ID_SNAPTOGRID, CHECKED
     END

@@ -444,7 +444,7 @@ LONG WINAPI CommandHandler (
 		case ID_VIEW_SHOWCOORDINATES:
 			g_qeglobals.d_savedinfo.show_coordinates ^= 1;
 			CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_VIEW_SHOWCOORDINATES, MF_BYCOMMAND | (g_qeglobals.d_savedinfo.show_coordinates ? MF_CHECKED : MF_UNCHECKED)  );
-			Sys_UpdateWindows (W_XY);
+			Sys_UpdateWindows (W_XY|W_Z);
 			break;
 
 		case ID_VIEW_SHOWBLOCKS:
@@ -547,6 +547,7 @@ LONG WINAPI CommandHandler (
 		case ID_GRID_32:
 		case ID_GRID_64:
 		case ID_GRID_128:
+		case ID_GRID_256:
 		{
 			hMenu = GetMenu(hWnd);
 			
@@ -558,6 +559,7 @@ LONG WINAPI CommandHandler (
 			CheckMenuItem(hMenu, ID_GRID_32, MF_BYCOMMAND | MF_UNCHECKED);
 			CheckMenuItem(hMenu, ID_GRID_64, MF_BYCOMMAND | MF_UNCHECKED);
 			CheckMenuItem(hMenu, ID_GRID_128, MF_BYCOMMAND | MF_UNCHECKED);
+			CheckMenuItem(hMenu, ID_GRID_256, MF_BYCOMMAND | MF_UNCHECKED);
 
 			switch (LOWORD(wParam))
 			{
@@ -569,6 +571,7 @@ LONG WINAPI CommandHandler (
 				case ID_GRID_32: g_qeglobals.d_gridsize = 5; break;
 				case ID_GRID_64: g_qeglobals.d_gridsize = 6; break;
 				case ID_GRID_128: g_qeglobals.d_gridsize = 7; break;
+				case ID_GRID_256: g_qeglobals.d_gridsize = 8; break;
 			}
 			g_qeglobals.d_gridsize = 1 << g_qeglobals.d_gridsize;
 
@@ -577,7 +580,13 @@ LONG WINAPI CommandHandler (
 			Sys_UpdateGridStatusBar ();
 			break;
 		}
-
+		
+		case ID_SHOWGRID:
+			g_qeglobals.d_showgrid ^= 1;
+			CheckMenuItem ( GetMenu(hWnd), ID_SHOWGRID, MF_BYCOMMAND | (g_qeglobals.d_showgrid ? MF_CHECKED : MF_UNCHECKED)  );
+			Sys_UpdateWindows (W_XY|W_Z);
+			break;
+		
 		case ID_SNAPTOGRID:
 			g_qeglobals.d_savedinfo.noclamp ^= 1;
 			CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_SNAPTOGRID, MF_BYCOMMAND | ((!g_qeglobals.d_savedinfo.noclamp) ? MF_CHECKED : MF_UNCHECKED)  );

@@ -1003,11 +1003,19 @@ void XY_DrawGrid (void)
 	char	text[32];
 	int		dim1, dim2;
 	char	view[20];
+	int		size;
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_1D);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+
+	if (g_qeglobals.d_gridsize == 128)
+		size = 128;
+	else if (g_qeglobals.d_gridsize == 256)
+		size = 256;
+	else
+		size = 64;
 
 	w = g_qeglobals.d_xyz.width/2 / g_qeglobals.d_xyz.scale;
 	h = g_qeglobals.d_xyz.height/2 / g_qeglobals.d_xyz.scale;
@@ -1018,45 +1026,40 @@ void XY_DrawGrid (void)
 	xb = g_qeglobals.d_xyz.origin[dim1] - w;
 	if (xb < region_mins[dim1])
 		xb = region_mins[dim1];
-	xb = 64 * floor (xb/64);
+	xb = size * floor (xb/size);
 
 	xe = g_qeglobals.d_xyz.origin[dim1] + w;
 	if (xe > region_maxs[dim1])
 		xe = region_maxs[dim1];
-	xe = 64 * ceil (xe/64);
+	xe = size * ceil (xe/size);
 
 	yb = g_qeglobals.d_xyz.origin[dim2] - h;
 	if (yb < region_mins[dim2])
 		yb = region_mins[dim2];
-	yb = 64 * floor (yb/64);
+	yb = size * floor (yb/size);
 
 	ye = g_qeglobals.d_xyz.origin[dim2] + h;
 	if (ye > region_maxs[dim2])
 		ye = region_maxs[dim2];
-	ye = 64 * ceil (ye/64);
+	ye = size * ceil (ye/size);
 
 	// draw major blocks
-
-	glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR]);
-
 	if ( g_qeglobals.d_showgrid )
 	{
+		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR]);
 		
 		glBegin (GL_LINES);
-		
-		for (x=xb ; x<=xe ; x+=64)
+		for (x=xb ; x<=xe ; x+=size)
 		{
 			glVertex2f (x, yb);
 			glVertex2f (x, ye);
 		}
-		for (y=yb ; y<=ye ; y+=64)
+		for (y=yb ; y<=ye ; y+=size)
 		{
 			glVertex2f (xb, y);
 			glVertex2f (xe, y);
 		}
-		
 		glEnd ();
-		
 	}
 
 	// draw minor blocks
@@ -1083,19 +1086,18 @@ void XY_DrawGrid (void)
 	}
 
 	// draw coordinate text if needed
-
 	if ( g_qeglobals.d_savedinfo.show_coordinates)
 	{
 		//glColor4f(0, 0, 0, 0);
 		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT]);
 
-		for (x=xb ; x<xe ; x+=64)
+		for (x=xb ; x<xe ; x+=size)
 		{
 			glRasterPos2f (x, g_qeglobals.d_xyz.origin[dim2] + h - 6/g_qeglobals.d_xyz.scale);
 			sprintf (text, "%i",(int)x);
 			glCallLists (strlen(text), GL_UNSIGNED_BYTE, text);
 		}
-		for (y=yb ; y<ye ; y+=64)
+		for (y=yb ; y<ye ; y+=size)
 		{
 			glRasterPos2f (g_qeglobals.d_xyz.origin[dim1] - w + 1, y);
 			sprintf (text, "%i",(int)y);
@@ -1198,7 +1200,6 @@ void XY_DrawBlockGrid (void)
 	glLineWidth (1);
 
 	// draw coordinate text if needed
-
 	for (x=xb ; x<xe ; x+=1024)
 		for (y=yb ; y<ye ; y+=1024)
 		{

@@ -168,6 +168,14 @@ void Z_DrawGrid (void)
 	float	zz, zb, ze;
 	int		w, h;
 	char	text[32];
+	int		size;
+
+	if (g_qeglobals.d_gridsize == 128)
+		size = 128;
+	else if (g_qeglobals.d_gridsize == 256)
+		size = 256;
+	else
+		size = 64;
 
 	w = g_qeglobals.d_z.width/2 / g_qeglobals.d_z.scale;
 	h = g_qeglobals.d_z.height/2 / g_qeglobals.d_z.scale;
@@ -175,32 +183,31 @@ void Z_DrawGrid (void)
 	zb = g_qeglobals.d_z.origin[2] - h;
 	if (zb < region_mins[2])
 		zb = region_mins[2];
-	zb = 64 * floor (zb/64);
+	zb = size * floor (zb/size);
 
 	ze = g_qeglobals.d_z.origin[2] + h;
 	if (ze > region_maxs[2])
 		ze = region_maxs[2];
-	ze = 64 * ceil (ze/64);
-
+	ze = size * ceil (ze/size);
+	
 	// draw major blocks
-
-	glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR]);
-
-	glBegin (GL_LINES);
-
-	glVertex2f (0, zb);
-	glVertex2f (0, ze);
-
-	for (zz=zb ; zz<ze ; zz+=64)
+	if ( g_qeglobals.d_showgrid )
 	{
-		glVertex2f (-w, zz);
-		glVertex2f (w, zz);
+		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR]);
+		
+		glBegin (GL_LINES);
+		glVertex2f (0, zb);
+		glVertex2f (0, ze);
+		for (zz=zb ; zz<ze ; zz+=size)
+		{
+			glVertex2f (-w, zz);
+			glVertex2f (w, zz);
+		}
+		glEnd ();
 	}
-
-	glEnd ();
-
+	
 	// draw minor blocks
-	if (g_qeglobals.d_showgrid && g_qeglobals.d_gridsize*g_qeglobals.d_z.scale >= 4)
+	if ( g_qeglobals.d_showgrid && g_qeglobals.d_gridsize*g_qeglobals.d_z.scale >= 4)
 	{
 		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR]);
 
@@ -214,16 +221,19 @@ void Z_DrawGrid (void)
 		}
 		glEnd ();
 	}
-
+	
 	// draw coordinate text if needed
-
-	glColor4f(0, 0, 0, 0);
-
-	for (zz=zb ; zz<ze ; zz+=64)
+	if ( g_qeglobals.d_savedinfo.show_coordinates)
 	{
-		glRasterPos2f (-w+1, zz);
-		sprintf (text, "%i",(int)zz);
-		glCallLists (strlen(text), GL_UNSIGNED_BYTE, text);
+//		glColor4f(0, 0, 0, 0);
+		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT]);
+		
+		for (zz=zb ; zz<ze ; zz+=size)
+		{
+			glRasterPos2f (-w+1, zz);
+			sprintf (text, "%i",(int)zz);
+			glCallLists (strlen(text), GL_UNSIGNED_BYTE, text);
+		}
 	}
 }
 
