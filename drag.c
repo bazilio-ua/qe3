@@ -233,10 +233,13 @@ void Drag_Begin (int x, int y, int buttons,
 	// shift LBUTTON = select entire brush
 	if (buttons == (MK_LBUTTON | MK_SHIFT))
 	{
+		int	flag;
+		
+		flag = GetAsyncKeyState(VK_MENU) ? SF_CYCLE : 0;	// single selection cycle (shift+alt+LBUTTON)
 		if (!dir[0] && !dir[1])
-			Select_Ray (origin, dir, SF_ENTITIES_FIRST);	// hack for XY
+			Select_Ray (origin, dir, flag | SF_ENTITIES_FIRST);	// hack for XY
 		else
-			Select_Ray (origin, dir, 0);
+			Select_Ray (origin, dir, flag);
 		return;
 	}
 

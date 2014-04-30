@@ -8,7 +8,6 @@
 Test_Ray
 ===========
 */
-#define	DIST_START	999999
 trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags)
 {
 	brush_t	*brush;
@@ -19,7 +18,70 @@ trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags)
 	memset (&t, 0, sizeof(t));
 	t.dist = DIST_START;
 
+	// single selection cycle (shift+alt+LBUTTON)
+	if (flags & SF_CYCLE)
+	{
+		int			size, j = 0;
+		brush_t	   *select;
+		brush_t	   *array[MAX_MAP_BRUSHES];  
+
+		select = (selected_brushes.next != &selected_brushes) ? selected_brushes.next : NULL;
+		Select_Deselect();
+
+		// go through active brushes and accumulate all "hit" brushes
+		for (brush = active_brushes.next; brush != &active_brushes; brush = brush->next)
+		{
+			if (FilterBrush (brush))
+				continue;
+
+			face = Brush_Ray (origin, dir, brush, &dist);
+
+			if (face)
+			{
+				array[j] = brush;
+				j++;
+			}
+		}
+
+		size = j;
+		if (size)
+		{
+			brush_t	   *b;
+			qboolean	found = false;
+			int			i;
+
+			for (i = 0; i < size; i++)
+			{
+				b = array[i];
+				// did we hit the last one selected yet ?
+				if (b == select)
+				{
+					// yes we want to select the next one in the list 
+					int n = (i > 0) ? i - 1: size - 1;
+					select = array[n];
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				j = 0;
+				select = array[0];
+			}
+		}
+		if (select)
+		{
+			face = Brush_Ray (origin, dir, select, &dist);
+			t.dist = dist;
+			t.brush = select;
+			t.face = face;
+			t.selected = false;
+			return t;
+		}
+	}
+
 	if (! (flags & SF_SELECTED_ONLY) )
+	{
 		for (brush = active_brushes.next ; brush != &active_brushes ; brush=brush->next)
 		{
 			if ( (flags & SF_ENTITIES_FIRST) && brush->owner == world_entity)
@@ -35,6 +97,7 @@ trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags)
 				t.selected = false;
 			}
 		}
+	}
 	for (brush = selected_brushes.next ; brush != &selected_brushes ; brush=brush->next)
 	{
 		if ( (flags & SF_ENTITIES_FIRST) && brush->owner == world_entity)
@@ -52,7 +115,6 @@ trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags)
 	}
 
 	// if entites first, but didn't find any, check regular
-
 	if ( (flags & SF_ENTITIES_FIRST) && t.brush == NULL)
 		return Test_Ray (origin, dir, flags - SF_ENTITIES_FIRST);
 

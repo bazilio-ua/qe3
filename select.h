@@ -1,4 +1,6 @@
 
+#define	DIST_START	999999
+
 typedef enum
 {
 	sel_brush,
@@ -19,7 +21,7 @@ typedef struct
 #define	SF_SELECTED_ONLY	1
 #define	SF_ENTITIES_FIRST	2
 #define	SF_SINGLEFACE		4
-
+#define SF_CYCLE			8
 
 trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags);
 
