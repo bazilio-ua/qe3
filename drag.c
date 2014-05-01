@@ -469,7 +469,8 @@ Drag_MouseUp
 */
 void Drag_MouseUp (void)
 {
-	Sys_Printf ("Drag completed.\n");
+	if (drag_ok)
+		Sys_Printf ("Drag completed.\n");
 	if (g_qeglobals.d_select_translate[0] || g_qeglobals.d_select_translate[1] || g_qeglobals.d_select_translate[2])
 	{
 		Select_Move (g_qeglobals.d_select_translate);

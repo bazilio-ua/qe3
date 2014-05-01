@@ -1,16 +1,16 @@
 #include <assert.h>
 #include "qe3.h"
-#include "winding.h"
+//#include "winding.h"
 
-#define MAX_POINTS_ON_WINDING	64
+//#define MAX_POINTS_ON_WINDING	64
 
 face_t *Face_Alloc( void );
 void    Face_Free( face_t *f );
 
-winding_t	*NewWinding (int points);
-void		FreeWinding (winding_t *w);
-winding_t	*Winding_Clone( winding_t *w );
-winding_t	*ClipWinding (winding_t *in, plane_t *split, qboolean keepon);
+//winding_t	*NewWinding (int points);
+//void		FreeWinding (winding_t *w);
+//winding_t	*Winding_Clone( winding_t *w );
+//winding_t	*ClipWinding (winding_t *in, plane_t *split, qboolean keepon);
 
 brush_t *Brush_Alloc()
 {
@@ -41,7 +41,7 @@ void PrintVector (vec3_t v)
 
 //============================================================================
 
-#define	BOGUS_RANGE	18000
+//#define	BOGUS_RANGE	18000
 
 
 /*
@@ -49,6 +49,7 @@ void PrintVector (vec3_t v)
 NewWinding
 ==================
 */
+/*
 winding_t *NewWinding (int points)
 {
 	winding_t	*w;
@@ -70,13 +71,14 @@ void FreeWinding (winding_t *w)
 {
 	free (w);
 }
-
+*/
 
 /*
 ==================
 Winding_Clone
 ==================
 */
+/*
 winding_t *Winding_Clone(winding_t *w)
 {
 	int			size;
@@ -87,7 +89,7 @@ winding_t *Winding_Clone(winding_t *w)
 	memcpy (c, w, size);
 	return c;
 }
-
+*/
 
 /*
 ==================
@@ -99,6 +101,7 @@ If keepon is true, an exactly on-plane winding will be saved, otherwise
 it will be clipped away.
 ==================
 */
+/*
 winding_t *ClipWinding (winding_t *in, plane_t *split, qboolean keepon)
 {
 	vec_t	dists[MAX_POINTS_ON_WINDING];
@@ -193,7 +196,7 @@ winding_t *ClipWinding (winding_t *in, plane_t *split, qboolean keepon)
 	
 	return neww;
 }
-
+*/
 
 /*
 =============================================================================
@@ -546,6 +549,7 @@ void Face_MoveTexture(face_t *f, vec3_t move)
 BasePolyForPlane
 =================
 */
+/*
 winding_t *BasePolyForPlane (plane_t *p)
 {
 	int		i, x;
@@ -612,6 +616,7 @@ winding_t *BasePolyForPlane (plane_t *p)
 	
 	return w;	
 }
+*/
 
 void Brush_MakeFacePlanes (brush_t *b)
 {
@@ -716,7 +721,7 @@ winding_t	*Brush_MakeFaceWinding (brush_t *b, face_t *face)
 	qboolean		past;
 
 	// get a poly that covers an effectively infinite area
-	w = BasePolyForPlane (&face->plane);
+	w = Winding_BaseForPlane (&face->plane);
 
 	// chop the poly by all of the other faces
 	past = false;
@@ -742,7 +747,7 @@ winding_t	*Brush_MakeFaceWinding (brush_t *b, face_t *face)
 		VectorSubtract (vec3_origin,clip->plane.normal, plane.normal);
 		plane.dist = -clip->plane.dist;
 		
-		w = ClipWinding (w, &plane, false);
+		w = Winding_Clip (w, &plane, false);
 		if (!w)
 			return w;
 	}
