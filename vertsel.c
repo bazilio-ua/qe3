@@ -127,36 +127,36 @@ void SelectVertex (int p1)
 	face_t		*f;
 
 	for (b=selected_brushes.next ; b != &selected_brushes ; b=b->next)
-  {
-	  for (f=b->brush_faces ; f ; f=f->next)
-	  {
-		  w =  Brush_MakeFaceWinding (b, f);
-		  if (!w)
-			  continue;
-		  for (i=0 ; i<w->numpoints ; i++)
-		  {
-			  if (FindPoint (w->points[i]) == p1)
-			  {
-				  VectorCopy (w->points[(i+w->numpoints-1)%w->numpoints], f->planepts[0]);
-				  VectorCopy (w->points[i], f->planepts[1]);
-				  VectorCopy (w->points[(i+1)%w->numpoints], f->planepts[2]);
-			    for (j=0 ; j<3 ; j++)
-          {
-				    for (k=0 ; k<3 ; k++)
-            {
-					    ;//f->planepts[j][k] = floor(f->planepts[j][k]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
-            } 
-          }
-
-			    AddPlanept (f->planepts[1]);
-          //MessageBeep(-1);
-
-			    break;
-        }
-		  }
-		  free (w);
-	  }
-  }
+	{
+		for (f=b->brush_faces ; f ; f=f->next)
+		{
+			w =  Brush_MakeFaceWinding (b, f);
+			if (!w)
+				continue;
+			for (i=0 ; i<w->numpoints ; i++)
+			{
+				if (FindPoint (w->points[i]) == p1)
+				{
+					VectorCopy (w->points[(i+w->numpoints-1)%w->numpoints], f->planepts[0]);
+					VectorCopy (w->points[i], f->planepts[1]);
+					VectorCopy (w->points[(i+1)%w->numpoints], f->planepts[2]);
+					for (j=0 ; j<3 ; j++)
+					{
+						for (k=0 ; k<3 ; k++)
+						{
+							;//f->planepts[j][k] = floor(f->planepts[j][k]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
+						} 
+					}
+					
+					AddPlanept (f->planepts[1]);
+					//MessageBeep(-1);
+					
+					break;
+				}
+			}
+			free (w);
+		}
+	}
 /*	b = selected_brushes.next;
 	for (f=b->brush_faces ; f ; f=f->next)
 	{
@@ -269,6 +269,4 @@ void SelectVertexByRay (vec3_t org, vec3_t dir)
 	g_qeglobals.d_move_points[g_qeglobals.d_num_move_points++] = g_qeglobals.d_points[besti];
 	//SelectVertex (besti);
 }
-
-
 

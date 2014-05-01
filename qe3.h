@@ -14,6 +14,7 @@
 #include "glingr.h"
 #include <math.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "cmdlib.h"
 #include "mathlib.h"

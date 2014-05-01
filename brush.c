@@ -1,4 +1,5 @@
-#include <assert.h>
+// brush.c
+
 #include "qe3.h"
 
 
@@ -302,6 +303,7 @@ void Face_MakePlane (face_t *f)
 	f->plane.dist = DotProduct (t3, f->plane.normal);
 }
 
+/*
 void _EmitTextureCoordinates (vec3_t v, qtexture_t *q)
 {
 	float	s, t;
@@ -317,6 +319,7 @@ void _EmitTextureCoordinates (vec3_t v, qtexture_t *q)
 
 	glTexCoord2f (s, t);
 }
+*/
 
 void EmitTextureCoordinates ( float *xyzst, qtexture_t *q, face_t *f)
 {
@@ -611,11 +614,14 @@ qboolean Brush_Convex(brush_t *b)
 
 	for (face1 = b->brush_faces; face1; face1 = face1->next)
 	{
-		if (!face1->face_winding) continue;
+		if (!face1->face_winding) 
+			continue;
 		for (face2 = b->brush_faces; face2; face2 = face2->next)
 		{
-			if (face1 == face2) continue;
-			if (!face2->face_winding) continue;
+			if (face1 == face2) 
+				continue;
+			if (!face2->face_winding) 
+				continue;
 			if (Winding_PlanesConcave(face1->face_winding, face2->face_winding,
 										face1->plane.normal, face2->plane.normal,
 										face1->plane.dist, face2->plane.dist))
