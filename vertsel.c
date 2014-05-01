@@ -1,5 +1,7 @@
+// vertsel.c
 
 #include "qe3.h"
+
 
 int	FindPoint (vec3_t point)
 {
@@ -119,6 +121,7 @@ void SelectFaceEdge (brush_t* b, face_t *f, int p1, int p2)
 	free (w);
 }
 
+/*
 void SelectVertex (int p1)
 {
 	brush_t		*b;
@@ -157,35 +160,36 @@ void SelectVertex (int p1)
 			free (w);
 		}
 	}
-/*	b = selected_brushes.next;
-	for (f=b->brush_faces ; f ; f=f->next)
-	{
-		w =  MakeFaceWinding (b, f);
-		if (!w)
-			continue;
-		for (i=0 ; i<w->numpoints ; i++)
-		{
-			if (FindPoint (w->points[i]) == p1)
-			{
-				VectorCopy (w->points[(i+w->numpoints-1)%w->numpoints], f->planepts[0]);
-				VectorCopy (w->points[i], f->planepts[1]);
-				VectorCopy (w->points[(i+1)%w->numpoints], f->planepts[2]);
-			for (j=0 ; j<3 ; j++)
-			{
-				for (k=0 ; k<3 ; k++)
-				{
-					f->planepts[j][k] = floor(f->planepts[j][k]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
-				}
-			}
-
-				AddPlanept (f->planepts[1]);
-				break;
-			}
-		}
-		free (w);
-	}
-*/
+//	b = selected_brushes.next;
+//	for (f=b->brush_faces ; f ; f=f->next)
+//	{
+//		w =  MakeFaceWinding (b, f);
+//		if (!w)
+//			continue;
+//		for (i=0 ; i<w->numpoints ; i++)
+//		{
+//			if (FindPoint (w->points[i]) == p1)
+//			{
+//				VectorCopy (w->points[(i+w->numpoints-1)%w->numpoints], f->planepts[0]);
+//				VectorCopy (w->points[i], f->planepts[1]);
+//				VectorCopy (w->points[(i+1)%w->numpoints], f->planepts[2]);
+//			for (j=0 ; j<3 ; j++)
+//			{
+//				for (k=0 ; k<3 ; k++)
+//				{
+//					f->planepts[j][k] = floor(f->planepts[j][k]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
+//				}
+//			}
+//
+//				AddPlanept (f->planepts[1]);
+//				break;
+//			}
+//		}
+//		free (w);
+//	}
+//
 }
+*/
 
 void SelectEdgeByRay (vec3_t org, vec3_t dir)
 {

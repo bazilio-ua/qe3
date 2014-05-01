@@ -1,3 +1,5 @@
+// qe3.h -- main header
+
 #ifndef __QE3_H__
 #define __QE3_H__
 

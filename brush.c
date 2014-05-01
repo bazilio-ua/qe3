@@ -321,6 +321,11 @@ void _EmitTextureCoordinates (vec3_t v, qtexture_t *q)
 }
 */
 
+/*
+================
+EmitTextureCoordinates
+================
+*/
 void EmitTextureCoordinates ( float *xyzst, qtexture_t *q, face_t *f)
 {
 	float	s, t, ns, nt;

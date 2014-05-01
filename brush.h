@@ -1,4 +1,3 @@
-
 // brush.h
 
 typedef struct
