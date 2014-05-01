@@ -1,14 +1,12 @@
 
 // brush.h
 
-
 typedef struct
 {
 	int		numpoints;
 	int		maxpoints;
 	float 	points[8][5];			// variable sized
 } winding_t;
-
 
 // the normals on planes point OUT of the brush
 #define	MAXPOINTS	16
@@ -52,6 +50,7 @@ void     Brush_Draw( brush_t *b );
 
 void     Brush_DrawXY(brush_t *b, int viewtype);
 
+brush_t	*Brush_Alloc ();
 void     Brush_Free (brush_t *b);
 void     Brush_MakeSided (int sides);
 void     Brush_Move (brush_t *b, vec3_t move);
@@ -68,17 +67,15 @@ void	Brush_RemoveEmptyFaces ( brush_t *b );
 winding_t *Brush_MakeFaceWinding (brush_t *b, face_t *face);
 
 int        AddPlanept (float *f);
+
+face_t    *Face_Alloc ( void );
+void       Face_Free ( face_t *f );
 face_t	  *Face_Clone (face_t *f);
 void       Face_MakePlane (face_t *f);
 void       Face_Draw( face_t *face );
 
-brush_t	*Brush_Alloc ();
-face_t	*Face_Alloc( void );
-
 void	Face_MoveTexture(face_t *f, vec3_t delta);
-
 void	TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv);
-
 void	Brush_FitTexture			(brush_t *b, int height, int width);
 void	Face_FitTexture				(face_t *face, int height, int width);
 
