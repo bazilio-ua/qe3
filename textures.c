@@ -1,5 +1,7 @@
+// texture.c
+
 #include "qe3.h"
-#include "io.h"
+//#include "io.h"
 
 static unsigned	tex_palette[256];
 

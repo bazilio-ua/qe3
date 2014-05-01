@@ -17,6 +17,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <io.h>
 
 #include "cmdlib.h"
 #include "mathlib.h"
