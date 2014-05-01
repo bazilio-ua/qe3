@@ -15,6 +15,7 @@ typedef struct
 typedef struct face_s
 {
 	struct face_s	*next;
+	struct face_s	*original;		//used for vertex movement
 	vec3_t		planepts[3];
     texdef_t	texdef;
 
@@ -54,6 +55,8 @@ void     Brush_DrawXY(brush_t *b, int viewtype);
 void     Brush_Free (brush_t *b);
 void     Brush_MakeSided (int sides);
 void     Brush_Move (brush_t *b, vec3_t move);
+qboolean Brush_MoveVertex (brush_t *b, vec3_t vertex, vec3_t delta, vec3_t end);
+void     Brush_ResetFaceOriginals (brush_t *b);
 brush_t *Brush_Parse (void);
 face_t  *Brush_Ray (vec3_t origin, vec3_t dir, brush_t *b, float *dist);
 void     Brush_RemoveFromList (brush_t *b);
@@ -62,11 +65,12 @@ void     Brush_SetTexture (brush_t *b, texdef_t *texdef);
 void     Brush_SideSelect (brush_t *b, vec3_t origin, vec3_t dir, qboolean shear);
 void     Brush_Write (brush_t *b, FILE *f);
 void	Brush_RemoveEmptyFaces ( brush_t *b );
+winding_t *Brush_MakeFaceWinding (brush_t *b, face_t *face);
 
 int        AddPlanept (float *f);
 face_t	  *Face_Clone (face_t *f);
+void       Face_MakePlane (face_t *f);
 void       Face_Draw( face_t *face );
-winding_t *MakeFaceWinding (brush_t *b, face_t *face);
 
 brush_t	*Brush_Alloc ();
 face_t	*Face_Alloc( void );

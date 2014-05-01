@@ -284,6 +284,34 @@ float	shift[2];
 
 /*
 ================
+Face_SetColor
+================
+*/
+void Face_SetColor (brush_t *b, face_t *f) 
+{
+	float	shade;
+	qtexture_t *q;
+
+	q = f->d_texture;
+
+	// set shading for face
+	shade = SetShadeForPlane (&f->plane);
+	if (g_qeglobals.d_camera.draw_mode == cd_texture && !b->owner->eclass->fixedsize)
+	{
+		f->d_color[0] = 
+		f->d_color[1] = 
+		f->d_color[2] = shade;
+	}
+	else
+	{
+		f->d_color[0] = shade*q->color[0];
+		f->d_color[1] = shade*q->color[1];
+		f->d_color[2] = shade*q->color[2];
+	}
+}
+
+/*
+================
 BeginTexturingFace
 ================
 */
@@ -366,6 +394,31 @@ void BeginTexturingFace (brush_t *b, face_t *f, qtexture_t *q)
 			vecs[i][j] = vecs[i][j] / f->texdef.scale[i];
 }
 
+
+/*
+================
+Face_MakePlane
+================
+*/
+void Face_MakePlane (face_t *f)
+{
+	int		j;
+	vec3_t	t1, t2, t3;
+
+	// convert to a vector / dist plane
+	for (j=0 ; j<3 ; j++)
+	{
+		t1[j] = f->planepts[0][j] - f->planepts[1][j];
+		t2[j] = f->planepts[2][j] - f->planepts[1][j];
+		t3[j] = f->planepts[1][j];
+	}
+	
+	CrossProduct(t1,t2, f->plane.normal);
+	if (VectorCompare (f->plane.normal, vec3_origin))
+		Sys_Printf ("WARNING: brush plane with no normal\n");
+	VectorNormalize (f->plane.normal);
+	f->plane.dist = DotProduct (t3, f->plane.normal);
+}
 
 void _EmitTextureCoordinates (vec3_t v, qtexture_t *q)
 {
@@ -650,12 +703,12 @@ void DrawBrushEntityName (brush_t *b)
 
 /*
 =================
-MakeFaceWinding
+Brush_MakeFaceWinding
 
 returns the visible polygon on a face
 =================
 */
-winding_t	*MakeFaceWinding (brush_t *b, face_t *face)
+winding_t	*Brush_MakeFaceWinding (brush_t *b, face_t *face)
 {
 	winding_t	*w;
 	face_t		*clip;
@@ -753,6 +806,350 @@ void Brush_Build( brush_t *b )
 	*/
 	if (g_qeglobals.d_select_mode == sel_vertex || g_qeglobals.d_select_mode == sel_edge)
 		SetupVertexSelection ();
+}
+
+/*
+=================
+Brush_Convex
+=================
+*/
+qboolean Brush_Convex(brush_t *b)
+{
+	face_t *face1, *face2;
+
+	for (face1 = b->brush_faces; face1; face1 = face1->next)
+	{
+		if (!face1->face_winding) continue;
+		for (face2 = b->brush_faces; face2; face2 = face2->next)
+		{
+			if (face1 == face2) continue;
+			if (!face2->face_winding) continue;
+			if (Winding_PlanesConcave(face1->face_winding, face2->face_winding,
+										face1->plane.normal, face2->plane.normal,
+										face1->plane.dist, face2->plane.dist))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+/*
+=================
+Brush_MoveVertexes
+
+- The input brush must be convex
+- The input brush must have face windings.
+- The output brush will be convex.
+- Returns true if the WHOLE vertex movement is performed.
+=================
+*/
+
+#define MAX_MOVE_FACES		64
+
+qboolean Brush_MoveVertex(brush_t *b, vec3_t vertex, vec3_t delta, vec3_t end)
+{
+	face_t *f, *face, *newface, *lastface, *nextface;
+	face_t *movefaces[MAX_MOVE_FACES];
+	int movefacepoints[MAX_MOVE_FACES];
+	winding_t *w, tmpw;
+	vec3_t start, mid;
+	plane_t plane;
+	int i, j, k, nummovefaces, done;
+	qboolean result;
+	float dot, front, back, frac, smallestfrac;
+
+	result = true;
+	//
+	tmpw.numpoints = 3;
+	tmpw.maxpoints = 3;
+	VectorCopy(vertex, start);
+	VectorAdd(vertex, delta, end);
+	//snap or not?
+	if (!g_qeglobals.d_savedinfo.noclamp)
+		for (i = 0; i < 3; i++)
+			end[i] = floor(end[i] / g_qeglobals.d_gridsize + 0.5) * g_qeglobals.d_gridsize;
+	//
+	VectorCopy(end, mid);
+	//if the start and end are the same
+	if (Point_Equal(start, end, 0.3)) 
+		return false;
+	//the end point may not be the same as another vertex
+	for (face = b->brush_faces; face; face = face->next)
+	{
+		w = face->face_winding;
+		if (!w) 
+			continue;
+		for (i = 0; i < w->numpoints; i++)
+		{
+			if (Point_Equal(w->points[i], end, 0.3))
+			{
+				VectorCopy(vertex, end);
+				return false;
+			}
+		}
+	}
+	//
+	done = false;
+	while(!done)
+	{
+		//chop off triangles from all brush faces that use the to be moved vertex
+		//store pointers to these chopped off triangles in movefaces[]
+		nummovefaces = 0;
+		for (face = b->brush_faces; face; face = face->next)
+		{
+			w = face->face_winding;
+			if (!w) 
+				continue;
+			for (i = 0; i < w->numpoints; i++)
+			{
+				if (Point_Equal(w->points[i], start, 0.2))
+				{
+					if (face->face_winding->numpoints <= 3)
+					{
+						movefacepoints[nummovefaces] = i;
+						movefaces[nummovefaces++] = face;
+						break;
+					}
+					dot = DotProduct(end, face->plane.normal) - face->plane.dist;
+					//if the end point is in front of the face plane
+					if (dot > 0.1)
+					{
+						//fanout triangle subdivision
+						for (k = i; k < i + w->numpoints-3; k++)
+						{
+							VectorCopy(w->points[i], tmpw.points[0]);
+							VectorCopy(w->points[(k+1) % w->numpoints], tmpw.points[1]);
+							VectorCopy(w->points[(k+2) % w->numpoints], tmpw.points[2]);
+							//
+							newface = Face_Clone(face);
+							//get the original
+							for (f = face; f->original; f = f->original) 
+								;
+							newface->original = f;
+							//store the new winding
+							if (newface->face_winding) 
+								Winding_Free(newface->face_winding);
+							newface->face_winding = Winding_Clone(&tmpw);
+							//get the texture
+							newface->d_texture = Texture_ForName( newface->texdef.name );
+							//add the face to the brush
+							newface->next = b->brush_faces;
+							b->brush_faces = newface;
+							//add this new triangle to the move faces
+							movefacepoints[nummovefaces] = 0;
+							movefaces[nummovefaces++] = newface;
+						}
+						//give the original face a new winding
+						VectorCopy(w->points[(i-2+w->numpoints) % w->numpoints], tmpw.points[0]);
+						VectorCopy(w->points[(i-1+w->numpoints) % w->numpoints], tmpw.points[1]);
+						VectorCopy(w->points[i], tmpw.points[2]);
+						Winding_Free(face->face_winding);
+						face->face_winding = Winding_Clone(&tmpw);
+						//add the original face to the move faces
+						movefacepoints[nummovefaces] = 2;
+						movefaces[nummovefaces++] = face;
+					}
+					else
+					{
+						//chop a triangle off the face
+						VectorCopy(w->points[(i-1+w->numpoints) % w->numpoints], tmpw.points[0]);
+						VectorCopy(w->points[i], tmpw.points[1]);
+						VectorCopy(w->points[(i+1) % w->numpoints], tmpw.points[2]);
+						//remove the point from the face winding
+						Winding_RemovePoint(w, i);
+						//get texture crap right
+						Face_SetColor(b, face);
+						for (j = 0; j < w->numpoints; j++)
+							EmitTextureCoordinates(w->points[j], face->d_texture, face);
+						//make a triangle face
+						newface = Face_Clone(face);
+						//get the original
+						for (f = face; f->original; f = f->original) 
+							;
+						newface->original = f;
+						//store the new winding
+						if (newface->face_winding) 
+							Winding_Free(newface->face_winding);
+						newface->face_winding = Winding_Clone(&tmpw);
+						//get the texture
+						newface->d_texture = Texture_ForName( newface->texdef.name );
+						//add the face to the brush
+						newface->next = b->brush_faces;
+						b->brush_faces = newface;
+						//
+						movefacepoints[nummovefaces] = 1;
+						movefaces[nummovefaces++] = newface;
+					}
+					break;
+				}
+			}
+		}
+		//now movefaces contains pointers to triangle faces that
+		//contain the to be moved vertex
+		//
+		done = true;
+		VectorCopy(end, mid);
+		smallestfrac = 1;
+		for (face = b->brush_faces; face; face = face->next)
+		{
+			//check if there is a move face that has this face as the original
+			for (i = 0; i < nummovefaces; i++)
+			{
+				if (movefaces[i]->original == face) 
+					break;
+			}
+			if (i >= nummovefaces) 
+				continue;
+			//check if the original is not a move face itself
+			for (j = 0; j < nummovefaces; j++)
+			{
+				if (face == movefaces[j]) 
+					break;
+			}
+			//if the original is not a move face itself
+			if (j >= nummovefaces)
+			{
+				memcpy(&plane, &movefaces[i]->original->plane, sizeof(plane_t));
+			}
+			else
+			{
+				k = movefacepoints[j];
+				w = movefaces[j]->face_winding;
+				VectorCopy(w->points[(k+1)%w->numpoints], tmpw.points[0]);
+				VectorCopy(w->points[(k+2)%w->numpoints], tmpw.points[1]);
+				//
+				k = movefacepoints[i];
+				w = movefaces[i]->face_winding;
+				VectorCopy(w->points[(k+1)%w->numpoints], tmpw.points[2]);
+				if (!Plane_FromPoints(tmpw.points[0], tmpw.points[1], tmpw.points[2], &plane))
+				{
+					VectorCopy(w->points[(k+2)%w->numpoints], tmpw.points[2]);
+					if (!Plane_FromPoints(tmpw.points[0], tmpw.points[1], tmpw.points[2], &plane))
+						//this should never happen otherwise the face merge did a crappy job a previous pass
+						continue;
+				}
+			}
+			//now we've got the plane to check agains
+			front = DotProduct(start, plane.normal) - plane.dist;
+			back = DotProduct(end, plane.normal) - plane.dist;
+			//if the whole move is at one side of the plane
+			if (front < 0.01 && back < 0.01) 
+				continue;
+			if (front > -0.01 && back > -0.01) 
+				continue;
+			//if there's no movement orthogonal to this plane at all
+			if (fabs(front-back) < 0.001) 
+				continue;
+			//ok first only move till the plane is hit
+			frac = front/(front-back);
+			if (frac < smallestfrac)
+			{
+				mid[0] = start[0] + (end[0] - start[0]) * frac;
+				mid[1] = start[1] + (end[1] - start[1]) * frac;
+				mid[2] = start[2] + (end[2] - start[2]) * frac;
+				smallestfrac = frac;
+			}
+			//
+			done = false;
+		}
+
+		//move the vertex
+		for (i = 0; i < nummovefaces; i++)
+		{
+			//move vertex to end position
+			VectorCopy(mid, movefaces[i]->face_winding->points[movefacepoints[i]]);
+			//create new face plane
+			for (j = 0; j < 3; j++)
+			{
+				VectorCopy(movefaces[i]->face_winding->points[j], movefaces[i]->planepts[j]);
+			}
+			Face_MakePlane(movefaces[i]);
+			if (VectorLength(movefaces[i]->plane.normal) < 0.1)
+				result = false;
+		}
+		//if the brush is no longer convex
+		if (!result || !Brush_Convex(b))
+		{
+			for (i = 0; i < nummovefaces; i++)
+			{
+				//move the vertex back to the initial position
+				VectorCopy(start, movefaces[i]->face_winding->points[movefacepoints[i]]);
+				//create new face plane
+				for (j = 0; j < 3; j++)
+				{
+					VectorCopy(movefaces[i]->face_winding->points[j], movefaces[i]->planepts[j]);
+				}
+				Face_MakePlane(movefaces[i]);
+			}
+			result = false;
+			VectorCopy(start, end);
+			done = true;
+		}
+		else
+		{
+			VectorCopy(mid, start);
+		}
+		//get texture crap right
+		for (i = 0; i < nummovefaces; i++)
+		{
+			Face_SetColor(b, movefaces[i]);
+			for (j = 0; j < movefaces[i]->face_winding->numpoints; j++)
+				EmitTextureCoordinates(movefaces[i]->face_winding->points[j], movefaces[i]->d_texture, movefaces[i]);
+		}
+
+		//now try to merge faces with their original faces
+		lastface = NULL;
+		for (face = b->brush_faces; face; face = nextface)
+		{
+			nextface = face->next;
+			if (!face->original)
+			{
+				lastface = face;
+				continue;
+			}
+			if (!Plane_Equal(&face->plane, &face->original->plane, false))
+			{
+				lastface = face;
+				continue;
+			}
+			w = Winding_TryMerge(face->face_winding, face->original->face_winding, face->plane.normal, true);
+			if (!w)
+			{
+				lastface = face;
+				continue;
+			}
+			Winding_Free(face->original->face_winding);
+			face->original->face_winding = w;
+			//get texture crap right
+			Face_SetColor(b, face->original);
+			for (j = 0; j < face->original->face_winding->numpoints; j++)
+				EmitTextureCoordinates(face->original->face_winding->points[j], face->original->d_texture, face->original);
+			//remove the face that was merged with the original
+			if (lastface) 
+				lastface->next = face->next;
+			else 
+				b->brush_faces = face->next;
+			Face_Free(face);
+		}
+	}
+	return result;
+}
+
+/*
+=================
+Brush_ResetFaceOriginals
+=================
+*/
+void Brush_ResetFaceOriginals(brush_t *b)
+{
+	face_t *face;
+
+	for (face = b->brush_faces; face; face = face->next)
+	{
+		face->original = NULL;
+	}
 }
 
 /*
@@ -1448,7 +1845,7 @@ void Brush_SelectFaceForDragging (brush_t *b, face_t *f, qboolean shear)
 	{
 		if (f2 == f)
 			continue;
-		w = MakeFaceWinding (b, f2);
+		w = Brush_MakeFaceWinding (b, f2);
 		if (!w)
 			continue;
 
@@ -1560,8 +1957,8 @@ void Brush_BuildWindings( brush_t *b )
 	for ( ; face ; face=face->next)
 	{
 		int i, j;
-
-		w = face->face_winding = MakeFaceWinding (b, face);
+		free(face->face_winding);
+		w = face->face_winding = Brush_MakeFaceWinding (b, face);
 		face->d_texture = Texture_ForName( face->texdef.name );
 
 		if (!w)

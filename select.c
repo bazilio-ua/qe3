@@ -8,6 +8,7 @@
 Test_Ray
 ===========
 */
+#define	DIST_START	999999
 trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags)
 {
 	brush_t	*brush;

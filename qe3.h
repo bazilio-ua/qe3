@@ -44,6 +44,7 @@ typedef struct
 #include "camera.h"
 #include "xy.h"
 #include "z.h"
+#include "winding.h"
 #include "mru.h"
 
 typedef struct

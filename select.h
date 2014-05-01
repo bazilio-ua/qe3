@@ -1,6 +1,4 @@
 
-#define	DIST_START	999999
-
 typedef enum
 {
 	sel_brush,

@@ -334,7 +334,9 @@ MoveSelection
 void MoveSelection (vec3_t move)
 {
 	int		i;
+	qboolean	success;
 	brush_t	*b;
+	vec3_t		end;
 
 	if (!move[0] && !move[1] && !move[2])
 		return;
@@ -347,6 +349,19 @@ void MoveSelection (vec3_t move)
 	//
 	if (g_qeglobals.d_num_move_points)
 	{
+		//vertex selection
+		if (g_qeglobals.d_select_mode == sel_vertex)
+		{
+			success = true;
+			for (b = selected_brushes.next; b != &selected_brushes; b = b->next)
+			{
+				success &= Brush_MoveVertex(b, g_qeglobals.d_move_points[0], move, end);
+			}
+			if (success)
+				VectorCopy(end, g_qeglobals.d_move_points[0]);
+			return;
+		}
+		//all other selection types
 		for (i=0 ; i<g_qeglobals.d_num_move_points ; i++)
 			VectorAdd (g_qeglobals.d_move_points[i], move, g_qeglobals.d_move_points[i]);
 
@@ -362,7 +377,7 @@ void MoveSelection (vec3_t move)
 		}
 
 		// if any of the brushes were crushed out of existance
-		// calcel the entire move
+		// cancel the entire move
 		if (b != &selected_brushes)
 		{
 			Sys_Printf ("Brush dragged backwards, move canceled\n");
@@ -376,6 +391,13 @@ void MoveSelection (vec3_t move)
 	}
 	else
 	{
+		// reset face originals from vertex edit mode
+		// this is dirty, but unfortunately necessary because Brush_Build
+		// can remove windings
+		for (b = selected_brushes.next; b != &selected_brushes; b = b->next)
+		{
+			Brush_ResetFaceOriginals(b);
+		}
 		//
 		// if there are lots of brushes selected, just translate instead
 		// of rebuilding the brushes
