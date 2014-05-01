@@ -1,5 +1,7 @@
+// points.c
 
 #include "qe3.h"
+
 
 //#define	MAX_POINTFILE	4096 //EER1
 #define	MAX_POINTFILE	8192

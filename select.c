@@ -126,10 +126,8 @@ trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags)
 /*
 ============
 Select_Brush
-
 ============
 */
-//void Select_Brush (brush_t *brush)
 void Select_Brush (brush_t *brush, qboolean complete)
 {
 	brush_t		*b;
@@ -204,7 +202,6 @@ void Select_Ray (vec3_t origin, vec3_t dir, int flags)
 	}
 
 	// move the brush to the other list
-
 	g_qeglobals.d_select_mode = sel_brush;
 
 	if (t.selected)
@@ -366,7 +363,6 @@ void Select_Clone (void)
 		}
         
 		// brush is a complex entity, grab all the other ones now
-
 		next = &selected_brushes;
 
 		for ( b2 = b ; b2 != &selected_brushes ; b2=next2)
@@ -454,10 +450,10 @@ void Select_GetTrueMid (vec3_t mid)
 {
 	vec3_t	mins, maxs;
 	int		i;
+	
 	Select_GetBounds (mins, maxs);
-
-  for (i=0 ; i<3 ; i++)
-    mid[i] = (mins[i] + ((maxs[i] - mins[i]) / 2));
+	for (i=0 ; i<3 ; i++)
+		mid[i] = (mins[i] + ((maxs[i] - mins[i]) / 2));
 }
 
 void Select_GetMid (vec3_t mid)

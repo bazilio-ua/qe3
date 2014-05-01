@@ -1,5 +1,7 @@
+// xy.c
 
 #include "qe3.h"
+
 
 #define	PAGEFLIPS	2
 
@@ -66,19 +68,19 @@ void VectorCopyXY (vec3_t in, vec3_t out)
 {
   if (g_qeglobals.d_viewtype == XY)
   {
-	  out[0] = in[0];
-	  out[1] = in[1];
+    out[0] = in[0];
+    out[1] = in[1];
   }
   else
   if (g_qeglobals.d_viewtype == XZ)
   {
-	  out[0] = in[0];
-	  out[2] = in[2];
+    out[0] = in[0];
+    out[2] = in[2];
   }
   else
   {
-	  out[1] = in[1];
-	  out[2] = in[2];
+    out[1] = in[1];
+    out[2] = in[2];
   }
 }
 
@@ -392,129 +394,126 @@ void XY_MouseDown (int x, int y, int buttons)
 		Sys_UpdateWindows (W_ALL);
 	}
 	else
-		{
-
-	pressx = x;
-	pressy = y;
-
-	VectorCopy (vec3_origin, pressdelta);
-
-	XY_ToPoint (x, y, point);
-
-	VectorCopy (point, origin);
-
-	dir[0] = 0; dir[1] = 0; dir[2] = 0;
-	if (g_qeglobals.d_viewtype == XY)
 	{
-		origin[2] = 8192;
-		dir[2] = -1;
-
-		right[0] = 1/g_qeglobals.d_xyz.scale;
-		right[1] = 0;
-		right[2] = 0;
-
-		up[0] = 0;
-		up[1] = 1/g_qeglobals.d_xyz.scale;
-		up[2] = 0;
-	}
-	else if (g_qeglobals.d_viewtype == YZ)
-	{
-		origin[0] = 8192;
-		dir[0] = -1;
-
-		right[0] = 0;
-		right[1] = 1/g_qeglobals.d_xyz.scale;
-	    right[2] = 0; 
-	    
-	   	up[0] = 0; 
-	    up[1] = 0;
-		up[2] = 1/g_qeglobals.d_xyz.scale;
-	}
-	else
-	{
-	    origin[1] = 8192;
-		dir[1] = -1;
-
-		right[0] = 1/g_qeglobals.d_xyz.scale;
-		right[1] = 0;
-	    right[2] = 0; 
-
-		up[0] = 0; 
-		up[1] = 0;
-		up[2] = 1/g_qeglobals.d_xyz.scale;
-	}
-
-	press_selection = (selected_brushes.next != &selected_brushes);
-
-	Sys_GetCursorPos (&cursorx, &cursory);
-
-	// lbutton = manipulate selection
-	// shift-LBUTTON = select
-//	if ( (buttonstate == MK_LBUTTON)
-//		|| (buttonstate == (MK_LBUTTON | MK_SHIFT))
-//		|| (buttonstate == (MK_LBUTTON | MK_CONTROL))
-//		|| (buttonstate == (MK_LBUTTON | MK_CONTROL | MK_SHIFT)) )
-	if (buttonstate & MK_LBUTTON)
-	{
-		Drag_Begin (x, y, buttons, 
-			right, up,
-			origin, dir);
-		return;
-	}
-
-	// control mbutton = move camera
-	if (buttonstate == (MK_CONTROL|MK_MBUTTON) )
-	{	
-//		g_qeglobals.d_camera.origin[0] = point[0];
-//		g_qeglobals.d_camera.origin[1] = point[1];
-		VectorCopyXY(point, g_qeglobals.d_camera.origin);
-
-		Sys_UpdateWindows (W_CAMERA|W_XY_OVERLAY|W_Z);
-	}
-
-	// mbutton = angle camera
-	if (buttonstate == MK_MBUTTON)
-	{	
-		VectorSubtract (point, g_qeglobals.d_camera.origin, point);
-
-		n1 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
-		n2 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
-		angle = (g_qeglobals.d_viewtype == XY) ? YAW : PITCH;
-
-		if (point[n1] || point[n2])
-		{
-			g_qeglobals.d_camera.angles[angle] = 180/Q_PI*atan2 (point[n1], point[n2]);
-			Sys_UpdateWindows (W_CAMERA|W_XY_OVERLAY|W_Z);
-		}
-	}
-
-	// shift mbutton = move z checker
-	if (buttonstate == (MK_SHIFT|MK_MBUTTON) )
-	{
-//		XY_ToPoint (x, y, point);
-		SnapToPoint (x, y, point);
-
+		pressx = x;
+		pressy = y;
+	
+		VectorCopy (vec3_origin, pressdelta);
+	
+		XY_ToPoint (x, y, point);
+	
+		VectorCopy (point, origin);
+	
+		dir[0] = 0; dir[1] = 0; dir[2] = 0;
 		if (g_qeglobals.d_viewtype == XY)
 		{
-			g_qeglobals.d_z.origin[0] = point[0];
-			g_qeglobals.d_z.origin[1] = point[1];
+			origin[2] = 8192;
+			dir[2] = -1;
+	
+			right[0] = 1/g_qeglobals.d_xyz.scale;
+			right[1] = 0;
+			right[2] = 0;
+	
+			up[0] = 0;
+			up[1] = 1/g_qeglobals.d_xyz.scale;
+			up[2] = 0;
 		}
 		else if (g_qeglobals.d_viewtype == YZ)
 		{
-			g_qeglobals.d_z.origin[0] = point[1];
-			g_qeglobals.d_z.origin[1] = point[2];
+			origin[0] = 8192;
+			dir[0] = -1;
+	
+			right[0] = 0;
+			right[1] = 1/g_qeglobals.d_xyz.scale;
+			right[2] = 0; 
+			
+			up[0] = 0; 
+			up[1] = 0;
+			up[2] = 1/g_qeglobals.d_xyz.scale;
 		}
 		else
 		{
-			g_qeglobals.d_z.origin[0] = point[0];
-			g_qeglobals.d_z.origin[1] = point[2];
+			origin[1] = 8192;
+			dir[1] = -1;
+	
+			right[0] = 1/g_qeglobals.d_xyz.scale;
+			right[1] = 0;
+			right[2] = 0; 
+	
+			up[0] = 0; 
+			up[1] = 0;
+			up[2] = 1/g_qeglobals.d_xyz.scale;
 		}
-		Sys_UpdateWindows (W_XY_OVERLAY|W_Z);
-		return;
+	
+		press_selection = (selected_brushes.next != &selected_brushes);
+	
+		Sys_GetCursorPos (&cursorx, &cursory);
+	
+		// lbutton = manipulate selection
+		// shift-LBUTTON = select
+	//	if ( (buttonstate == MK_LBUTTON)
+	//		|| (buttonstate == (MK_LBUTTON | MK_SHIFT))
+	//		|| (buttonstate == (MK_LBUTTON | MK_CONTROL))
+	//		|| (buttonstate == (MK_LBUTTON | MK_CONTROL | MK_SHIFT)) )
+		if (buttonstate & MK_LBUTTON)
+		{
+			Drag_Begin (x, y, buttons, 
+				right, up,
+				origin, dir);
+			return;
+		}
+	
+		// control mbutton = move camera
+		if (buttonstate == (MK_CONTROL|MK_MBUTTON) )
+		{	
+	//		g_qeglobals.d_camera.origin[0] = point[0];
+	//		g_qeglobals.d_camera.origin[1] = point[1];
+			VectorCopyXY(point, g_qeglobals.d_camera.origin);
+	
+			Sys_UpdateWindows (W_CAMERA|W_XY_OVERLAY|W_Z);
+		}
+	
+		// mbutton = angle camera
+		if (buttonstate == MK_MBUTTON)
+		{	
+			VectorSubtract (point, g_qeglobals.d_camera.origin, point);
+	
+			n1 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
+			n2 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+			angle = (g_qeglobals.d_viewtype == XY) ? YAW : PITCH;
+	
+			if (point[n1] || point[n2])
+			{
+				g_qeglobals.d_camera.angles[angle] = 180/Q_PI*atan2 (point[n1], point[n2]);
+				Sys_UpdateWindows (W_CAMERA|W_XY_OVERLAY|W_Z);
+			}
+		}
+	
+		// shift mbutton = move z checker
+		if (buttonstate == (MK_SHIFT|MK_MBUTTON) )
+		{
+	//		XY_ToPoint (x, y, point);
+			SnapToPoint (x, y, point);
+	
+			if (g_qeglobals.d_viewtype == XY)
+			{
+				g_qeglobals.d_z.origin[0] = point[0];
+				g_qeglobals.d_z.origin[1] = point[1];
+			}
+			else if (g_qeglobals.d_viewtype == YZ)
+			{
+				g_qeglobals.d_z.origin[0] = point[1];
+				g_qeglobals.d_z.origin[1] = point[2];
+			}
+			else
+			{
+				g_qeglobals.d_z.origin[0] = point[0];
+				g_qeglobals.d_z.origin[1] = point[2];
+			}
+			Sys_UpdateWindows (W_XY_OVERLAY|W_Z);
+			return;
+		}
 	}
-
-		}
-
 }
 
 
@@ -525,22 +524,18 @@ XY_MouseUp
 */
 void XY_MouseUp (int x, int y, int buttons)
 {
-
 	// clipper
 	if (g_qeglobals.d_clipmode)
 		EndClipPoint ();
 	else
-		{
-
-	Drag_MouseUp ();
-
-	if (!press_selection)
-		Sys_UpdateWindows (W_ALL);
-
-		}
+	{
+		Drag_MouseUp ();
+		
+		if (!press_selection)
+			Sys_UpdateWindows (W_ALL);
+	}
 
 	buttonstate = 0;
-
 }
 
 //DragDelta
@@ -668,109 +663,106 @@ void XY_MouseMoved (int x, int y, int buttons)
 		Sys_UpdateWindows (W_ALL);
 	}
 	else
-		{
-
-	if (!buttonstate)
-		return;
-
-	// lbutton without selection = drag new brush
-	if (buttonstate == MK_LBUTTON && !press_selection)
 	{
-		NewBrushDrag (x, y);
-		return;
-	}
-
-	// lbutton (possibly with control and or shift)
-	// with selection = drag selection
-	if (buttonstate & MK_LBUTTON)
-	{
-		Drag_MouseMoved (x, y, buttons);
-		Sys_UpdateWindows (W_XY_OVERLAY | W_CAMERA | W_Z);
-		return;
-	}
-
-	// control mbutton = move camera
-	if (buttonstate == (MK_CONTROL|MK_MBUTTON) )
-	{
-//		XY_ToPoint (x, y, point);
-//		g_qeglobals.d_camera.origin[0] = point[0];
-//		g_qeglobals.d_camera.origin[1] = point[1];
-
-		SnapToPoint (x, y, point);
-		VectorCopyXY(point, g_qeglobals.d_camera.origin);
-
-		Sys_UpdateWindows (W_XY_OVERLAY|W_CAMERA|W_Z);
-		return;
-	}
-
-	// shift mbutton = move z checker
-	if (buttonstate == (MK_SHIFT|MK_MBUTTON) )
-	{
-
-//		XY_ToPoint (x, y, point);
-		SnapToPoint (x, y, point);
-
-		if (g_qeglobals.d_viewtype == XY)
-		{
-			g_qeglobals.d_z.origin[0] = point[0];
-			g_qeglobals.d_z.origin[1] = point[1];
-		}
-		else if (g_qeglobals.d_viewtype == YZ)
-		{
-			g_qeglobals.d_z.origin[0] = point[1];
-			g_qeglobals.d_z.origin[1] = point[2];
-		}
-		else
-		{
-			g_qeglobals.d_z.origin[0] = point[0];
-			g_qeglobals.d_z.origin[1] = point[2];
-		}
-			Sys_UpdateWindows (W_XY_OVERLAY|W_Z);
+		if (!buttonstate)
 			return;
-	}
-	// mbutton = angle camera
-	if (buttonstate == MK_MBUTTON )
-	{	
-//		XY_ToPoint (x, y, point);
-		SnapToPoint (x, y, point);
-		VectorSubtract (point, g_qeglobals.d_camera.origin, point);
-
-		n1 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
-		n2 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
-		angle = (g_qeglobals.d_viewtype == XY) ? YAW : PITCH;
-
-		if (point[n1] || point[n2])
+	
+		// lbutton without selection = drag new brush
+		if (buttonstate == MK_LBUTTON && !press_selection)
 		{
-			g_qeglobals.d_camera.angles[angle] = 180/Q_PI*atan2 (point[n1], point[n2]);
-			Sys_UpdateWindows (W_XY_OVERLAY | W_CAMERA);
+			NewBrushDrag (x, y);
+			return;
 		}
-		return;
-	}
-
-	// rbutton = drag xy origin
-	if (buttonstate == MK_RBUTTON)
-	{
-		SetCursor(NULL);
-		Sys_GetCursorPos (&x, &y);
-		if (x != cursorx || y != cursory)
+	
+		// lbutton (possibly with control and or shift)
+		// with selection = drag selection
+		if (buttonstate & MK_LBUTTON)
 		{
-			dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
-			dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
-
-			g_qeglobals.d_xyz.origin[dim1] -= (x-cursorx)/g_qeglobals.d_xyz.scale;
-			g_qeglobals.d_xyz.origin[dim2] += (y-cursory)/g_qeglobals.d_xyz.scale;
-
-			Sys_SetCursorPos (cursorx, cursory);
-			Sys_UpdateWindows (W_XY | W_XY_OVERLAY| W_Z);
-
-			sprintf (xystring, "xyz Origin: (%i %i %i)", (int)g_qeglobals.d_xyz.origin[0], (int)g_qeglobals.d_xyz.origin[1], (int)g_qeglobals.d_xyz.origin[2]);
-			Sys_Status (xystring, 0);
+			Drag_MouseMoved (x, y, buttons);
+			Sys_UpdateWindows (W_XY_OVERLAY | W_CAMERA | W_Z);
+			return;
 		}
-		return;
+	
+		// control mbutton = move camera
+		if (buttonstate == (MK_CONTROL|MK_MBUTTON) )
+		{
+	//		XY_ToPoint (x, y, point);
+	//		g_qeglobals.d_camera.origin[0] = point[0];
+	//		g_qeglobals.d_camera.origin[1] = point[1];
+	
+			SnapToPoint (x, y, point);
+			VectorCopyXY(point, g_qeglobals.d_camera.origin);
+	
+			Sys_UpdateWindows (W_XY_OVERLAY|W_CAMERA|W_Z);
+			return;
+		}
+	
+		// shift mbutton = move z checker
+		if (buttonstate == (MK_SHIFT|MK_MBUTTON) )
+		{
+	
+	//		XY_ToPoint (x, y, point);
+			SnapToPoint (x, y, point);
+	
+			if (g_qeglobals.d_viewtype == XY)
+			{
+				g_qeglobals.d_z.origin[0] = point[0];
+				g_qeglobals.d_z.origin[1] = point[1];
+			}
+			else if (g_qeglobals.d_viewtype == YZ)
+			{
+				g_qeglobals.d_z.origin[0] = point[1];
+				g_qeglobals.d_z.origin[1] = point[2];
+			}
+			else
+			{
+				g_qeglobals.d_z.origin[0] = point[0];
+				g_qeglobals.d_z.origin[1] = point[2];
+			}
+				Sys_UpdateWindows (W_XY_OVERLAY|W_Z);
+				return;
+		}
+		// mbutton = angle camera
+		if (buttonstate == MK_MBUTTON )
+		{	
+	//		XY_ToPoint (x, y, point);
+			SnapToPoint (x, y, point);
+			VectorSubtract (point, g_qeglobals.d_camera.origin, point);
+	
+			n1 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
+			n2 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+			angle = (g_qeglobals.d_viewtype == XY) ? YAW : PITCH;
+	
+			if (point[n1] || point[n2])
+			{
+				g_qeglobals.d_camera.angles[angle] = 180/Q_PI*atan2 (point[n1], point[n2]);
+				Sys_UpdateWindows (W_XY_OVERLAY | W_CAMERA);
+			}
+			return;
+		}
+	
+		// rbutton = drag xy origin
+		if (buttonstate == MK_RBUTTON)
+		{
+			SetCursor(NULL);
+			Sys_GetCursorPos (&x, &y);
+			if (x != cursorx || y != cursory)
+			{
+				dim1 = (g_qeglobals.d_viewtype == YZ) ? 1 : 0;
+				dim2 = (g_qeglobals.d_viewtype == XY) ? 1 : 2;
+	
+				g_qeglobals.d_xyz.origin[dim1] -= (x-cursorx)/g_qeglobals.d_xyz.scale;
+				g_qeglobals.d_xyz.origin[dim2] += (y-cursory)/g_qeglobals.d_xyz.scale;
+	
+				Sys_SetCursorPos (cursorx, cursory);
+				Sys_UpdateWindows (W_XY | W_XY_OVERLAY| W_Z);
+	
+				sprintf (xystring, "xyz Origin: (%i %i %i)", (int)g_qeglobals.d_xyz.origin[0], (int)g_qeglobals.d_xyz.origin[1], (int)g_qeglobals.d_xyz.origin[2]);
+				Sys_Status (xystring, 0);
+			}
+			return;
+		}
 	}
-
-		}
-
 }
 
 
@@ -1180,7 +1172,6 @@ void XY_DrawBlockGrid (void)
 
 	// draw major blocks
 	glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK]);
-//	glColor3f(0,0,1);
 	glLineWidth (2);
 
 	glBegin (GL_LINES);
@@ -1255,7 +1246,6 @@ void DrawCameraIcon (void)
 //	glRasterPos2f (x+64, y+64);
 //	sprintf (text, "angle: %f", g_qeglobals.d_camera.angles[YAW]);
 //	glCallLists (strlen(text), GL_UNSIGNED_BYTE, text);
-
 }
 
 void DrawZIcon (void)
@@ -1500,7 +1490,7 @@ void PaintSizeInfo (int dim1, int dim2, vec3_t minbounds, vec3_t maxbounds)
 
   if (g_qeglobals.d_viewtype == XY)
   {
-		glBegin (GL_LINES);
+    glBegin (GL_LINES);
 
     glVertex3f(minbounds[dim1], minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale, 0.0f);
     glVertex3f(minbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale, 0.0f);
@@ -1537,12 +1527,11 @@ void PaintSizeInfo (int dim1, int dim2, vec3_t minbounds, vec3_t maxbounds)
 
     sprintf(dimstr, orgstrings[0], minbounds[dim1], maxbounds[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
-
-
-	}
-	else if (g_qeglobals.d_viewtype == XZ)
-	{
-		glBegin (GL_LINES);
+	
+  }
+  else if (g_qeglobals.d_viewtype == XZ)
+  {
+    glBegin (GL_LINES);
 
     glVertex3f(minbounds[dim1], 0.0f, minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale);
     glVertex3f(minbounds[dim1], 0.0f, minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
@@ -1576,11 +1565,11 @@ void PaintSizeInfo (int dim1, int dim2, vec3_t minbounds, vec3_t maxbounds)
     glRasterPos3f (minbounds[dim1] + 4, 0.0f, maxbounds[dim2] + 8 / g_qeglobals.d_xyz.scale);
     sprintf(dimstr, orgstrings[1], minbounds[dim1], maxbounds[dim2]);
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
-
+	
   }
   else
   {
-		glBegin (GL_LINES);
+    glBegin (GL_LINES);
 
     glVertex3f(0.0f, minbounds[dim1], minbounds[dim2] - 6.0f  / g_qeglobals.d_xyz.scale);
     glVertex3f(0.0f, minbounds[dim1], minbounds[dim2] - 10.0f / g_qeglobals.d_xyz.scale);
@@ -1616,7 +1605,6 @@ void PaintSizeInfo (int dim1, int dim2, vec3_t minbounds, vec3_t maxbounds)
 	  glCallLists (strlen(dimstr), GL_UNSIGNED_BYTE, dimstr);
 
   }
-
 }
 
 
@@ -1792,7 +1780,6 @@ void XY_Draw (void)
 		Brush_DrawXY( brush, g_qeglobals.d_viewtype );
 
 // paint size
-
 	    if (!fixedsize)
 	    {
 			if (brush->owner->eclass->fixedsize)
@@ -1815,13 +1802,11 @@ void XY_Draw (void)
 	glLineWidth (1);
 
 // paint size
-
 	if (!fixedsize && drawn - savedrawn > 0 && g_qeglobals.d_savedinfo.check_sizepaint)
 		PaintSizeInfo(dim1, dim2, minbounds, maxbounds);
 //
 
 	// edge / vertex flags
-
 	if (g_qeglobals.d_select_mode == sel_vertex)
 	{
 		glPointSize (4);
@@ -1886,7 +1871,6 @@ void XY_Overlay (void)
 	static	vec3_t	lastz;
 	static	vec3_t	lastcamera;
 
-
 	glViewport(0, 0, g_qeglobals.d_xyz.width, g_qeglobals.d_xyz.height);
 
 	//
@@ -1899,6 +1883,7 @@ void XY_Overlay (void)
 	h = g_qeglobals.d_xyz.height/2 / g_qeglobals.d_xyz.scale;
 
 	glOrtho (g_qeglobals.d_xyz.origin[0] - w, g_qeglobals.d_xyz.origin[0] + w, g_qeglobals.d_xyz.origin[1] - h, g_qeglobals.d_xyz.origin[1] + h, -8192, 8192);
+	
 	//
 	// erase the old camera and z checker positions
 	// if the entire xy hasn't been redrawn
@@ -1921,7 +1906,6 @@ void XY_Overlay (void)
 	//
 	// save off underneath where we are about to draw
 	//
-
 	VectorCopy (g_qeglobals.d_z.origin, lastz);
 	VectorCopy (g_qeglobals.d_camera.origin, lastcamera);
 

@@ -1,3 +1,4 @@
+// xy.h
 
 // window system independent camera view code
 
@@ -67,4 +68,3 @@ void DropClipPoint (int x, int y);
 void MoveClipPoint (int x, int y);
 void DrawClipPoint (void);
 void EndClipPoint (void);
-

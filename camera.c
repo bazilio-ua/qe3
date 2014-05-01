@@ -1,5 +1,7 @@
+// camera.c
 
 #include "qe3.h"
+
 
 #define	PAGEFLIPS	2
 

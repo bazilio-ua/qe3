@@ -1,7 +1,7 @@
 // texture.c
 
 #include "qe3.h"
-//#include "io.h"
+
 
 static unsigned	tex_palette[256];
 
@@ -14,16 +14,16 @@ static qboolean	nomips;
 static HGLRC s_hglrcTexture;
 static HDC	 s_hdcTexture;
 
-//int		texture_mode = GL_NEAREST;
-//int		texture_mode = GL_NEAREST_MIPMAP_NEAREST;
-//int		texture_mode = GL_NEAREST_MIPMAP_LINEAR;
-//int		texture_mode = GL_LINEAR;
-//int		texture_mode = GL_LINEAR_MIPMAP_NEAREST;
+// GL_NEAREST;
+// GL_NEAREST_MIPMAP_NEAREST;
+// GL_NEAREST_MIPMAP_LINEAR;
+// GL_LINEAR;
+// GL_LINEAR_MIPMAP_NEAREST;
 int		texture_mode = GL_LINEAR_MIPMAP_LINEAR;
 
 int		texture_extension_number = 1;
 
-// current wad.
+// current wad
 char		currentwad[1024];
 char		wadstring[1024];
 
@@ -81,21 +81,17 @@ void SortTextures (void)
 			}
 			
 			// Move on
-
 			qprev = qcur;
 			qcur = qcur->next;
 
 
 			// is this one at the end?
-
 			if (qcur == NULL)
 			{
 				qprev->next = qtemp;
 				qtemp->next = NULL;
 			}
 		}
-
-
 	}
 
 	g_qeglobals.d_qtextures = qhead;
@@ -205,7 +201,7 @@ void Texture_SetMode(int iMenu)
 		iMode = GL_LINEAR_MIPMAP_NEAREST;
 		g_qeglobals.d_savedinfo.iVTexMenu = iMenu;
 		break;
-//	default: 
+	//default: 
 	case ID_VIEW_TRILINEAR:
 		iMode = GL_LINEAR_MIPMAP_LINEAR;
 		g_qeglobals.d_savedinfo.iVTexMenu = iMenu;
@@ -294,15 +290,6 @@ qtexture_t *Texture_LoadTexture (miptex_t *qtex)
 
     q->width = width;
     q->height = height;
-/*
-EER1
-	q->flags = qtex->flags;
-	q->value = qtex->value;
-	q->contents = qtex->contents;
-*/
-//	q->flags = 0;
-//	q->value = 0;
-//	q->contents = 0;
 
 	dest = qmalloc (width*height*4);
 
@@ -311,7 +298,6 @@ EER1
 
 	// The dib is upside down so we want to copy it into 
 	// the buffer bottom up.
-
 	total[0] = total[1] = total[2] = 0;
     for (i=0 ; i<count ; i++)
 	{
@@ -424,7 +410,6 @@ qtexture_t *Texture_ForName (char *name)
 {
 	qtexture_t	*q;
 
-//return notexture;
 	for (q=g_qeglobals.d_qtextures ; q ; q=q->next)
 	{
 		if (!strcmp(name, q->name))
@@ -609,7 +594,6 @@ void	Texture_InitFromWad (char *file)
 		
 		Sys_Printf ("Loading %s\n", lumpinfo->name);
 
-//		q = Texture_LoadTexture ((miptex_t *)(wadfile + LittleLong(lumpinfo->filepos)));
 		q = Texture_LoadTexture (qtex);
 
 		strncpy (q->name, lumpinfo->name, sizeof(q->name)-1);
@@ -734,7 +718,6 @@ qtexture_t *Texture_NextPos (int *x, int *y)
 
 	// Is our texture larger than the row? If so, grow the 
 	// row height to match it
-
     if (current_row < q->height)
 		current_row = q->height;
 
@@ -758,7 +741,6 @@ static	int	textures_cursorx, textures_cursory;
 /*
 ============
 Texture_SetTexture
-
 ============
 */
 void Texture_SetTexture (texdef_t *texdef)
@@ -775,8 +757,6 @@ void Texture_SetTexture (texdef_t *texdef)
 	g_qeglobals.d_texturewin.texdef = *texdef;
 
 	Sys_UpdateWindows (W_TEXTURE);
-//	sprintf(sz, "Selected texture: %s\n", texdef->name);
-//	Sys_Status(sz, 0);
 	Select_SetTexture(texdef);
 
 // scroll origin so the texture is completely on screen
@@ -817,8 +797,8 @@ void Texture_SetTexture (texdef_t *texdef)
 ==============
 GetTextureUnderMouse
 
-  Sets texture window's caption to the name and size of the texture
-  under the current mouse position.
+Sets texture window's caption to the name and size of the texture
+under the current mouse position.
 ==============
 */
 void GetTextureUnderMouse (int mx, int my)
@@ -853,7 +833,7 @@ void GetTextureUnderMouse (int mx, int my)
 ==============
 SelectTexture
 
-  By mouse click
+By mouse click
 ==============
 */
 void SelectTexture (int mx, int my)
@@ -876,10 +856,6 @@ void SelectTexture (int mx, int my)
 			memset (&tex, 0, sizeof(tex));
 			tex.scale[0] = 1;
 			tex.scale[1] = 1;
-
-//			tex.flags = q->flags;
-//			tex.value = q->value;
-//			tex.contents = q->contents;
 
 			strcpy (tex.name, q->name);
 			Texture_SetTexture (&tex);
@@ -905,7 +881,6 @@ void Texture_MouseDown (int x, int y, int buttons)
 		SelectTexture (x, g_qeglobals.d_texturewin.height - 1 - y);
 		return;
 	}
-
 }
 
 /*
@@ -942,7 +917,6 @@ void Texture_MouseMoved (int x, int y, int buttons)
 			Sys_SetCursorPos (textures_cursorx, textures_cursory);
 			Sys_UpdateWindows (W_TEXTURE);
 		}
-//		return;
 	}
 	else 
 		GetTextureUnderMouse(x, g_qeglobals.d_texturewin.height - 1 - y);
@@ -1050,7 +1024,6 @@ void Texture_Draw2 (int width, int height)
 			}
 
 			// draw the texture name
-//			glColor3f (0,0,0);
 			glColor3fv (g_qeglobals.d_savedinfo.colors[COLOR_TEXTURETEXT]);
 			glDisable (GL_TEXTURE_2D);
 
@@ -1160,7 +1133,6 @@ LONG WINAPI WTex_WndProc (
 }
 
 
-
 /*
 ==================
 WTex_Create
@@ -1191,19 +1163,7 @@ HWND WTex_Create (void)
 
     if (!RegisterClass (&wc) )
         Error ("WTex_Register: failed");
-/* EER1
-	hwnd = CreateWindow (TEXTURE_WINDOW_CLASS ,
-		"Texture",
-		WS_CHILD|WS_VISIBLE,
-		20,
-		20,
-		64,
-		64,	// size
-		g_qeglobals.d_hwndEntity,	// parent window
-		0,		// no menu
-		g_qeglobals.d_hInstance,
-		0);
-*/
+
 	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE,	// extended window style
 		TEXTURE_WINDOW_CLASS,				// registered class name
 		"Texture",						// window name

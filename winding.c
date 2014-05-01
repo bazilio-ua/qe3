@@ -86,7 +86,6 @@ winding_t *Winding_BaseForPlane (plane_t *p)
 	winding_t	*w;
 	
 	// find the major axis
-
 	max = -BOGUS_RANGE;
 	x = -1;
 	for (i=0 ; i<3; i++)
@@ -113,11 +112,10 @@ winding_t *Winding_BaseForPlane (plane_t *p)
 		break;		
 	}
 
-
 	v = DotProduct (vup, p->normal);
 	VectorMA (vup, -v, p->normal, vup);
 	VectorNormalize (vup);
-		
+	
 	VectorScale (p->normal, p->dist, org);
 	
 	CrossProduct (vup, p->normal, vright);
@@ -367,7 +365,6 @@ winding_t *Winding_TryMerge(winding_t *f1, winding_t *f2, vec3_t planenormal, in
 	vec3_t		normal, delta;
 	vec_t		dot;
 	qboolean	keep1, keep2;
-	
 
 	//
 	// find a common edge
@@ -454,3 +451,4 @@ winding_t *Winding_TryMerge(winding_t *f1, winding_t *f2, vec3_t planenormal, in
 
 	return newf;
 }
+

@@ -1,3 +1,4 @@
+// z.h
 
 // window system independent camera view code
 
@@ -16,4 +17,3 @@ void Z_MouseDown (int x, int y, int buttons);
 void Z_MouseUp (int x, int y, int buttons);
 void Z_MouseMoved (int x, int y, int buttons);
 void Z_Draw (void);
-

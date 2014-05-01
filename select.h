@@ -3,8 +3,6 @@
 typedef enum
 {
 	sel_brush,
-	// sel_sticky_brush,
-	// sel_face,
 	sel_vertex,
 	sel_edge
 } select_t;
@@ -27,7 +25,6 @@ trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags);
 void Select_GetBounds (vec3_t mins, vec3_t maxs);
 void Select_GetTrueMid (vec3_t mid);
 void Select_GetMid (vec3_t mid);
-//void Select_Brush (brush_t *b);
 void Select_Brush (brush_t *b, qboolean complete);
 void Select_Ray (vec3_t origin, vec3_t dir, int flags);
 void Select_Delete (void);

@@ -1,3 +1,4 @@
+// camera.h
 
 // window system independent camera view code
 

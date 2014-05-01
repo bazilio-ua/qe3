@@ -6,12 +6,7 @@ typedef struct
 	float	shift[2];
 	float	rotate;
 	float	scale[2];
-
-//	int		contents;
-//	int		flags;
-//	int		value;
 } texdef_t;
-
 
 typedef struct
 {
@@ -25,11 +20,6 @@ typedef struct qtexture_s
 	struct	qtexture_s *next;
 	char	name[64];		// includes partial directory and extension
     int		width,  height;
-
-//	int		contents;
-//	int		flags;
-//	int		value;
-
 	int		texture_number;	// gl bind number
 	vec3_t	color;			// for flat shade mode
 	qboolean	inuse;		// true = is present on the level
