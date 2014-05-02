@@ -2309,3 +2309,4 @@ void Brush_FitTexture( brush_t *b, int height, int width )
 		Face_FitTexture( face, height, width );
 	}
 }
+

@@ -72,3 +72,4 @@ void UpdateWorkzone_ForBrush( brush_t *b );
 
 void FindReplaceTextures (char *find, char *replace, qboolean selected, qboolean force);
 void GroupSelectNextBrush (void);
+

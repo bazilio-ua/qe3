@@ -82,3 +82,4 @@ void	Brush_FitTexture			(brush_t *b, int height, int width);
 void	Face_FitTexture				(face_t *face, int height, int width);
 
 void	DrawLight(brush_t *b);
+

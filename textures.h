@@ -43,3 +43,4 @@ void	Texture_InitFromWad (char *file);
 void	Texture_SetTexture (texdef_t *texdef, qboolean set_selection);	// sikk - Multiple Face Selection: added set_selection
 void	Texture_SetMode(int iMenu);	// GL_NEAREST, etc..
 qtexture_t *Texture_ForName (char *name);
+

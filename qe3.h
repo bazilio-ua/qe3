@@ -332,3 +332,4 @@ void QEW_StopGL( HWND hWnd, HGLRC hGLRC, HDC hDC );
 extern QEGlobals_t   g_qeglobals;
 
 #endif
+

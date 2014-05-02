@@ -30,3 +30,4 @@ void	Map_RegionTallBrush (void);
 void	Map_RegionBrush (void);
 void	Map_RegionSelectedBrushes (void);
 qboolean Map_IsBrushFiltered (brush_t *b);
+

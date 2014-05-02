@@ -56,7 +56,6 @@ void	AxializeVector (vec3_t v)
 		v[i] = -1;
 	else
 		v[i] = 1;
-	
 }
 
 
@@ -107,7 +106,6 @@ void Drag_Setup (int x, int y, int buttons,
 			return;
 		}
 	}
-
 
 	//
 	// check for direct hit first
@@ -186,10 +184,8 @@ void UpdateTarget(vec3_t origin, vec3_t dir)
 	// is this the first?
 	if (peLink != NULL)
 	{
-
-		// Get the target id from out current target
+		// get the target id from out current target
 		// if there is no id, make one
-
 		i = IntForKey(pe, "target");
 		if (i <= 0)
 		{
@@ -200,7 +196,6 @@ void UpdateTarget(vec3_t origin, vec3_t dir)
 		}
 
 		// set the target # into our src
-
 		sprintf(sz, "%d", i);
 		SetKeyValue(peLink, "targetname", sz);
 
@@ -209,7 +204,6 @@ void UpdateTarget(vec3_t origin, vec3_t dir)
 	}
 
 	// promote the target to the src
-
 	peLink = pe;
 	
 }
@@ -336,7 +330,6 @@ void Drag_Begin (int x, int y, int buttons,
 			Sys_Printf ("Didn't hit a brush\n");
 		return;
 	}
-
 }
 
 
@@ -401,7 +394,6 @@ void MoveSelection (vec3_t move)
 			for (b=selected_brushes.next ; b != &selected_brushes ; b=b->next)
 				Brush_Build( b );
 		}
-
 	}
 	else
 	{
@@ -456,7 +448,6 @@ void Drag_MouseMoved (int x, int y, int buttons)
 			x = pressx;
 	}
 
-
 	for (i=0 ; i<3 ; i++)
 	{
 		move[i] = drag_xvec[i]*(x - pressx) + drag_yvec[i]*(y - pressy);
@@ -492,3 +483,4 @@ void Drag_MouseUp (void)
 		Sys_UpdateWindows (W_CAMERA);
 	}
 }
+
