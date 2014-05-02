@@ -205,8 +205,8 @@ void UpdateTarget(vec3_t origin, vec3_t dir)
 
 	// promote the target to the src
 	peLink = pe;
-	
 }
+
 
 /*
 ===========
