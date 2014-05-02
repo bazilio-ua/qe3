@@ -177,6 +177,7 @@ singleselect:
 	sprintf (selectionstring, "Selected object: %s (%i %i %i)", name, (int)size[0], (int)size[1], (int)size[2]);
 	Sys_Status (selectionstring, 3);
 }
+
 /*
 ================
 Select_DeselectFace
@@ -260,7 +261,7 @@ void Select_Ray (vec3_t origin, vec3_t dir, int flags)
 		}
 
 		g_qeglobals.d_select_mode = sel_brush;
-		Sys_UpdateWindows(W_ALL);
+		Sys_UpdateWindows (W_ALL);
 		return;
 	}
 
