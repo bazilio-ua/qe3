@@ -743,7 +743,7 @@ static	int	textures_cursorx, textures_cursory;
 Texture_SetTexture
 ============
 */
-void Texture_SetTexture (texdef_t *texdef)
+void Texture_SetTexture (texdef_t *texdef, qboolean set_selection)
 {
 	qtexture_t	*q;
 	int			x,y;
@@ -757,7 +757,10 @@ void Texture_SetTexture (texdef_t *texdef)
 	g_qeglobals.d_texturewin.texdef = *texdef;
 
 	Sys_UpdateWindows (W_TEXTURE);
-	Select_SetTexture(texdef);
+// sikk---> Multiple Face Selection
+	// Check if we want to set current selection's texture
+	if (set_selection)
+		Select_SetTexture(texdef);
 
 // scroll origin so the texture is completely on screen
 	Texture_StartPos ();
@@ -858,7 +861,7 @@ void SelectTexture (int mx, int my)
 			tex.scale[1] = 1;
 
 			strcpy (tex.name, q->name);
-			Texture_SetTexture (&tex);
+			Texture_SetTexture (&tex, true);
 			return;
 		}
 	}

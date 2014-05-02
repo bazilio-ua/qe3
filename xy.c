@@ -451,11 +451,11 @@ void XY_MouseDown (int x, int y, int buttons)
 	
 		// lbutton = manipulate selection
 		// shift-LBUTTON = select
-	//	if ( (buttonstate == MK_LBUTTON)
-	//		|| (buttonstate == (MK_LBUTTON | MK_SHIFT))
-	//		|| (buttonstate == (MK_LBUTTON | MK_CONTROL))
-	//		|| (buttonstate == (MK_LBUTTON | MK_CONTROL | MK_SHIFT)) )
-		if (buttonstate & MK_LBUTTON)
+		if ( (buttonstate == MK_LBUTTON)
+			|| (buttonstate == (MK_LBUTTON | MK_SHIFT))
+			|| (buttonstate == (MK_LBUTTON | MK_CONTROL))
+			|| (buttonstate == (MK_LBUTTON | MK_CONTROL | MK_SHIFT)) )
+//		if (buttonstate & MK_LBUTTON)
 		{
 			Drag_Begin (x, y, buttons, 
 				right, up,

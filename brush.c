@@ -194,6 +194,17 @@ void Face_SetColor (brush_t *b, face_t *f)
 }
 
 /*
+=================
+Face_SetTexture
+=================
+*/
+void Face_SetTexture (face_t *f, texdef_t *texdef)
+{
+	f->texdef = *texdef;
+	Brush_Build(f->owner);
+}
+
+/*
 ================
 BeginTexturingFace
 ================

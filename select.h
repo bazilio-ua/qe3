@@ -20,6 +20,8 @@ typedef struct
 #define	SF_SINGLEFACE		4
 #define	SF_CYCLE			8
 
+int select_face_count, select_face_pos;	// sikk - Multiple Face Selection
+
 trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags);
 
 void Select_GetBounds (vec3_t mins, vec3_t maxs);
@@ -28,7 +30,11 @@ void Select_GetMid (vec3_t mid);
 void Select_Brush (brush_t *b, qboolean complete);
 void Select_Ray (vec3_t origin, vec3_t dir, int flags);
 void Select_Delete (void);
-void Select_Deselect (void);
+void Select_Deselect (qboolean deselect_faces);
+// sikk---> Multiple Face Selection
+qboolean Select_IsFaceSelected (face_t *face);
+void Select_DeselectFaces ();
+// <---sikk
 void Select_Clone (void);
 void Select_Move (vec3_t delta);
 void Select_SetTexture (texdef_t *texdef);
@@ -53,6 +59,13 @@ void ComputeAbsolute(face_t *f, vec3_t p1, vec3_t p2, vec3_t p3);
 void AbsoluteToLocal(plane_t normal2, face_t *f, vec3_t p1, vec3_t p2, vec3_t p3);
 void RotateFaceTexture(face_t* f, int axis, float deg);
 void RotateTextures(int axis, float deg, vec3_t origin);
+// returns true if pFind is in pList
+qboolean OnEntityList (entity_t *pFind, entity_t *pList[MAX_MAP_ENTITIES], int nSize);
+// <---sikk
+
+// sikk - Multiple Face Selection: returns true if pFind is in pList
+qboolean OnBrushList (brush_t *pFind, brush_t *pList[MAX_MAP_BRUSHES], int nSize);
+
 
 // updating workzone to a given brush (depends on current view)
 void UpdateWorkzone_ForBrush( brush_t *b );

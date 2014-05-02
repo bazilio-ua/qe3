@@ -27,7 +27,7 @@ trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags)
 		brush_t	   *array[MAX_MAP_BRUSHES];  
 
 		select = (selected_brushes.next != &selected_brushes) ? selected_brushes.next : NULL;
-		Select_Deselect();
+		Select_Deselect(true);
 
 		// go through active brushes and accumulate all "hit" brushes
 		for (brush = active_brushes.next; brush != &active_brushes; brush = brush->next)
@@ -136,7 +136,10 @@ void Select_Brush (brush_t *brush, qboolean complete)
 	char	*name;
 	vec3_t mins, maxs, size;
 
-	selected_face = NULL;
+//	selected_face = NULL;
+	// deselect any selected faces on brush
+	Select_DeselectFaces();	// sikk - Multiple Face Selection
+
 	if (g_qeglobals.d_select_count < 2)
 		g_qeglobals.d_select_order[g_qeglobals.d_select_count] = brush;
 	g_qeglobals.d_select_count++;
@@ -174,7 +177,41 @@ singleselect:
 	sprintf (selectionstring, "Selected object: %s (%i %i %i)", name, (int)size[0], (int)size[1], (int)size[2]);
 	Sys_Status (selectionstring, 3);
 }
+/*
+================
+Select_DeselectFace
+================
+*/
+void Select_DeselectFaces ()
+{
+	int i;
 
+	if (select_face_count)
+	{
+		for (i = 0; i < select_face_count; i++)
+			selected_faces[i] = NULL;
+		select_face_count = 0;
+	}
+}
+
+/*
+================
+Select_IsFaceSelected
+================
+*/
+qboolean Select_IsFaceSelected (face_t *face)
+{
+	int i;
+	
+	for (i = 0; i < select_face_count; i++)
+		if (face == selected_faces[i])
+		{
+			select_face_pos = i;
+			return true;
+		}
+
+	return false;
+}
 
 /*
 ============
@@ -193,11 +230,37 @@ void Select_Ray (vec3_t origin, vec3_t dir, int flags)
 
 	if (flags == SF_SINGLEFACE)
 	{
-		selected_face = t.face;
+/*		selected_face = t.face;
 		selected_face_brush = t.brush;
 		Sys_UpdateWindows (W_ALL);
 		g_qeglobals.d_select_mode = sel_brush;
 		Texture_SetTexture (&t.face->texdef);
+		return;
+*/
+		// deselect face if already selected
+		if (Select_IsFaceSelected(t.face))
+		{
+			int i;
+			selected_faces[select_face_pos] = NULL;
+			for (i = select_face_pos; i < select_face_count; i++)
+				if (selected_faces[i + 1] != NULL)
+					selected_faces[i] = selected_faces[i + 1];
+				else
+					selected_faces[i] = NULL;
+
+			select_face_count--;
+//			Select_Deselect();
+		} 
+		else	
+		{	// if face we clicked on is of a selected brush, do nothing
+			selected_faces[select_face_count] = t.face;
+			selected_faces[select_face_count]->owner = t.brush;
+			Texture_SetTexture (&t.face->texdef, false);
+			select_face_count++;
+		}
+
+		g_qeglobals.d_select_mode = sel_brush;
+		Sys_UpdateWindows(W_ALL);
 		return;
 	}
 
@@ -208,7 +271,8 @@ void Select_Ray (vec3_t origin, vec3_t dir, int flags)
 	{		
 		Brush_RemoveFromList (t.brush);
 		Brush_AddToList (t.brush, &active_brushes);
-	} else
+	} 
+	else
 	{
 		Select_Brush (t.brush, true);
 	}
@@ -221,7 +285,11 @@ void Select_Delete (void)
 {
 	brush_t	*brush;
 
-	selected_face = NULL;
+//	selected_face = NULL;
+// sikk---> Multiple Face Selection
+	if (select_face_count)
+		Select_DeselectFaces();
+// <---sikk
 	g_qeglobals.d_select_mode = sel_brush;
 
 	g_qeglobals.d_select_count = 0;
@@ -256,7 +324,7 @@ void UpdateWorkzone_ForBrush( brush_t* b )
 
 }
 
-void Select_Deselect (void)
+void Select_Deselect (qboolean deselect_faces)
 {
 	brush_t	*b;
 
@@ -267,15 +335,26 @@ void Select_Deselect (void)
 
 	if (b == &selected_brushes)
 	{
-		if (selected_face)
+/*		if (selected_face)
 		{
 			selected_face = NULL;
+			Sys_UpdateWindows (W_ALL);
+		}
+*/
+// sikk---> Multiple Face Selection
+		if (deselect_faces)
+		{
+			Select_DeselectFaces();
 			Sys_UpdateWindows (W_ALL);
 		}
 		return;
 	}
 
-	selected_face = NULL;
+//	selected_face = NULL;
+	if (deselect_faces)
+		Select_DeselectFaces();
+// <---sikk
+
 	g_qeglobals.d_select_mode = sel_brush;
 
 	// grab top / bottom height for new brushes
@@ -292,6 +371,8 @@ void Select_Deselect (void)
 	active_brushes.next->prev = selected_brushes.prev;
 	active_brushes.next = selected_brushes.next;
 	selected_brushes.prev = selected_brushes.next = &selected_brushes;	
+
+	Sys_Status ("", 3);	// sikk - Clear Selection Status
 
 	Sys_UpdateWindows (W_ALL);
 }
@@ -392,7 +473,6 @@ void Select_Clone (void)
 }
 
 
-
 /*
 ============
 Select_SetTexture
@@ -402,12 +482,28 @@ void Select_SetTexture (texdef_t *texdef)
 {
 	brush_t	*b;
 
-	if (selected_face)
+// sikk---> Multiple Face Selection
+	if (select_face_count)
 	{
-		selected_face->texdef = *texdef;
-		Brush_Build(selected_face_brush);
+		int i, count = 0;
+		brush_t	*array[MAX_MAP_BRUSHES];
+
+		for (i = 0; i < select_face_count; i++)
+		{
+			// this check makes sure that brushes are only added to undo once 
+			// and not once per selected face on brush
+			if (!OnBrushList(selected_faces[i]->owner, array, count))
+			{
+				array[count] = selected_faces[i]->owner;
+				count++;
+			}
+		}
+
+		for (i = 0; i < select_face_count; i++)
+			Face_SetTexture(selected_faces[i], texdef);
 	}
-	else
+// <---sikk
+	else if (selected_brushes.next != &selected_brushes)
 	{
 		for (b=selected_brushes.next ; b != &selected_brushes ; b=b->next)
 			if (!b->owner->eclass->fixedsize)
@@ -864,7 +960,7 @@ void Select_FitTexture(int height, int width)
 {
 	brush_t		*b;
 	
-	if(selected_brushes.next == &selected_brushes && !selected_face)
+	if(selected_brushes.next == &selected_brushes && !select_face_count)
 		return;
 	
 	for (b=selected_brushes.next ; b != &selected_brushes ; b=b->next)
@@ -873,12 +969,17 @@ void Select_FitTexture(int height, int width)
 		Brush_Build(b);
 	}
 
-	
-	if (selected_face)
+// sikk---> Multiple Face Selection
+	if (select_face_count)
 	{
-		Face_FitTexture(selected_face, height, width);
-		Brush_Build(selected_face_brush);
+		int i;
+		for (i = 0; i < select_face_count; i++)
+		{
+			Face_FitTexture(selected_faces[i], height, width);
+			Brush_Build(selected_faces[i]->owner);
+		}
 	}
+// <---sikk
 	
 	Sys_UpdateWindows (W_CAMERA);
 }
@@ -1154,7 +1255,7 @@ void FindReplaceTextures (char *find, char *replace, qboolean selected, qboolean
 
 	list = (selected) ? &selected_brushes : &active_brushes;
 	if (!selected)
-		Select_Deselect();
+		Select_Deselect(true);
 
 	for (brush = list->next ; brush != list; brush = brush->next)
 	{
@@ -1188,7 +1289,7 @@ void GroupSelectNextBrush (void)
 		if (strcmpi(b->owner->eclass->name, "worldspawn") != 0)
 		{
 			e = b->owner;
-			Select_Deselect();
+			Select_Deselect(true);
 			for (b2 = e->brushes.onext ; b2 != &e->brushes ; b2 = b2->onext)
 			{
 				if (b == b2)
@@ -1204,5 +1305,40 @@ void GroupSelectNextBrush (void)
 			Sys_UpdateWindows(W_ALL);
 		}
 	}
+}
+
+
+/*
+===============
+OnEntityList
+sikk
+returns true if pFind is in pList
+===============
+*/
+qboolean OnEntityList (entity_t *pFind, entity_t *pList[MAX_MAP_ENTITIES], int nSize)
+{
+	while (nSize-- > 0)
+	{
+		if (pList[nSize] == pFind)
+			return true;
+	}
+	return false;
+}
+
+
+/*
+===============
+OnBrushList
+sikk
+returns true if pFind is in pList
+===============
+*/
+qboolean OnBrushList (brush_t *pFind, brush_t *pList[MAX_MAP_BRUSHES], int nSize)
+{
+	while (nSize-- > 0)
+		if (pList[nSize] == pFind)
+			return true;
+
+	return false;
 }
 

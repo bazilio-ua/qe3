@@ -370,7 +370,7 @@ void ConnectEntities (void)
 	SetKeyValue (e2, "targetname", newtarg);
 	Sys_UpdateWindows (W_XY | W_CAMERA);
 
-	Select_Deselect();
+	Select_Deselect(true);
 	Select_Brush (g_qeglobals.d_select_order[1], true);
 }
 

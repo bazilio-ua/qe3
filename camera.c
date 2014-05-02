@@ -227,12 +227,14 @@ void Cam_PositionRotate (void)
 		origin[1] = (mins[1] + maxs[1])/2;
 		origin[2] = (mins[2] + maxs[2])/2;
 	}
-	else if(selected_face)
+	else if(select_face_count)
 	{
 		mins[0] = mins[1] = mins[2] = 99999;
 		maxs[0] = maxs[1] = maxs[2] = -99999;
 
-		f = selected_face;
+//		f = selected_face;
+		// rotate around last selected face
+		f = selected_faces[select_face_count - 1];	// sikk - Multiple Face Selection
 		for ( j = 0 ; j < f->face_winding->numpoints; j++)
 		{
 			for(i = 0; i < 3; i++)
@@ -767,11 +769,18 @@ void Cam_Draw (void)
 			Face_Draw( face );
 */
 
-	if (selected_face)
-		Face_Draw(selected_face);
+//	if (selected_face)
+//		Face_Draw(selected_face);
+// sikk---> Multiple Face Selection
+	if (select_face_count)
+	{
+		int i;
+		for (i = 0; i < select_face_count; i++)
+			Face_Draw(selected_faces[i]);
+	}
+// <---sikk
 
 	// non-zbuffered outline
-
 	glDisable (GL_BLEND);
 	glDisable (GL_DEPTH_TEST);
 	glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);

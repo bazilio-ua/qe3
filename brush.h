@@ -13,6 +13,7 @@ typedef struct face_s
 {
 	struct face_s	*next;
 	struct face_s	*original;		//used for vertex movement
+	struct brush_s	*owner;		// sikk - brush of selected face
 	vec3_t		planepts[3];
     texdef_t	texdef;
 
@@ -74,6 +75,8 @@ void       Face_MakePlane (face_t *f);
 void       Face_Draw( face_t *face );
 
 void	Face_MoveTexture(face_t *f, vec3_t delta);
+void	Face_SetTexture (face_t *f, texdef_t *texdef);
+
 void	TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv);
 void	Brush_FitTexture			(brush_t *b, int height, int width);
 void	Face_FitTexture				(face_t *face, int height, int width);

@@ -224,7 +224,7 @@ void Drag_Begin (int x, int y, int buttons,
 		   vec3_t origin, vec3_t dir)
 {
 	trace_t	t;
-
+	qboolean altdown;
 	int dim1, dim2;
 
 	drag_ok = false;
@@ -233,23 +233,34 @@ void Drag_Begin (int x, int y, int buttons,
 	drag_first = true;
 	peLink = NULL;
 
+	altdown = (qboolean)GetAsyncKeyState(VK_MENU);
+
 	// shift LBUTTON = select entire brush
 	if (buttons == (MK_LBUTTON | MK_SHIFT))
 	{
-		int	flag;
-		
-		flag = GetAsyncKeyState(VK_MENU) ? SF_CYCLE : 0;	// single selection cycle (shift+alt+LBUTTON)
-		if (!dir[0] && !dir[1])
+		int flag = altdown ? SF_CYCLE : 0;	// single selection cycle (shift+alt+LBUTTON);
+		if (dir[0] == 0 || dir[1] == 0 || dir[2] == 0)  // extremely low chance of this happening from camera
 			Select_Ray (origin, dir, flag | SF_ENTITIES_FIRST);	// hack for XY
 		else
 			Select_Ray (origin, dir, flag);
 		return;
 	}
 
+	// ctrl-alt-LBUTTON = multiple brush select without selecting whole entities
+	if (buttons == (MK_LBUTTON | MK_CONTROL) && altdown)
+	{
+		if (dir[0] == 0 || dir[1] == 0 || dir[2] == 0)  // extremely low chance of this happening from camera
+			Select_Ray (origin, dir, SF_ENTITIES_FIRST);	// hack for XY
+		else
+			Select_Ray (origin, dir, 0);
+		return;
+	}
+
 	// ctrl-shift LBUTTON = select single face
 	if (buttons == (MK_LBUTTON | MK_CONTROL | MK_SHIFT))
 	{
-		Select_Deselect ();
+		// if alt pressed, don't deselect selected faces
+		Select_Deselect (!altdown);	// sikk - Multiple Face Selection
 		Select_Ray (origin, dir, SF_SINGLEFACE);
 		return;
 	}
@@ -280,7 +291,7 @@ void Drag_Begin (int x, int y, int buttons,
 
 			UpdateWorkzone_ForBrush( t.brush );
 
-			Texture_SetTexture (&t.face->texdef);
+			Texture_SetTexture (&t.face->texdef, true);
 		}
 		else
 			Sys_Printf ("Did not select a texture\n");

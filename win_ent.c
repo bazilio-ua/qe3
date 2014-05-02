@@ -726,7 +726,7 @@ void CreateEntity(void)
 		edit_entity = selected_brushes.next->owner;
 
 	SetKeyValuePairs();
-	Select_Deselect ();
+	Select_Deselect (true);
 	Select_Brush (edit_entity->brushes.onext, true);
 }
 

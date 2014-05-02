@@ -29,6 +29,9 @@ typedef struct qtexture_s
 // a texturename of the form (0 0 0) will
 // create a solid color texture
 
+extern	char		currentwad[1024];
+extern	char		wadstring[1024];
+
 void	Texture_Init (void);
 void	Texture_Flush (void);
 void	Texture_FlushUnused (void);
@@ -37,13 +40,6 @@ void	Texture_ClearInuse (void);
 void	Texture_ShowInuse (void);
 void	Texture_ShowWad (int menunum);
 void	Texture_InitFromWad (char *file);
-
-extern	char		currentwad[1024];
-extern	char		wadstring[1024];
-
-qtexture_t *Texture_ForName (char *name);
-
-void	Texture_Init (void);
-void	Texture_SetTexture (texdef_t *texdef);
-
+void	Texture_SetTexture (texdef_t *texdef, qboolean set_selection);	// sikk - Multiple Face Selection: added set_selection
 void	Texture_SetMode(int iMenu);	// GL_NEAREST, etc..
+qtexture_t *Texture_ForName (char *name);

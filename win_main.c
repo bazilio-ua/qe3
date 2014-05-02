@@ -983,7 +983,7 @@ LONG WINAPI CommandHandler (
 			if (g_qeglobals.d_clipmode)
 				UnsetClipMode ();
 			else
-				Select_Deselect ();
+				Select_Deselect (true);
 			break;
 
 		case ID_SELECT_GROUPNEXTBRUSH:
@@ -1005,7 +1005,7 @@ LONG WINAPI CommandHandler (
 
 		case ID_VIEW_HIDESHOW_HIDESELECTED:
 			Select_Hide();  
-			Select_Deselect();
+			Select_Deselect(true);
 			break;
 		case ID_VIEW_HIDESHOW_SHOWHIDDEN:
 			Select_ShowAllHidden();
