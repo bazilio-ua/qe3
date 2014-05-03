@@ -77,6 +77,7 @@ LONG WINAPI WCam_WndProc (
 			Sys_Printf ("GL_EXTENSIONS: %s\n", glGetString (GL_EXTENSIONS));
 		}
 		return 0;
+		
 	case WM_PAINT:
         { 
 			PAINTSTRUCT	ps;

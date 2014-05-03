@@ -599,7 +599,6 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance
 				have_quit = true;
 		}
 
-
 		CheckBspProcess ();
 
 		time = Sys_DoubleTime ();
@@ -637,15 +636,13 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance
 
 		update_bits = 0;
 
-		if (!cambuttonstate && !have_quit)
+		if (cambuttonstate != MK_RBUTTON && !have_quit) // EER1 fix
 		{	// if not driving in the camera view, block
 			WaitMessage ();
 		}
-
 	}
 
     /* return success of application */
     return TRUE;
-
 }
 

@@ -14,11 +14,11 @@ static qboolean	nomips;
 static HGLRC s_hglrcTexture;
 static HDC	 s_hdcTexture;
 
-// GL_NEAREST;
-// GL_NEAREST_MIPMAP_NEAREST;
-// GL_NEAREST_MIPMAP_LINEAR;
-// GL_LINEAR;
-// GL_LINEAR_MIPMAP_NEAREST;
+// GL_NEAREST
+// GL_NEAREST_MIPMAP_NEAREST
+// GL_NEAREST_MIPMAP_LINEAR
+// GL_LINEAR
+// GL_LINEAR_MIPMAP_NEAREST
 int		texture_mode = GL_LINEAR_MIPMAP_LINEAR;
 
 int		texture_extension_number = 1;
@@ -201,7 +201,7 @@ void Texture_SetMode(int iMenu)
 		iMode = GL_LINEAR_MIPMAP_NEAREST;
 		g_qeglobals.d_savedinfo.iVTexMenu = iMenu;
 		break;
-	//default: 
+//	default:
 	case ID_VIEW_TRILINEAR:
 		iMode = GL_LINEAR_MIPMAP_LINEAR;
 		g_qeglobals.d_savedinfo.iVTexMenu = iMenu;
@@ -594,6 +594,7 @@ void	Texture_InitFromWad (char *file)
 		
 		Sys_Printf ("Loading %s\n", lumpinfo->name);
 
+//		q = Texture_LoadTexture ((miptex_t *)(wadfile + LittleLong(lumpinfo->filepos)));
 		q = Texture_LoadTexture (qtex);
 
 		strncpy (q->name, lumpinfo->name, sizeof(q->name)-1);
@@ -758,7 +759,7 @@ void Texture_SetTexture (texdef_t *texdef, qboolean set_selection)
 
 	Sys_UpdateWindows (W_TEXTURE);
 // sikk---> Multiple Face Selection
-	// Check if we want to set current selection's texture
+	// check if we want to set current selection's texture
 	if (set_selection)
 		Select_SetTexture(texdef);
 
@@ -934,8 +935,8 @@ DRAWING
 ============================================================================
 */
 
-int imax(int iFloor, int i) { if (i>iFloor) return iFloor; return i; }
-HFONT ghFont = NULL;
+//int imax(int iFloor, int i) { if (i>iFloor) return iFloor; return i; }
+//HFONT ghFont = NULL;
 
 /*
 ============

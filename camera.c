@@ -352,8 +352,6 @@ void Cam_MouseControl (float dtime)
 }
 
 
-
-
 /*
 ==============
 Cam_MouseDown

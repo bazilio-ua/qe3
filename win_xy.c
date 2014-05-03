@@ -31,7 +31,6 @@ LONG WINAPI WXY_WndProc (
 	int		fwKeys, xPos, yPos;
     RECT	rect;
 
-
     GetClientRect(hWnd, &rect);
 
     switch (uMsg)
@@ -87,6 +86,7 @@ LONG WINAPI WXY_WndProc (
 	case WM_LBUTTONDOWN:
 		if ( GetTopWindow( g_qeglobals.d_hwndMain ) != hWnd)
 			BringWindowToTop(hWnd);
+		
 		SetFocus( g_qeglobals.d_hwndXY );
 		SetCapture( g_qeglobals.d_hwndXY );
 		fwKeys = wParam;        // key flags 
