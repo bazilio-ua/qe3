@@ -10,6 +10,7 @@ char		currentmap[1024];
 brush_t	active_brushes;		// brushes currently being displayed
 brush_t	selected_brushes;	// highlighted
 face_t	*selected_faces[MAX_MAP_FACES];	// sikk - Multiple Face Selection
+int	select_face_count, select_face_pos;	// sikk - Multiple Face Selection
 //face_t	*selected_face;
 //brush_t	*selected_face_brush;	// sikk - selected_face has "owner" brush now
 brush_t	filtered_brushes;	// brushes that have been filtered or regioned

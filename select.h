@@ -20,8 +20,6 @@ typedef struct
 #define	SF_SINGLEFACE		4
 #define	SF_CYCLE			8
 
-int select_face_count, select_face_pos;	// sikk - Multiple Face Selection
-
 trace_t Test_Ray (vec3_t origin, vec3_t dir, int flags);
 
 void Select_GetBounds (vec3_t mins, vec3_t maxs);

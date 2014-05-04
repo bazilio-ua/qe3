@@ -1,7 +1,7 @@
+// mathlib.h
+
 #ifndef __MATHLIB__
 #define __MATHLIB__
-
-// mathlib.h
 
 #include <math.h>
 
