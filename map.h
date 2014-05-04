@@ -7,8 +7,6 @@ extern	brush_t	active_brushes;	// brushes currently being displayed
 extern	brush_t	selected_brushes;	// highlighted
 extern	face_t	*selected_faces[MAX_MAP_FACES];	// sikk - Multiple Face Selection
 extern	int	select_face_count, select_face_pos;	// sikk - Multiple Face Selection
-//extern	face_t	*selected_face;
-//extern	brush_t	*selected_face_brush;	// selected_face has "owner" brush
 extern	brush_t	filtered_brushes;	// brushes that have been filtered or regioned
 
 extern	entity_t	entities;

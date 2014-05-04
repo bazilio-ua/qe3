@@ -135,7 +135,6 @@ void Select_Brush (brush_t *brush, qboolean complete)
 	char	*name;
 	vec3_t mins, maxs, size;
 
-//	selected_face = NULL;
 	// deselect any selected faces on brush
 	Select_DeselectFaces();	// sikk - Multiple Face Selection
 
@@ -230,13 +229,6 @@ void Select_Ray (vec3_t origin, vec3_t dir, int flags)
 
 	if (flags == SF_SINGLEFACE)
 	{
-/*		selected_face = t.face;
-		selected_face_brush = t.brush;
-		Sys_UpdateWindows (W_ALL);
-		g_qeglobals.d_select_mode = sel_brush;
-		Texture_SetTexture (&t.face->texdef);
-		return;
-*/
 		// deselect face if already selected
 		if (Select_IsFaceSelected(t.face))
 		{
@@ -249,7 +241,6 @@ void Select_Ray (vec3_t origin, vec3_t dir, int flags)
 					selected_faces[i] = NULL;
 
 			select_face_count--;
-//			Select_Deselect();
 		} 
 		else	
 		{	// if face we clicked on is of a selected brush, do nothing
@@ -285,7 +276,6 @@ void Select_Delete (void)
 {
 	brush_t	*brush;
 
-//	selected_face = NULL;
 // sikk---> Multiple Face Selection
 	if (select_face_count)
 		Select_DeselectFaces();
@@ -335,12 +325,6 @@ void Select_Deselect (qboolean deselect_faces)
 
 	if (b == &selected_brushes)
 	{
-/*		if (selected_face)
-		{
-			selected_face = NULL;
-			Sys_UpdateWindows (W_ALL);
-		}
-*/
 // sikk---> Multiple Face Selection
 		if (deselect_faces)
 		{
@@ -350,7 +334,6 @@ void Select_Deselect (qboolean deselect_faces)
 		return;
 	}
 
-//	selected_face = NULL;
 	if (deselect_faces)
 		Select_DeselectFaces();
 // <---sikk
