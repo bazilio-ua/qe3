@@ -2,8 +2,7 @@
 
 #include "qe3.h"
 
-
-#define	PAGEFLIPS	2
+//#define	PAGEFLIPS	2
 
 /*
 ============

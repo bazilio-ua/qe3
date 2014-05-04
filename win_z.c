@@ -1,4 +1,4 @@
-// win_cam.c -- windows specific camera view code
+// win_z.c -- windows specific z view code
 
 #include "qe3.h"
 

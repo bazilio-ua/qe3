@@ -2,7 +2,6 @@
 
 #include "qe3.h"
 
-
 /*
 
   drag either multiple brushes, or select plane points from

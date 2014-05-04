@@ -1,5 +1,7 @@
+// win_qe3.c
+
 #include "qe3.h"
-#include "mru.h"
+//#include "mru.h"
 
 // for the logging part
 #include <io.h>

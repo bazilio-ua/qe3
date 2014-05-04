@@ -1,6 +1,8 @@
+// win_main.c
+
 #include "qe3.h"
 #include <process.h>
-#include "mru.h"
+//#include "mru.h"
 
 static HWND      s_hwndToolbar;
 
@@ -64,7 +66,6 @@ void QE_ExpandBspString (char *bspaction, char *out, char *mapname)
 	}
 	*out = 0;
 }
-
 
 
 void RunBsp (char *command)
@@ -535,7 +536,6 @@ LONG WINAPI CommandHandler (
 			Sys_UpdateWindows (W_XY|W_CAMERA);
 			break;
 
-
 //
 // grid menu
 //
@@ -592,6 +592,7 @@ LONG WINAPI CommandHandler (
 			CheckMenuItem ( GetMenu(g_qeglobals.d_hwndMain), ID_SNAPTOGRID, MF_BYCOMMAND | ((!g_qeglobals.d_savedinfo.noclamp) ? MF_CHECKED : MF_UNCHECKED)  );
 			Sys_UpdateGridStatusBar ();
 			break;
+
 //
 // texture menu
 //
@@ -1010,6 +1011,7 @@ LONG WINAPI CommandHandler (
 		case ID_VIEW_HIDESHOW_SHOWHIDDEN:
 			Select_ShowAllHidden();
 			break;
+
 //
 // region menu
 //
@@ -1127,8 +1129,6 @@ LONG WINAPI WMAIN_WndProc (
 
     return DefWindowProc (hWnd, uMsg, wParam, lParam);
 }
-
-
 
 
 /*
@@ -1627,3 +1627,4 @@ static HWND CreateToolBar(HINSTANCE hInst)
 
     return hwndTB; 
 }
+

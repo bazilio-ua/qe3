@@ -2,8 +2,7 @@
 
 #include "qe3.h"
 
-
-#define	PAGEFLIPS	2
+//#define	PAGEFLIPS	2
 
 const char *dimstrings[] = {"x:%.f", "y:%.f", "z:%.f"};
 const char *orgstrings[] = {"(x:%.f  y:%.f)", "(x:%.f  z:%.f)", "(y:%.f  z:%.f)"};

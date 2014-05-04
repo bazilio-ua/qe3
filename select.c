@@ -2,7 +2,6 @@
 
 #include "qe3.h"
 
-
 /*
 ===========
 Test_Ray

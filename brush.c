@@ -1,7 +1,7 @@
 // brush.c
 
 #include "qe3.h"
-
+#include <assert.h>
 
 brush_t *Brush_Alloc()
 {
