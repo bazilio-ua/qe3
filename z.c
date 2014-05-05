@@ -228,7 +228,27 @@ void Z_DrawGrid (void)
 //		glColor4f(0, 0, 0, 0);
 		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT]);
 		
-		for (zz=zb ; zz<ze ; zz+=size)
+		size = 64;
+		if (g_qeglobals.d_z.scale <= 0.6)
+			size = 128;
+		if (g_qeglobals.d_z.scale <= 0.3)
+			size = 256;
+		if (g_qeglobals.d_z.scale <= 0.15)
+			size = 512;
+		if (g_qeglobals.d_z.scale <= 0.075)
+			size = 1024;
+		
+		zb = g_qeglobals.d_z.origin[2] - h;
+		if (zb < region_mins[2])
+			zb = region_mins[2];
+		zb = size * floor (zb/size);
+		
+		ze = g_qeglobals.d_z.origin[2] + h;
+		if (ze > region_maxs[2])
+			ze = region_maxs[2];
+		ze = size * ceil (ze/size);
+		
+		for (zz=zb ; zz<=ze ; zz+=size)	// sikk - 'zz <= ze' instead of 'zz < ze' so last coord is drawn 
 		{
 			glRasterPos2f (-w+1, zz);
 			sprintf (text, "%i",(int)zz);

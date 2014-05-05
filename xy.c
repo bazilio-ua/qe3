@@ -1082,13 +1082,43 @@ void XY_DrawGrid (void)
 		//glColor4f(0, 0, 0, 0);
 		glColor3fv(g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT]);
 
-		for (x=xb ; x<xe ; x+=size)
+		size = 64;
+		if (g_qeglobals.d_xyz.scale <= 0.6)
+			size = 128;
+		if (g_qeglobals.d_xyz.scale <= 0.3)
+			size = 256;
+		if (g_qeglobals.d_xyz.scale <= 0.15)
+			size = 512;
+		if (g_qeglobals.d_xyz.scale <= 0.075)
+			size = 1024;
+
+		xb = g_qeglobals.d_xyz.origin[dim1] - w;
+		if (xb < region_mins[dim1])
+			xb = region_mins[dim1];
+		xb = size * floor (xb/size);
+
+		xe = g_qeglobals.d_xyz.origin[dim1] + w;
+		if (xe > region_maxs[dim1])
+			xe = region_maxs[dim1];
+		xe = size * ceil (xe/size);
+
+		yb = g_qeglobals.d_xyz.origin[dim2] - h;
+		if (yb < region_mins[dim2])
+			yb = region_mins[dim2];
+		yb = size * floor (yb/size);
+
+		ye = g_qeglobals.d_xyz.origin[dim2] + h;
+		if (ye > region_maxs[dim2])
+			ye = region_maxs[dim2];
+		ye = size * ceil (ye/size);
+
+		for (x=xb ; x<=xe ; x+=size)	// sikk - 'x <= xe' instead of 'x < xe' so last coord is drawn 
 		{
 			glRasterPos2f (x, g_qeglobals.d_xyz.origin[dim2] + h - 6/g_qeglobals.d_xyz.scale);
 			sprintf (text, "%i",(int)x);
 			glCallLists (strlen(text), GL_UNSIGNED_BYTE, text);
 		}
-		for (y=yb ; y<ye ; y+=size)
+		for (y=yb ; y<=ye ; y+=size)	// sikk - 'y <= ye' instead of 'y < ye' so last coord is drawn
 		{
 			glRasterPos2f (g_qeglobals.d_xyz.origin[dim1] - w + 1, y);
 			sprintf (text, "%i",(int)y);
